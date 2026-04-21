@@ -14,6 +14,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/hero.css">
 </head>
 <body>
 
@@ -62,10 +63,43 @@
   </div>
 
   <!-- ============================================================
-       Main Content（次タスクで実装）
+       Main Content
        ============================================================ -->
   <main id="main">
-    <!-- Hero, Services, Works, CTA ... -->
+
+    <!-- Hero -->
+    <section class="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero__glow"></div>
+
+      <div class="hero__content">
+        <div class="hero__eyebrow">ITS合同会社</div>
+
+        <h1 class="hero__title">
+          テクノロジーで<br>世界を輝かせる
+        </h1>
+
+        <p class="hero__en">STARS YOUR TECHNOLOGY</p>
+
+        <p class="hero__desc">
+          システム受託開発・ITコンサルティング・Web制作を通じて、<br>
+          企業の課題を解決し、事業成長を支援します。
+        </p>
+
+        <div class="hero__actions">
+          <a href="contact.html" class="btn btn--primary">お問い合わせ（無料）</a>
+          <a href="services.html" class="btn btn--outline">サービスを見る</a>
+        </div>
+      </div>
+
+      <div class="hero__scroll">
+        <span class="hero__scroll-label">Scroll</span>
+        <div class="hero__scroll-bar"></div>
+      </div>
+    </section>
+
+    <!-- 以降のセクションは次タスクで実装 -->
+
   </main>
 
   <!-- Scripts -->

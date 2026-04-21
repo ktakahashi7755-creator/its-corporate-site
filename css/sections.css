@@ -390,3 +390,159 @@
   .strengths-grid { grid-template-columns: 1fr; }
   .cta-section__actions { flex-direction: column; align-items: center; }
 }
+
+/* ==========================================================================
+   About Strip (index)
+   ========================================================================== */
+.about-strip {
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.about-strip__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+}
+
+.about-strip__label {
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 14px;
+}
+
+.about-strip__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 600;
+  color: var(--color-white);
+  line-height: 1.3;
+  margin-bottom: 18px;
+}
+
+.about-strip__text {
+  font-size: 0.9rem;
+  color: var(--color-text-2);
+  line-height: 1.88;
+  margin-bottom: 24px;
+}
+
+.about-strip__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--color-gold);
+  transition: gap var(--duration-fast) ease;
+}
+
+.about-strip__link:hover { gap: 10px; }
+
+.about-strip__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.about-strip__card {
+  padding: 22px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  transition: border-color var(--duration-base) ease;
+}
+
+.about-strip__card:hover { border-color: var(--color-border); }
+
+.about-strip__card-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-gold);
+  margin-bottom: 8px;
+}
+
+.about-strip__card-text {
+  font-size: 0.8rem;
+  color: var(--color-text-2);
+  line-height: 1.72;
+}
+
+/* ==========================================================================
+   CEO Teaser (index)
+   ========================================================================== */
+.ceo-teaser__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+}
+
+.ceo-teaser__img {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  background: var(--color-bg-3);
+}
+
+.ceo-teaser__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ceo-teaser__img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.ceo-teaser__quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.2vw, 1.7rem);
+  color: var(--color-white);
+  line-height: 1.55;
+  margin-bottom: 18px;
+  padding-left: 18px;
+  border-left: 2px solid var(--color-gold);
+  font-style: normal;
+}
+
+.ceo-teaser__text {
+  font-size: 0.9rem;
+  color: var(--color-text-2);
+  line-height: 1.88;
+  margin-bottom: 20px;
+}
+
+.ceo-teaser__name {
+  font-size: 0.78rem;
+  color: var(--color-text-3);
+  line-height: 1.7;
+}
+
+.ceo-teaser__name strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 2px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .about-strip__inner  { grid-template-columns: 1fr; gap: 40px; }
+  .ceo-teaser__inner   { grid-template-columns: 1fr; gap: 40px; }
+  .ceo-teaser__img     { max-width: 380px; }
+}
+
+@media (max-width: 640px) {
+  .about-strip__cards  { grid-template-columns: 1fr; }
+}

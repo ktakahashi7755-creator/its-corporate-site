@@ -42,6 +42,12 @@
   flex-shrink: 0;
 }
 
+.nav__logo-img {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
 .nav__logo-mark {
   font-family: var(--font-serif);
   font-size: 1.5rem;
@@ -52,7 +58,7 @@
 }
 
 .nav__logo-text {
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   letter-spacing: 0.08em;
   color: var(--color-text-2);
 }

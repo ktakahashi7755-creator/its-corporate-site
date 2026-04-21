@@ -21,24 +21,22 @@
 /* Brand Column */
 .footer__brand-logo {
   display: flex;
-  align-items: baseline;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 10px;
 }
 
-.footer__brand-mark {
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--color-gold);
-  line-height: 1;
+.footer__brand-img {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
 }
 
 .footer__brand-sub {
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   letter-spacing: 0.08em;
-  color: var(--color-text-3);
+  color: var(--color-text-2);
+  font-weight: 500;
 }
 
 .footer__tagline {

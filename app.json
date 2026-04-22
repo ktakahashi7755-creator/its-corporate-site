@@ -1,0 +1,76 @@
+{
+  "expo": {
+    "name": "ふぁみりんく",
+    "slug": "familink",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF9F0"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.familink.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "プリントを撮影してAIで読み取るために使用します",
+        "NSPhotoLibraryUsageDescription": "ライブラリからプリント画像を選択するために使用します"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFF9F0"
+      },
+      "package": "com.familink.app",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "プリントを撮影するためにカメラを使用します"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "プリントを選択するためにフォトライブラリを使用します"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#FF8FA3"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "scheme": "familink",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "your-eas-project-id"
+      }
+    }
+  }
+}

@@ -12,3 +12,4 @@ web-build/
 *.orig.*
 ios/
 android/
+dist/

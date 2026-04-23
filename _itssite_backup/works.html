@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>実績紹介 | ITS合同会社</title>
+  <meta name="description" content="ITS合同会社の実績紹介。運送業・通信業・設備業など様々な業界への支援実績をご紹介します。">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/page.css">
+  <style>
+    /* Works Detail Layout */
+    .work-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      padding: 40px;
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      background: var(--color-bg-card);
+      margin-bottom: 20px;
+      transition: border-color var(--duration-base) ease;
+    }
+    .work-detail:hover { border-color: var(--color-border); }
+    .work-detail__media {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      background: var(--color-bg-3);
+    }
+    .work-detail__media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .work-detail__tag {
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: 10px;
+    }
+    .work-detail__title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-white);
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+    .work-detail__desc {
+      font-size: 0.88rem;
+      color: var(--color-text-2);
+      line-height: 1.88;
+      margin-bottom: 20px;
+    }
+    .work-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .work-tag {
+      font-size: 0.66rem;
+      padding: 3px 11px;
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 100px;
+      color: var(--color-text-2);
+    }
+    @media (max-width: 768px) {
+      .work-detail { grid-template-columns: 1fr; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <img src="images/logo.svg" alt="ITS" class="nav__logo-img" width="36" height="36">
+        <span class="nav__logo-text">ITS合同会社</span>
+      </a>
+      <nav class="nav__menu" aria-label="メインナビゲーション">
+        <a href="services.html" class="nav__link">サービス</a>
+        <a href="works.html"    class="nav__link" style="color:var(--color-white)">実績</a>
+        <a href="company.html"  class="nav__link">会社概要</a>
+        <a href="faq.html"      class="nav__link">よくある質問</a>
+      </nav>
+      <a href="contact.html" class="nav__cta">お問い合わせ</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="nav__drawer" id="nav-drawer" aria-hidden="true">
+    <nav aria-label="モバイルナビゲーション">
+      <a href="index.html"    class="nav__drawer-link">ホーム</a>
+      <a href="services.html" class="nav__drawer-link">サービス</a>
+      <a href="works.html"    class="nav__drawer-link">実績</a>
+      <a href="company.html"  class="nav__drawer-link">会社概要</a>
+      <a href="faq.html"      class="nav__drawer-link">よくある質問</a>
+      <a href="contact.html"  class="nav__drawer-link nav__drawer-link--cta">お問い合わせ</a>
+    </nav>
+  </div>
+
+  <main>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb__sep">/</span>
+          <span>実績紹介</span>
+        </div>
+        <span class="page-hero__label">Works</span>
+        <h1 class="page-hero__title">実績紹介</h1>
+        <p class="page-hero__desc">ITSが支援してきた企業・プロジェクトの一部をご紹介します。</p>
+      </div>
+    </section>
+
+    <!-- Works List -->
+    <section class="section">
+      <div class="container">
+
+        <!-- Work 01 -->
+        <article class="work-detail js-fade">
+          <div class="work-detail__media">
+            <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=720&auto=format&q=75" alt="運送業界向けホームページ制作" loading="lazy">
+          </div>
+          <div>
+            <p class="work-detail__tag">Web制作</p>
+            <h2 class="work-detail__title">運送業界向けホームページ制作支援</h2>
+            <p class="work-detail__desc">
+              企業の信頼感向上だけでなく、採用導線も意識したサイト設計を実施。求職者が行動しやすいUI設計・コピーライティングを一体化させ、採用支援にもつながる形で制作を完了しました。
+            </p>
+            <p class="work-detail__desc">
+              トップページのファーストビューを刷新し、会社のブランド感と採用メッセージを同時に訴求。問い合わせ数の増加と採用応募数の向上を実現しました。
+            </p>
+            <div class="work-tags">
+              <span class="work-tag">Web制作</span>
+              <span class="work-tag">UI/UX設計</span>
+              <span class="work-tag">コピーライティング</span>
+              <span class="work-tag">採用支援</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Work 02 -->
+        <article class="work-detail js-fade">
+          <div class="work-detail__media">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=720&auto=format&q=75" alt="通信企業向けCRM提供" loading="lazy">
+          </div>
+          <div>
+            <p class="work-detail__tag">システム開発</p>
+            <h2 class="work-detail__title">通信企業向けCRM提供</h2>
+            <p class="work-detail__desc">
+              顧客情報管理・営業管理の効率化を目的としたCRMシステムを設計・開発。営業担当者が直感的に使えるUIを優先しつつ、管理者向けの分析ダッシュボードも実装しました。
+            </p>
+            <p class="work-detail__desc">
+              従来の手作業・表計算管理からの移行をスムーズに行い、入力工数の大幅削減と情報の一元管理を実現。営業活動の可視化により、マネジメント層の意思決定を支援しています。
+            </p>
+            <div class="work-tags">
+              <span class="work-tag">システム開発</span>
+              <span class="work-tag">CRM</span>
+              <span class="work-tag">業務効率化</span>
+              <span class="work-tag">ダッシュボード</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Work 03 -->
+        <article class="work-detail js-fade">
+          <div class="work-detail__media">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=720&auto=format&q=75" alt="設備会社向けアプリケーション提供" loading="lazy">
+          </div>
+          <div>
+            <p class="work-detail__tag">アプリ開発</p>
+            <h2 class="work-detail__title">設備会社向けアプリケーション提供</h2>
+            <p class="work-detail__desc">
+              現場スタッフが使うフィールド管理アプリを設計・開発。現場での作業記録・報告・指示を一元化し、紙・電話・メールによる情報伝達から脱却しました。
+            </p>
+            <p class="work-detail__desc">
+              オフライン対応・シンプルなUI設計により、ITに不慣れな現場スタッフでも即日利用開始。運用改善と現場の負担軽減を同時に実現し、定着率の向上にも貢献しました。
+            </p>
+            <div class="work-tags">
+              <span class="work-tag">アプリ開発</span>
+              <span class="work-tag">現場DX</span>
+              <span class="work-tag">業務改善</span>
+              <span class="work-tag">UX設計</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-section__bg-word">CONTACT</div>
+      <div class="cta-section__inner">
+        <h2 class="cta-section__title js-fade">貴社の課題、ぜひご相談ください。</h2>
+        <p class="cta-section__desc js-fade delay-1">
+          業種・規模を問わず、まずは現状と課題をお聞かせください。
+        </p>
+        <div class="cta-section__actions js-fade delay-2">
+          <a href="contact.html" class="btn btn--primary">お問い合わせ（無料）</a>
+          <a href="services.html" class="btn btn--outline">サービスを見る</a>
+        </div>
+        <p class="cta-section__note js-fade delay-3">通常3営業日以内にご返信いたします</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-logo">
+            <img src="images/logo.svg" alt="ITS" class="footer__brand-img" width="30" height="30">
+            <span class="footer__brand-sub">ITS合同会社</span>
+          </div>
+          <p class="footer__tagline">STARS YOUR TECHNOLOGY</p>
+          <p class="footer__desc">テクノロジーの力でビジネスの可能性を広げ、企業と人の成長を支援します。</p>
+        </div>
+        <div>
+          <p class="footer__col-title">Service</p>
+          <ul class="footer__links">
+            <li><a href="service-development.html">システム受託開発</a></li>
+            <li><a href="service-consulting.html">ITコンサルティング</a></li>
+            <li><a href="service-web.html">Web制作 / LP制作</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Company</p>
+          <ul class="footer__links">
+            <li><a href="company.html">会社概要</a></li>
+            <li><a href="works.html">実績紹介</a></li>
+            <li><a href="faq.html">よくある質問</a></li>
+            <li><a href="privacy.html">プライバシーポリシー</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Contact</p>
+          <div class="footer__contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:info@its-tokyo.com">info@its-tokyo.com</a>
+          </div>
+          <div class="footer__contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            東京都新宿区西新宿3-3-13
+          </div>
+          <a href="contact.html" class="btn--gold-outline" style="margin-top:16px; font-size:0.74rem; padding:9px 18px;">お問い合わせ</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2024 ITS合同会社. All Rights Reserved.</p>
+        <div class="footer__bottom-links">
+          <a href="privacy.html">プライバシーポリシー</a>
+          <a href="contact.html">お問い合わせ</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

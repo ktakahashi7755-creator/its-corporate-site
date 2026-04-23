@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITコンサルティング | ITS合同会社</title>
+  <meta name="description" content="ITS合同会社のITコンサルティング。業務課題・事業課題に対してITをどう活用すべきか整理し、導入方針から改善施策まで支援します。">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/page.css">
+  <style>
+    .svc-detail-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-bottom: 72px; }
+    .svc-detail-img { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; background: var(--color-bg-3); }
+    .svc-detail-img img { width: 100%; height: 100%; object-fit: cover; }
+    .check-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+    .check-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 0.88rem; color: var(--color-text-2); line-height: 1.75; }
+    .check-list li::before { content: ''; display: block; width: 18px; height: 18px; min-width: 18px; border: 1px solid var(--color-gold); border-radius: 50%; margin-top: 2px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4 9l3.5 3.5L14 6' stroke='%23c9a84c' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") center/12px no-repeat; }
+    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border-subtle); border: 1px solid var(--color-border-subtle); margin-top: 44px; }
+    .proc-item { padding: 28px 22px; background: var(--color-bg-2); }
+    .proc-step { font-family: var(--font-serif); font-size: 2rem; font-weight: 300; color: rgba(201,168,76,.18); line-height: 1; margin-bottom: 12px; }
+    .proc-title { font-size: 0.88rem; font-weight: 700; color: var(--color-white); margin-bottom: 8px; }
+    .proc-desc { font-size: 0.78rem; color: var(--color-text-2); line-height: 1.75; }
+    @media (max-width: 768px) { .svc-detail-intro { grid-template-columns: 1fr; gap: 32px; } .process-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .process-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="images/logo.svg" alt="ITS" class="nav__logo-img" width="36" height="36"><span class="nav__logo-text">ITS合同会社</span></a>
+      <nav class="nav__menu">
+        <a href="services.html" class="nav__link" style="color:var(--color-white)">サービス</a>
+        <a href="works.html"    class="nav__link">実績</a>
+        <a href="company.html"  class="nav__link">会社概要</a>
+        <a href="faq.html"      class="nav__link">よくある質問</a>
+      </nav>
+      <a href="contact.html" class="nav__cta">お問い合わせ</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="nav__drawer" id="nav-drawer" aria-hidden="true">
+    <nav>
+      <a href="index.html"    class="nav__drawer-link">ホーム</a>
+      <a href="services.html" class="nav__drawer-link">サービス</a>
+      <a href="works.html"    class="nav__drawer-link">実績</a>
+      <a href="company.html"  class="nav__drawer-link">会社概要</a>
+      <a href="faq.html"      class="nav__drawer-link">よくある質問</a>
+      <a href="contact.html"  class="nav__drawer-link nav__drawer-link--cta">お問い合わせ</a>
+    </nav>
+  </div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a><span class="breadcrumb__sep">/</span>
+          <a href="services.html">サービス</a><span class="breadcrumb__sep">/</span>
+          <span>ITコンサルティング</span>
+        </div>
+        <span class="page-hero__label">IT Consulting</span>
+        <h1 class="page-hero__title">ITコンサルティング</h1>
+        <p class="page-hero__desc">事業・業務課題に対し、ITをどう活用すべきかを整理。導入方針から改善施策まで、実務で使えるレベルまで具体化します。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="svc-detail-intro">
+          <div class="svc-detail-img">
+            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=720&auto=format&q=75" alt="ITコンサルティング" loading="lazy">
+          </div>
+          <div class="js-fade">
+            <span class="section-label">Overview</span>
+            <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.2rem);">「何をすべきか」から<br>一緒に整理します。</h2>
+            <p style="font-size:0.9rem; color:var(--color-text-2); line-height:1.88; margin-bottom:16px;">
+              ITを導入すべきかどうか迷っている段階から、既存システムの改善まで幅広く対応。技術的な視点だけでなく、事業・営業・現場の視点を統合して、本当に意味のある施策を提案します。
+            </p>
+            <ul class="check-list">
+              <li>現状の業務課題・IT活用状況の整理</li>
+              <li>IT導入ロードマップの策定</li>
+              <li>ツール・システム選定の支援</li>
+              <li>DX推進・業務効率化の施策立案</li>
+              <li>具体的な実行支援・伴走サポート</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="js-fade">
+          <div class="section-header" style="text-align:left; margin-bottom:0;">
+            <span class="section-label">Process</span>
+            <h3 class="section-title" style="font-size:clamp(1.4rem,2.5vw,2rem);">支援の流れ</h3>
+          </div>
+          <div class="process-grid">
+            <div class="proc-item">
+              <p class="proc-step">01</p>
+              <p class="proc-title">現状分析</p>
+              <p class="proc-desc">業務フロー・課題・現在のIT活用状況をヒアリングし、問題の本質を整理します。</p>
+            </div>
+            <div class="proc-item">
+              <p class="proc-step">02</p>
+              <p class="proc-title">方針策定</p>
+              <p class="proc-desc">優先順位・コスト・スケジュールを考慮したIT活用方針・ロードマップを提示します。</p>
+            </div>
+            <div class="proc-item">
+              <p class="proc-step">03</p>
+              <p class="proc-title">施策実行支援</p>
+              <p class="proc-desc">ツール選定・ベンダー調整・社内展開など、実行フェーズも伴走してサポートします。</p>
+            </div>
+            <div class="proc-item">
+              <p class="proc-step">04</p>
+              <p class="proc-title">効果検証・改善</p>
+              <p class="proc-desc">施策の効果を測定し、次のアクションへつなげる改善サイクルを構築します。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-section__bg-word">CONTACT</div>
+      <div class="cta-section__inner">
+        <h2 class="cta-section__title js-fade">何から始めればよいか、<br>一緒に整理しましょう。</h2>
+        <p class="cta-section__desc js-fade delay-1">課題が明確でない段階でも歓迎です。</p>
+        <div class="cta-section__actions js-fade delay-2">
+          <a href="contact.html" class="btn btn--primary">無料相談はこちら</a>
+          <a href="works.html"   class="btn btn--outline">実績を見る</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div><div class="footer__brand-logo"><img src="images/logo.svg" alt="ITS" class="footer__brand-img" width="30" height="30"><span class="footer__brand-sub">ITS合同会社</span></div><p class="footer__tagline">STARS YOUR TECHNOLOGY</p><p class="footer__desc">テクノロジーの力でビジネスの可能性を広げ、企業と人の成長を支援します。</p></div>
+        <div><p class="footer__col-title">Service</p><ul class="footer__links"><li><a href="service-development.html">システム受託開発</a></li><li><a href="service-consulting.html">ITコンサルティング</a></li><li><a href="service-web.html">Web制作 / LP制作</a></li></ul></div>
+        <div><p class="footer__col-title">Company</p><ul class="footer__links"><li><a href="company.html">会社概要</a></li><li><a href="works.html">実績紹介</a></li><li><a href="faq.html">よくある質問</a></li><li><a href="privacy.html">プライバシーポリシー</a></li></ul></div>
+        <div><p class="footer__col-title">Contact</p><div class="footer__contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><a href="mailto:info@its-tokyo.com">info@its-tokyo.com</a></div><a href="contact.html" class="btn--gold-outline" style="margin-top:16px;font-size:.74rem;padding:9px 18px;">お問い合わせ</a></div>
+      </div>
+      <div class="footer__bottom"><p class="footer__copy">&copy; 2024 ITS合同会社. All Rights Reserved.</p><div class="footer__bottom-links"><a href="privacy.html">プライバシーポリシー</a><a href="contact.html">お問い合わせ</a></div></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

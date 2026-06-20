@@ -184,23 +184,21 @@
   display: inline-block;
 }
 
-/* Hoku SVG */
-.hoku-svg {
-  width: 270px;
-  height: 308px;
+/* Hoku キャラクター画像 */
+.hoku-img {
+  width: 300px;
+  height: 300px;
   display: block;
-  filter:
-    drop-shadow(0 24px 44px rgba(255, 213, 0, 0.30))
-    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.07));
+  mix-blend-mode: multiply;
   animation: hokuFloat 3.4s ease-in-out infinite;
   cursor: pointer;
-  transition: filter 0.35s ease;
+  transition: transform 0.4s var(--ease-out), filter 0.4s ease;
+  filter: drop-shadow(0 20px 40px rgba(230, 180, 0, 0.28)) drop-shadow(0 6px 14px rgba(0,0,0,0.05));
 }
 
-.hoku-svg:hover {
-  filter:
-    drop-shadow(0 32px 52px rgba(255, 213, 0, 0.48))
-    drop-shadow(0 12px 24px rgba(0, 0, 0, 0.10));
+.hoku-img:hover {
+  transform: scale(1.06) translateY(-6px);
+  filter: drop-shadow(0 32px 56px rgba(230, 180, 0, 0.44)) drop-shadow(0 10px 22px rgba(0,0,0,0.08));
 }
 
 /* Speech bubble */
@@ -344,47 +342,8 @@
 }
 
 /* --------------------------------------------------------------------------
-   Hoku: eye animations
+   Hoku: responsive sizing for PNG image
    -------------------------------------------------------------------------- */
-
-/* Both eyes blink simultaneously, right eye also winks alone */
-.hoku-eye-iris {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.hoku-eye-left .hoku-eye-iris {
-  animation: hokublink 8s ease-in-out infinite 0s;
-}
-
-.hoku-eye-right .hoku-eye-iris {
-  animation: hokublinkwink 8s ease-in-out infinite 0.07s;
-}
-
-@keyframes hokublink {
-  0%, 43%, 57%, 100% { transform: scaleY(1); }
-  50%                 { transform: scaleY(0.06); }
-}
-
-/* Shared blink at 50%, solo wink at 78% */
-@keyframes hokublinkwink {
-  0%, 43%, 57%, 74%, 84%, 100% { transform: scaleY(1); }
-  50%                           { transform: scaleY(0.06); }
-  79%                           { transform: scaleY(0.06); }
-}
-
-/* Hover: surprised expression */
-.hoku-mouth-open  { opacity: 0; transition: opacity 0.15s ease; }
-.hoku-mouth-smile { transition: opacity 0.15s ease; }
-
-.hoku-svg:hover .hoku-eye-iris {
-  animation: none;
-  transform: scale(1.2);
-  transition: transform 0.18s ease;
-}
-
-.hoku-svg:hover .hoku-mouth-smile { opacity: 0; }
-.hoku-svg:hover .hoku-mouth-open  { opacity: 1; }
 
 /* --------------------------------------------------------------------------
    Keyframes
@@ -435,7 +394,7 @@
    -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
   .hero__character { flex: 0 0 300px; min-height: 320px; }
-  .hoku-svg        { width: 220px; height: 251px; }
+  .hoku-img        { width: 220px; height: 220px; }
 }
 
 @media (max-width: 700px) {
@@ -447,7 +406,7 @@
   }
 
   .hero__character { flex: none; width: 100%; min-height: 240px; }
-  .hoku-svg        { width: 180px; height: 205px; }
+  .hoku-img        { width: 170px; height: 170px; }
   .hoku-bubble     { font-size: 0.75rem; padding: 8px 12px; }
   .hero__desc      { max-width: 100%; margin-inline: auto; }
   .hero__actions   { justify-content: center; }

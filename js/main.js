@@ -212,7 +212,6 @@
     initNavScroll();
     initHamburger();
     initScrollFade();
-    initParticles();
     initSmoothScroll();
     initForm();
   });

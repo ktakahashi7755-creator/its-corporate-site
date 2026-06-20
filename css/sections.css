@@ -259,14 +259,9 @@
   font-family: var(--font-serif);
   font-size: 2.6rem;
   font-weight: 300;
-  color: var(--color-primary-pale);
+  color: rgba(10, 132, 255, 0.12);
   line-height: 1;
   margin-bottom: 14px;
-}
-
-/* Correct number opacity for light bg */
-.svc-card__number {
-  color: rgba(10, 132, 255, 0.12);
 }
 
 .svc-card__icon {
@@ -1337,11 +1332,18 @@
   color: white;
 }
 
+/* Form: validation error state */
+.form-input.is-error,
+.form-textarea.is-error {
+  border-color: #FF3B30;
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.12);
+  outline: none;
+}
+
 /* Form submit success state */
-.form-submit[type="submit"].is-sent,
 [type="submit"].is-sent {
-  background: #34C759;
-  border-color: #34C759;
+  background: #34C759 !important;
+  border-color: #34C759 !important;
   cursor: default;
   opacity: 0.85;
 }

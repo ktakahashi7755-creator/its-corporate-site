@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>要件定義書 — ITS合同会社 コーポレートサイト</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-primary: #0A84FF;
+      --c-dark:    #050A14;
+      --c-text:    #1C1C1E;
+      --c-text2:   #6C6C70;
+      --c-border:  #E5E7EB;
+      --c-bg:      #FAFAFA;
+      --c-row:     #F4F8FF;
+      --font-sans: 'Noto Sans JP', sans-serif;
+      --font-en:   'Poppins', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--c-text);
+      background: var(--c-bg);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    /* ── Cover ── */
+    .cover {
+      background: var(--c-dark);
+      color: #fff;
+      padding: 80px 60px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(10,132,255,.3) 0%, transparent 70%);
+    }
+    .cover__tag {
+      font-family: var(--font-en);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--c-primary);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cover__tag::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--c-primary); }
+    .cover__company { font-size: 13px; color: rgba(255,255,255,.5); margin-bottom: 8px; }
+    .cover__title {
+      font-family: var(--font-en);
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .cover__title span { color: var(--c-primary); }
+    .cover__subtitle { font-size: 18px; color: rgba(255,255,255,.8); margin-bottom: 48px; font-weight: 300; }
+    .cover__meta {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: 32px 48px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding-top: 32px;
+    }
+    .cover__meta-item dt { font-size: 10px; letter-spacing: 0.15em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 4px; }
+    .cover__meta-item dd { font-size: 14px; color: rgba(255,255,255,.85); }
+
+    /* ── Layout ── */
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: #fff;
+      border-right: 1px solid var(--c-border);
+      padding: 32px 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar__title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-text2);
+      padding: 0 20px 16px;
+      border-bottom: 1px solid var(--c-border);
+      margin-bottom: 12px;
+    }
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      font-size: 12.5px;
+      color: var(--c-text2);
+      text-decoration: none;
+      transition: all .2s;
+      border-left: 2px solid transparent;
+    }
+    .sidebar a:hover { color: var(--c-primary); background: var(--c-row); }
+    .sidebar a.active { color: var(--c-primary); border-left-color: var(--c-primary); background: var(--c-row); font-weight: 500; }
+    .sidebar__num { font-family: var(--font-en); font-size: 10px; color: var(--c-primary); font-weight: 600; min-width: 20px; }
+
+    .content { flex: 1; padding: 48px 56px; max-width: 900px; }
+
+    /* ── Sections ── */
+    .section { margin-bottom: 64px; }
+    .section__num {
+      font-family: var(--font-en);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--c-primary);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .section__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--c-dark);
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--c-primary);
+    }
+    h3 { font-size: 16px; font-weight: 700; color: var(--c-dark); margin: 28px 0 12px; }
+    h4 { font-size: 13px; font-weight: 700; color: var(--c-text2); margin: 20px 0 8px; letter-spacing: 0.05em; }
+    p  { margin-bottom: 12px; line-height: 1.85; }
+
+    /* ── Tables ── */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0 24px; }
+    th {
+      background: var(--c-dark);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 11.5px;
+      letter-spacing: 0.05em;
+    }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--c-border); vertical-align: top; }
+    tr:nth-child(even) td { background: var(--c-row); }
+
+    /* ── Priority & Status Tags ── */
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-en);
+    }
+    .tag--high    { background: #FFE5E5; color: #D92D20; }
+    .tag--med     { background: #FFF3CD; color: #B45309; }
+    .tag--low     { background: #E0F2FE; color: #0369A1; }
+    .tag--must    { background: #FEE2E2; color: #991B1B; }
+    .tag--should  { background: #FEF3C7; color: #92400E; }
+    .tag--could   { background: #D1FAE5; color: #065F46; }
+
+    /* ── Info Boxes ── */
+    .info-box {
+      background: #EBF4FF;
+      border-left: 3px solid var(--c-primary);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .warn-box {
+      background: #FFFBEB;
+      border-left: 3px solid #F59E0B;
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+
+    /* ── Lists ── */
+    ul.doc-list { padding-left: 0; list-style: none; }
+    ul.doc-list li {
+      padding: 6px 0 6px 22px;
+      position: relative;
+      border-bottom: 1px solid var(--c-border);
+      font-size: 13.5px;
+    }
+    ul.doc-list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--c-primary);
+    }
+    ol.doc-list { padding-left: 0; list-style: none; counter-reset: ol-count; }
+    ol.doc-list li {
+      counter-increment: ol-count;
+      padding: 8px 0 8px 36px;
+      position: relative;
+      border-bottom: 1px solid var(--c-border);
+      font-size: 13.5px;
+    }
+    ol.doc-list li::before {
+      content: counter(ol-count);
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 24px; height: 24px;
+      background: var(--c-primary);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-en);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Metric Grid ── */
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .metric-card {
+      background: #fff;
+      border: 1px solid var(--c-border);
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+    }
+    .metric-card__val {
+      font-family: var(--font-en);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--c-primary);
+    }
+    .metric-card__label { font-size: 11.5px; color: var(--c-text2); margin-top: 4px; }
+
+    /* ── Footer ── */
+    .doc-footer {
+      margin-top: 80px;
+      padding: 24px 0;
+      border-top: 1px solid var(--c-border);
+      font-size: 11.5px;
+      color: var(--c-text2);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .content { padding: 32px 24px; }
+      .cover   { padding: 48px 24px 40px; }
+      .cover__meta { grid-template-columns: 1fr 1fr; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cover Page -->
+<div class="cover">
+  <div class="cover__tag">Document — Version 1.0</div>
+  <div class="cover__company">ITS合同会社 — コーポレートサイト</div>
+  <h1 class="cover__title">要件定義書<br><span>Requirements Definition</span></h1>
+  <p class="cover__subtitle">世界最高峰コーポレートサイト 全要件仕様</p>
+  <dl class="cover__meta">
+    <div class="cover__meta-item"><dt>作成日</dt><dd>2026年06月20日</dd></div>
+    <div class="cover__meta-item"><dt>バージョン</dt><dd>v1.0.0</dd></div>
+    <div class="cover__meta-item"><dt>ステータス</dt><dd>Approved</dd></div>
+    <div class="cover__meta-item"><dt>作成者</dt><dd>高橋 賢弥 / ITS合同会社</dd></div>
+    <div class="cover__meta-item"><dt>承認者</dt><dd>高橋 賢弥（代表）</dd></div>
+    <div class="cover__meta-item"><dt>参照</dt><dd>ポケモン株式会社 公式サイト</dd></div>
+  </dl>
+</div>
+
+<div class="layout">
+
+  <!-- Sidebar TOC -->
+  <nav class="sidebar">
+    <div class="sidebar__title">目次</div>
+    <a href="#sec1"><span class="sidebar__num">01</span>文書概要</a>
+    <a href="#sec2"><span class="sidebar__num">02</span>背景と目的</a>
+    <a href="#sec3"><span class="sidebar__num">03</span>ターゲットユーザー</a>
+    <a href="#sec4"><span class="sidebar__num">04</span>機能要件</a>
+    <a href="#sec5"><span class="sidebar__num">05</span>非機能要件</a>
+    <a href="#sec6"><span class="sidebar__num">06</span>デザイン品質基準</a>
+    <a href="#sec7"><span class="sidebar__num">07</span>アニメーション要件</a>
+    <a href="#sec8"><span class="sidebar__num">08</span>SEO・技術要件</a>
+    <a href="#sec9"><span class="sidebar__num">09</span>制約条件</a>
+    <a href="#sec10"><span class="sidebar__num">10</span>成果物一覧</a>
+  </nav>
+
+  <main class="content">
+
+    <!-- 1. 文書概要 -->
+    <section class="section" id="sec1">
+      <div class="section__num">Section 01</div>
+      <h2 class="section__title">文書概要</h2>
+      <p>本書は、ITS合同会社のコーポレートサイトを「世界最高峰・プロフェッショナルレベル」に刷新・構築するにあたり、全要件を定義する文書である。ポケモン株式会社の公式コーポレートサイト（<code>corporate.pokemon.co.jp</code>）を世界水準の日本語コーポレートサイトの参照モデルとして採用し、そのデザインクオリティ・UX設計・アニメーション手法を本サイトに応用することを目的とする。</p>
+      <div class="info-box">
+        <strong>本書の読み方：</strong>本要件定義書は「基本設計書（02）」「詳細設計書（03）」と一体で運用される三層構造の設計ドキュメントシリーズ第一弾である。WHY（なぜ作るか）を定義する。
+      </div>
+      <table>
+        <tr><th>項目</th><th>内容</th></tr>
+        <tr><td>文書名</td><td>ITS合同会社 コーポレートサイト 要件定義書</td></tr>
+        <tr><td>対象サイト</td><td>ktakahashi7755-creator.github.io/its-corporate-site/</td></tr>
+        <tr><td>技術スタック</td><td>Pure HTML / CSS / Vanilla JS (フレームワーク不使用)</td></tr>
+        <tr><td>配信方式</td><td>GitHub Pages (静的サイト)</td></tr>
+        <tr><td>参照モデル</td><td>ポケモン株式会社コーポレートサイト / Recruit / Sony Corporate</td></tr>
+      </table>
+    </section>
+
+    <!-- 2. 背景と目的 -->
+    <section class="section" id="sec2">
+      <div class="section__num">Section 02</div>
+      <h2 class="section__title">背景と目的</h2>
+
+      <h3>2.1 プロジェクト背景</h3>
+      <p>ITS合同会社は、システム受託開発・ITコンサルティング・Web制作・デザイン制作の4事業を展開するIT企業である。現在のコーポレートサイトは基本的な情報提供機能を有するが、以下の課題が存在する：</p>
+      <ul class="doc-list">
+        <li>BtoBクライアントへの「信頼感」「技術力」「プロ意識」の訴求が不十分</li>
+        <li>アニメーション・インタラクションが他社競合サイトと比較して劣位</li>
+        <li>採用・PR観点でのブランドイメージ形成が弱い</li>
+        <li>自社プロダクト「Familink」の魅力が十分に伝わっていない</li>
+      </ul>
+
+      <h3>2.2 目的</h3>
+      <ol class="doc-list">
+        <li><strong>ブランド格上げ：</strong>訪問者が「この会社は信頼できる」と即座に感じるビジュアルクオリティを実現</li>
+        <li><strong>商談獲得率向上：</strong>お問い合わせCTAへの導線を最適化し、コンバージョン率を改善</li>
+        <li><strong>採用ブランディング：</strong>優秀なエンジニア・デザイナーが「ここで働きたい」と感じるサイト設計</li>
+        <li><strong>SEO強化：</strong>競合キーワードでの検索露出向上</li>
+        <li><strong>プロダクトPR：</strong>Familinkの魅力・差別化ポイントを視覚的・動的に伝える</li>
+      </ol>
+
+      <h3>2.3 KPI（成功指標）</h3>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-card__val">90+</div>
+          <div class="metric-card__label">Lighthouse スコア<br>(Performance)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-card__val">2.5s</div>
+          <div class="metric-card__label">LCP 目標値<br>(Largest Contentful Paint)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-card__val">0.1</div>
+          <div class="metric-card__label">CLS 目標値<br>(Cumulative Layout Shift)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ターゲットユーザー -->
+    <section class="section" id="sec3">
+      <div class="section__num">Section 03</div>
+      <h2 class="section__title">ターゲットユーザー定義</h2>
+      <table>
+        <tr><th>優先度</th><th>ペルソナ</th><th>属性</th><th>ニーズ</th><th>重視ポイント</th></tr>
+        <tr>
+          <td><span class="tag tag--high">最優先</span></td>
+          <td>企業の意思決定者</td>
+          <td>中小〜中堅企業の経営者・役員・DX担当 (30〜50代)</td>
+          <td>信頼できるITパートナー探し</td>
+          <td>実績・専門性・レスポンスの速さ</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag--high">最優先</span></td>
+          <td>マーケティング担当者</td>
+          <td>Web制作・LP・バナー発注担当 (20〜40代)</td>
+          <td>クオリティの高いクリエイティブ</td>
+          <td>ポートフォリオ・デザイン品質・価格感</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag--med">重要</span></td>
+          <td>就職希望エンジニア</td>
+          <td>新卒〜3年目のWeb/Appエンジニア</td>
+          <td>成長できる環境・自社プロダクト開発</td>
+          <td>技術スタック・カルチャー・ビジョン</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag--med">重要</span></td>
+          <td>個人ユーザー (Familink)</td>
+          <td>子育て世代の親 (25〜40代)</td>
+          <td>家族向けアプリの信頼性確認</td>
+          <td>UIの使いやすさ・安全性・機能説明</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag--low">参考</span></td>
+          <td>パートナー企業</td>
+          <td>協力会社・外注先候補</td>
+          <td>会社の規模感・信頼性確認</td>
+          <td>会社概要・代表情報・資本金</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- 4. 機能要件 -->
+    <section class="section" id="sec4">
+      <div class="section__num">Section 04</div>
+      <h2 class="section__title">機能要件</h2>
+      <table>
+        <tr><th>ID</th><th>機能名</th><th>詳細</th><th>優先度</th></tr>
+        <tr><td>F-001</td><td>ナビゲーション</td><td>スティッキーヘッダー、スクロール検知で背景白転換、モバイルハンバーガーメニュー（ドロワー式）</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>F-002</td><td>ヒーローセクション</td><td>全幅ダークグラデーション、キャンバスパーティクル、CTA2ボタン、サービスチップリンク</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>F-003</td><td>スクロール連動アニメーション</td><td>IntersectionObserver によるフェードイン・スタガー、スクロール進行バー</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>F-004</td><td>サービス紹介（4種）</td><td>カード形式、各サービス詳細ページへのリンク、ホバー効果</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>F-005</td><td>サービス詳細ページ</td><td>4サービス別詳細（features、tech stack、process、CTA）スティッキー内部ナビ</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>F-006</td><td>Familink紹介ページ</td><td>プロダクト概要、CSSアプリデモ、ストーリー、料金表</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>F-007</td><td>会社概要セクション</td><td>Mission/Vision/Value、設立情報テーブル、地図（住所）</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>F-008</td><td>お問い合わせフォーム</td><td>名前・メール・サービス種別・メッセージ、バリデーション、送信完了UI</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>F-009</td><td>カウンターアニメーション</td><td>スクロール時に数字が加算アニメーション（実績件数等）</td><td><span class="tag tag--should">SHOULD</span></td></tr>
+        <tr><td>F-010</td><td>カスタムカーソル</td><td>デスクトップのみ、ホバー状態で拡大するドットカーソル</td><td><span class="tag tag--should">SHOULD</span></td></tr>
+        <tr><td>F-011</td><td>ページロードカーテン</td><td>初回表示時のスライドアップアニメーション（0.8s）</td><td><span class="tag tag--should">SHOULD</span></td></tr>
+        <tr><td>F-012</td><td>テキストリビール</td><td>見出しがclip-path+translateYでラインごとに現れる</td><td><span class="tag tag--should">SHOULD</span></td></tr>
+        <tr><td>F-013</td><td>マグネティックCTA</td><td>ボタンにマウスが近づくと引き寄せられる効果</td><td><span class="tag tag--could">COULD</span></td></tr>
+        <tr><td>F-014</td><td>マーキー (テキスト流れ)</td><td>テクノロジーキーワードが左右スクロールするデコレーション</td><td><span class="tag tag--could">COULD</span></td></tr>
+        <tr><td>F-015</td><td>3Dカードティルト</td><td>マウス追従でカードが3D回転するホバー効果</td><td><span class="tag tag--could">COULD</span></td></tr>
+      </table>
+    </section>
+
+    <!-- 5. 非機能要件 -->
+    <section class="section" id="sec5">
+      <div class="section__num">Section 05</div>
+      <h2 class="section__title">非機能要件</h2>
+
+      <h3>5.1 パフォーマンス要件</h3>
+      <table>
+        <tr><th>指標</th><th>目標値</th><th>測定方法</th></tr>
+        <tr><td>LCP (Largest Contentful Paint)</td><td>≤ 2.5秒</td><td>Google PageSpeed Insights</td></tr>
+        <tr><td>FID / INP (Interaction to Next Paint)</td><td>≤ 200ms</td><td>Chrome DevTools</td></tr>
+        <tr><td>CLS (Cumulative Layout Shift)</td><td>≤ 0.1</td><td>Web Vitals Extension</td></tr>
+        <tr><td>Lighthouse Performance</td><td>≥ 90</td><td>Lighthouse CLI</td></tr>
+        <tr><td>Total Page Weight</td><td>≤ 1.5MB (初回ロード)</td><td>Network Tab</td></tr>
+        <tr><td>CSS/JS (合計非圧縮)</td><td>≤ 300KB</td><td>ファイルサイズ計測</td></tr>
+      </table>
+
+      <h3>5.2 ブラウザ対応要件</h3>
+      <table>
+        <tr><th>ブラウザ</th><th>対応バージョン</th><th>動作保証レベル</th></tr>
+        <tr><td>Google Chrome</td><td>最新2バージョン</td><td>完全動作</td></tr>
+        <tr><td>Safari (macOS/iOS)</td><td>最新2バージョン</td><td>完全動作</td></tr>
+        <tr><td>Firefox</td><td>最新2バージョン</td><td>完全動作</td></tr>
+        <tr><td>Microsoft Edge</td><td>最新2バージョン</td><td>完全動作</td></tr>
+        <tr><td>Chrome Android</td><td>最新2バージョン</td><td>完全動作</td></tr>
+        <tr><td>IE 11</td><td>対象外</td><td>非対応</td></tr>
+      </table>
+
+      <h3>5.3 アクセシビリティ要件</h3>
+      <ul class="doc-list">
+        <li>WCAG 2.1 Level AA 準拠（コントラスト比 4.5:1 以上）</li>
+        <li>全インタラクティブ要素にキーボード操作対応 (Tab / Enter / Space)</li>
+        <li>スクリーンリーダー対応 (aria-label, role, alt テキスト)</li>
+        <li><code>prefers-reduced-motion</code> メディアクエリ対応（アニメーション無効化）</li>
+        <li>フォーカスリングの視認性確保</li>
+      </ul>
+
+      <h3>5.4 レスポンシブ設計ブレークポイント</h3>
+      <table>
+        <tr><th>ブレークポイント</th><th>対象デバイス</th><th>コンテナ幅</th></tr>
+        <tr><td>&lt; 480px</td><td>スマートフォン（縦）</td><td>100% - 32px padding</td></tr>
+        <tr><td>480〜768px</td><td>スマートフォン（横）/ 小型タブレット</td><td>100% - 40px padding</td></tr>
+        <tr><td>768〜1024px</td><td>タブレット</td><td>100% - 48px padding</td></tr>
+        <tr><td>1024〜1280px</td><td>小型デスクトップ</td><td>最大 1200px</td></tr>
+        <tr><td>&gt; 1280px</td><td>標準デスクトップ</td><td>最大 1200px</td></tr>
+      </table>
+    </section>
+
+    <!-- 6. デザイン品質基準 -->
+    <section class="section" id="sec6">
+      <div class="section__num">Section 06</div>
+      <h2 class="section__title">デザイン品質基準</h2>
+      <div class="info-box">
+        参照モデル：ポケモン株式会社コーポレートサイト、Recruit Holdings、Sony Group Portal、Apple Japan — いずれも「余白・タイポグラフィ・動き」の三位一体を体現するプレミアムサイト群。
+      </div>
+
+      <h3>6.1 カラーシステム</h3>
+      <table>
+        <tr><th>役割</th><th>カラーコード</th><th>用途</th></tr>
+        <tr><td>Primary Blue</td><td>#0A84FF</td><td>CTA、アクセント、リンク色</td></tr>
+        <tr><td>Dark Background</td><td>#050A14</td><td>ヒーロー、フッター背景</td></tr>
+        <tr><td>Gold Accent</td><td>#C9A84C</td><td>プレミアム感の演出（ルール、バッジ）</td></tr>
+        <tr><td>Text Primary</td><td>#1C1C1E</td><td>本文メインテキスト</td></tr>
+        <tr><td>Text Secondary</td><td>#6C6C70</td><td>補足テキスト、ラベル</td></tr>
+        <tr><td>BG White</td><td>#FFFFFF</td><td>カード、セクション背景</td></tr>
+        <tr><td>BG Alt</td><td>#F0F8FF</td><td>交互セクション背景</td></tr>
+      </table>
+
+      <h3>6.2 タイポグラフィ階層</h3>
+      <table>
+        <tr><th>レベル</th><th>用途</th><th>フォント</th><th>サイズ</th><th>ウェイト</th></tr>
+        <tr><td>Display</td><td>ヒーロー見出し</td><td>Cormorant Garamond</td><td>clamp(42px, 7vw, 72px)</td><td>300</td></tr>
+        <tr><td>H1</td><td>ページ主見出し</td><td>Noto Sans JP</td><td>clamp(32px, 5vw, 52px)</td><td>700</td></tr>
+        <tr><td>H2</td><td>セクション見出し</td><td>Noto Sans JP</td><td>clamp(22px, 3vw, 32px)</td><td>700</td></tr>
+        <tr><td>H3</td><td>小見出し</td><td>Noto Sans JP</td><td>18〜20px</td><td>700</td></tr>
+        <tr><td>Body</td><td>本文</td><td>Noto Sans JP</td><td>15〜16px</td><td>400</td></tr>
+        <tr><td>Caption</td><td>ラベル・注釈</td><td>Poppins / Noto Sans JP</td><td>11〜13px</td><td>600</td></tr>
+      </table>
+    </section>
+
+    <!-- 7. アニメーション要件 -->
+    <section class="section" id="sec7">
+      <div class="section__num">Section 07</div>
+      <h2 class="section__title">アニメーション・インタラクション要件</h2>
+
+      <div class="warn-box">
+        <strong>方針：</strong>「動きで驚かせる」のではなく「動きで自然に誘導する」。ポケモン社サイトに見られる「控えめだが確実に感じられる動き」を基本哲学とする。
+      </div>
+
+      <h3>7.1 スクロール連動アニメーション</h3>
+      <table>
+        <tr><th>アニメーション名</th><th>実装方式</th><th>対象要素</th><th>パラメータ</th></tr>
+        <tr><td>フェードアップ</td><td>IntersectionObserver + CSS transition</td><td>全セクション要素</td><td>delay: 0〜400ms stagger, duration: 650ms</td></tr>
+        <tr><td>テキストリビール</td><td>clip-path: inset(0 0 100% 0) → 0%</td><td>セクション主見出し</td><td>line-by-line, 100ms stagger</td></tr>
+        <tr><td>スタガー</td><td>setTimeout stagger via IntersectionObserver</td><td>カードグリッド</td><td>130ms間隔</td></tr>
+        <tr><td>カウンター</td><td>requestAnimationFrame + ease-out cubic</td><td>統計数字</td><td>duration: 2000ms</td></tr>
+        <tr><td>ラインリビール</td><td>width: 0 → 48px (after疑似要素)</td><td>セクション装飾ライン</td><td>duration: 900ms, delay: 200ms</td></tr>
+        <tr><td>視差スクロール</td><td>scroll event + translateY</td><td>ヒーロー背景ブロブ</td><td>speed: 0.25</td></tr>
+      </table>
+
+      <h3>7.2 インタラクションアニメーション</h3>
+      <table>
+        <tr><th>アニメーション名</th><th>トリガー</th><th>対象</th><th>効果</th></tr>
+        <tr><td>マグネティックCTA</td><td>mousemove</td><td>.js-magnetic ボタン</td><td>カーソル方向に最大28%移動</td></tr>
+        <tr><td>カード3Dティルト</td><td>mousemove</td><td>.js-tilt カード</td><td>perspective 800px, 最大5度回転</td></tr>
+        <tr><td>カスタムカーソル</td><td>mousemove (rAF)</td><td>全ページ</td><td>12px dot → 36px ring on hover</td></tr>
+        <tr><td>ホバー下線</td><td>hover</td><td>テキストリンク</td><td>scaleX(0→1) slide-in underline</td></tr>
+        <tr><td>ナビ白転換</td><td>scroll > 60px</td><td>#nav</td><td>background: transparent → white + shadow</td></tr>
+        <tr><td>ナビアクティブ</td><td>scroll position</td><td>.nav__link</td><td>現在セクションのリンクに is-active</td></tr>
+      </table>
+
+      <h3>7.3 イージング定義</h3>
+      <table>
+        <tr><th>名称</th><th>値</th><th>用途</th></tr>
+        <tr><td>--ease-out</td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>標準（入場アニメーション全般）</td></tr>
+        <tr><td>--ease-snap</td><td>cubic-bezier(0.76, 0, 0.24, 1)</td><td>ページロードカーテン</td></tr>
+        <tr><td>Linear</td><td>linear</td><td>スクロール進行バー</td></tr>
+        <tr><td>Ease In-Out</td><td>ease-in-out</td><td>ループアニメーション（blob等）</td></tr>
+      </table>
+    </section>
+
+    <!-- 8. SEO・技術要件 -->
+    <section class="section" id="sec8">
+      <div class="section__num">Section 08</div>
+      <h2 class="section__title">SEO・技術要件</h2>
+      <table>
+        <tr><th>要件</th><th>実装内容</th><th>優先度</th></tr>
+        <tr><td>メタタグ</td><td>title, description, OGP (og:title, og:description, og:url, og:image), Twitter Card</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>構造化データ</td><td>JSON-LD (Organization schema: name, url, logo, address, founder, hasOfferCatalog)</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>サイトマップ</td><td>sitemap.xml (全ページURL、lastmod、priority)</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>robots.txt</td><td>全クローラー許可、Sitemap URL指定</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>canonical URL</td><td>全ページに &lt;link rel="canonical"&gt;</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>キーワード</td><td>meta keywords（ターゲットキーワード含む）</td><td><span class="tag tag--should">SHOULD</span></td></tr>
+        <tr><td>画像最適化</td><td>alt属性必須、SVGアイコン優先、WebP推奨</td><td><span class="tag tag--must">MUST</span></td></tr>
+        <tr><td>フォントロード最適化</td><td>rel="preconnect" + Google Fonts display=swap</td><td><span class="tag tag--must">MUST</span></td></tr>
+      </table>
+    </section>
+
+    <!-- 9. 制約条件 -->
+    <section class="section" id="sec9">
+      <div class="section__num">Section 09</div>
+      <h2 class="section__title">制約条件</h2>
+      <table>
+        <tr><th>種別</th><th>制約事項</th></tr>
+        <tr><td>技術制約</td><td>Pure HTML / CSS / Vanilla JS のみ。React/Vue/TypeScript 等のフレームワーク・バンドラー不使用</td></tr>
+        <tr><td>ホスティング制約</td><td>GitHub Pages (静的ファイルのみ。サーバーサイド処理不可)</td></tr>
+        <tr><td>フォーム制約</td><td>フォームバックエンドなし（送信完了UI のみ、実メール送信は将来検討）</td></tr>
+        <tr><td>画像制約</td><td>著作権フリーまたは自社所有画像のみ使用可能</td></tr>
+        <tr><td>ライセンス制約</td><td>OSSライブラリ使用の場合はライセンス確認必須（CDN経由可）</td></tr>
+        <tr><td>ブランド制約</td><td>カラーパレット・ロゴは ITS 社規定に従う</td></tr>
+        <tr><td>パフォーマンス制約</td><td>アニメーション追加後も Lighthouse Performance ≥ 85 を維持</td></tr>
+      </table>
+    </section>
+
+    <!-- 10. 成果物一覧 -->
+    <section class="section" id="sec10">
+      <div class="section__num">Section 10</div>
+      <h2 class="section__title">成果物一覧</h2>
+      <table>
+        <tr><th>No.</th><th>成果物</th><th>ファイル</th><th>ステータス</th></tr>
+        <tr><td>1</td><td>トップページ</td><td>index.html</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>2</td><td>サービス詳細ページ</td><td>services.html</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>3</td><td>Familinkプロダクトページ</td><td>familink.html</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>4</td><td>プライバシーポリシー</td><td>privacy.html</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>5</td><td>利用規約</td><td>terms.html</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>6</td><td>デザイントークン CSS</td><td>css/style.css</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>7</td><td>アニメーション CSS</td><td>css/animations.css</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>8</td><td>アニメーション JS</td><td>js/animations.js</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>9</td><td>要件定義書</td><td>docs/01-requirements.html</td><td><span class="tag tag--should">本書</span></td></tr>
+        <tr><td>10</td><td>基本設計書</td><td>docs/02-basic-design.html</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>11</td><td>詳細設計書</td><td>docs/03-detailed-design.html</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>12</td><td>robots.txt</td><td>robots.txt</td><td><span class="tag tag--should">完成済</span></td></tr>
+        <tr><td>13</td><td>サイトマップ</td><td>sitemap.xml</td><td><span class="tag tag--should">完成済</span></td></tr>
+      </table>
+
+      <div class="doc-footer">
+        <span>ITS合同会社 — コーポレートサイト 要件定義書 v1.0.0</span>
+        <span>最終更新：2026年06月20日</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>

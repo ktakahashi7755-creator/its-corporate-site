@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>詳細設計書 — ITS合同会社 コーポレートサイト</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Poppins:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-primary: #0A84FF;
+      --c-dark:    #050A14;
+      --c-green:   #34C759;
+      --c-text:    #1C1C1E;
+      --c-text2:   #6C6C70;
+      --c-border:  #E5E7EB;
+      --c-bg:      #FAFAFA;
+      --c-row:     #F4F8FF;
+      --c-code-bg: #0D1117;
+      --font-sans: 'Noto Sans JP', sans-serif;
+      --font-en:   'Poppins', sans-serif;
+      --font-code: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--c-text); background: var(--c-bg); line-height: 1.8; font-size: 14px; }
+
+    .cover {
+      background: linear-gradient(135deg, #001A3A 0%, #050A14 50%, #0A1E0A 100%);
+      color: #fff; padding: 80px 60px 64px; position: relative; overflow: hidden;
+    }
+    .cover::after {
+      content: '03'; position: absolute; right: 40px; bottom: 20px;
+      font-family: var(--font-en); font-size: 180px; font-weight: 700;
+      color: rgba(255,255,255,.04); line-height: 1; pointer-events: none;
+    }
+    .cover__tag { font-family: var(--font-en); font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--c-green); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+    .cover__tag::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--c-green); }
+    .cover__title { font-family: var(--font-en); font-size: clamp(28px, 4vw, 46px); font-weight: 700; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+    .cover__title span { color: var(--c-green); }
+    .cover__subtitle { font-size: 18px; color: rgba(255,255,255,.8); margin-bottom: 48px; font-weight: 300; }
+    .cover__meta { display: grid; grid-template-columns: repeat(3, auto); gap: 32px 48px; border-top: 1px solid rgba(255,255,255,.12); padding-top: 32px; }
+    .cover__meta-item dt { font-size: 10px; letter-spacing: 0.15em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 4px; }
+    .cover__meta-item dd { font-size: 14px; color: rgba(255,255,255,.85); }
+
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar { width: 240px; flex-shrink: 0; background: #fff; border-right: 1px solid var(--c-border); padding: 32px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+    .sidebar__title { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-text2); padding: 0 20px 16px; border-bottom: 1px solid var(--c-border); margin-bottom: 12px; }
+    .sidebar a { display: flex; align-items: center; gap: 10px; padding: 8px 20px; font-size: 12.5px; color: var(--c-text2); text-decoration: none; transition: all .2s; border-left: 2px solid transparent; }
+    .sidebar a:hover { color: var(--c-green); background: #F0FFF4; }
+    .sidebar__num { font-family: var(--font-en); font-size: 10px; color: var(--c-green); font-weight: 600; min-width: 20px; }
+
+    .content { flex: 1; padding: 48px 56px; max-width: 980px; }
+    .section { margin-bottom: 64px; }
+    .section__num { font-family: var(--font-en); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: var(--c-green); text-transform: uppercase; margin-bottom: 6px; }
+    .section__title { font-size: 22px; font-weight: 700; color: var(--c-dark); margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--c-green); }
+    h3 { font-size: 16px; font-weight: 700; color: var(--c-dark); margin: 28px 0 12px; }
+    h4 { font-size: 13px; font-weight: 700; color: var(--c-text2); margin: 20px 0 8px; letter-spacing: 0.05em; }
+    p  { margin-bottom: 12px; line-height: 1.85; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0 24px; }
+    th { background: var(--c-dark); color: #fff; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11.5px; letter-spacing: 0.05em; }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--c-border); vertical-align: top; }
+    tr:nth-child(even) td { background: var(--c-row); }
+
+    /* ── Code Blocks ── */
+    .code-block {
+      background: var(--c-code-bg);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+      position: relative;
+    }
+    .code-block__label {
+      font-family: var(--font-en);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #58A6FF;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .code-block__label::before { content: ''; display: block; width: 8px; height: 8px; border-radius: 50%; background: #58A6FF; }
+    pre {
+      font-family: var(--font-code);
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #E6EDF3;
+      white-space: pre;
+    }
+    .kw  { color: #FF7B72; }  /* keywords */
+    .fn  { color: #D2A8FF; }  /* functions */
+    .st  { color: #A5D6FF; }  /* strings */
+    .cm  { color: #8B949E; }  /* comments */
+    .nu  { color: #79C0FF; }  /* numbers */
+    .pr  { color: #FFA657; }  /* property */
+    .va  { color: #E6EDF3; }  /* variable */
+    .cl  { color: #7EE787; }  /* class names */
+
+    .info-box { background: #F0FFF4; border-left: 3px solid var(--c-green); border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 16px 0; font-size: 13px; }
+    .warn-box  { background: #FFFBEB; border-left: 3px solid #F59E0B; border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 16px 0; font-size: 13px; }
+    .blue-box  { background: #EBF4FF; border-left: 3px solid var(--c-primary); border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 16px 0; font-size: 13px; }
+
+    ul.doc-list { padding-left: 0; list-style: none; }
+    ul.doc-list li { padding: 6px 0 6px 22px; position: relative; border-bottom: 1px solid var(--c-border); font-size: 13.5px; }
+    ul.doc-list li::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--c-green); }
+
+    /* ── Spec Card ── */
+    .spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
+    .spec-card { background: #fff; border: 1px solid var(--c-border); border-radius: 8px; padding: 16px 18px; }
+    .spec-card__name { font-weight: 700; font-size: 13px; color: var(--c-dark); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .spec-card__name::before { content: ''; display: block; width: 4px; height: 16px; background: var(--c-green); border-radius: 2px; }
+    .spec-card__prop { font-size: 12px; color: var(--c-text2); margin: 3px 0; }
+    .spec-card__prop strong { color: var(--c-text); font-size: 12px; }
+
+    /* ── Animation Spec ── */
+    .anim-spec { background: #fff; border: 1px solid var(--c-border); border-radius: 8px; overflow: hidden; margin: 12px 0; }
+    .anim-spec__header { padding: 12px 16px; background: var(--c-dark); display: flex; align-items: center; justify-content: space-between; }
+    .anim-spec__name { font-family: var(--font-en); font-size: 12px; font-weight: 600; color: #fff; }
+    .anim-spec__trigger { font-size: 10px; color: var(--c-green); font-weight: 600; letter-spacing: 0.1em; }
+    .anim-spec__body { padding: 14px 16px; font-size: 12.5px; }
+    .anim-spec__row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--c-border); }
+    .anim-spec__row:last-child { border-bottom: none; }
+    .anim-spec__key { color: var(--c-text2); }
+    .anim-spec__val { font-family: var(--font-code); font-size: 11.5px; color: var(--c-primary); }
+
+    /* ── Checklist ── */
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--c-border); font-size: 13px; }
+    .checklist li::before { content: '☐'; font-size: 16px; color: var(--c-text2); flex-shrink: 0; margin-top: -2px; }
+    .checklist li.done::before { content: '☑'; color: var(--c-green); }
+    .checklist li.warn::before { content: '⚠'; color: #F59E0B; }
+
+    code { font-family: var(--font-code); font-size: 12px; background: #F3F4F6; padding: 2px 6px; border-radius: 4px; color: var(--c-primary); }
+
+    .doc-footer { margin-top: 80px; padding: 24px 0; border-top: 1px solid var(--c-border); font-size: 11.5px; color: var(--c-text2); display: flex; justify-content: space-between; }
+    @media (max-width: 768px) { .sidebar { display: none; } .content { padding: 32px 24px; } .spec-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover__tag">Document — Version 1.0</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:8px;">ITS合同会社 — コーポレートサイト</div>
+  <h1 class="cover__title">詳細設計書<br><span>Detailed Design Document</span></h1>
+  <p class="cover__subtitle">コンポーネント仕様・CSS設計・アニメーション詳細・品質チェックリスト</p>
+  <dl class="cover__meta">
+    <div class="cover__meta-item"><dt>作成日</dt><dd>2026年06月20日</dd></div>
+    <div class="cover__meta-item"><dt>バージョン</dt><dd>v1.0.0</dd></div>
+    <div class="cover__meta-item"><dt>前提文書</dt><dd>基本設計書 v1.0.0</dd></div>
+    <div class="cover__meta-item"><dt>対象ブランチ</dt><dd>claude/its-corporate-site-WOQhD</dd></div>
+    <div class="cover__meta-item"><dt>実装ステータス</dt><dd>✅ 実装完了</dd></div>
+    <div class="cover__meta-item"><dt>次フェーズ</dt><dd>本番ドメイン設定・フォーム連携</dd></div>
+  </dl>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar__title">目次</div>
+    <a href="#sec1"><span class="sidebar__num">01</span>CSS設計詳細</a>
+    <a href="#sec2"><span class="sidebar__num">02</span>コンポーネント仕様</a>
+    <a href="#sec3"><span class="sidebar__num">03</span>アニメーション詳細</a>
+    <a href="#sec4"><span class="sidebar__num">04</span>JavaScript設計</a>
+    <a href="#sec5"><span class="sidebar__num">05</span>アクセシビリティ設計</a>
+    <a href="#sec6"><span class="sidebar__num">06</span>SEO詳細設計</a>
+    <a href="#sec7"><span class="sidebar__num">07</span>品質チェックリスト</a>
+    <a href="#sec8"><span class="sidebar__num">08</span>将来拡張計画</a>
+  </nav>
+
+  <main class="content">
+
+    <!-- 1. CSS設計詳細 -->
+    <section class="section" id="sec1">
+      <div class="section__num">Section 01</div>
+      <h2 class="section__title">CSS設計詳細</h2>
+
+      <h3>1.1 デザイントークン体系（css/style.css）</h3>
+      <p>全スタイルは <code>:root</code> で定義するカスタムプロパティ（デザイントークン）に基づく。トークンは「意味的長形式（--color-primary）」と「短縮エイリアス（--c-primary）」の二重定義を採用し、familink.html の既存コードとの後方互換性を保つ。</p>
+
+      <div class="code-block">
+        <div class="code-block__label">css/style.css — デザイントークン（抜粋）</div>
+        <pre><span class="cl">:root</span> {
+  <span class="cm">/* Primary Colors */</span>
+  <span class="pr">--color-primary</span>:      <span class="st">#0A84FF</span>;
+  <span class="pr">--color-primary-dk</span>:   <span class="st">#0060D8</span>;
+  <span class="pr">--grad-primary</span>: <span class="fn">linear-gradient</span>(<span class="nu">135</span>deg, <span class="st">#0A84FF</span> <span class="nu">0%</span>, <span class="st">#5AC8FA</span> <span class="nu">100%</span>);
+
+  <span class="cm">/* Motion */</span>
+  <span class="pr">--ease-out</span>:      <span class="fn">cubic-bezier</span>(<span class="nu">0.16</span>, <span class="nu">1</span>, <span class="nu">0.3</span>, <span class="nu">1</span>);
+  <span class="pr">--duration-fast</span>: <span class="nu">0.2</span><span class="kw">s</span>;
+  <span class="pr">--duration-base</span>: <span class="nu">0.35</span><span class="kw">s</span>;
+
+  <span class="cm">/* Shorthand aliases for familink.html */</span>
+  <span class="pr">--c-primary</span>:   <span class="st">#0A84FF</span>;
+  <span class="pr">--ease</span>:        <span class="fn">cubic-bezier</span>(<span class="nu">0.16</span>, <span class="nu">1</span>, <span class="nu">0.3</span>, <span class="nu">1</span>);
+}</pre>
+      </div>
+
+      <h3>1.2 Scroll Fade 基本アニメーション（css/style.css）</h3>
+      <div class="code-block">
+        <div class="code-block__label">スクロールフェードイン ベース</div>
+        <pre><span class="cl">.js-fade</span> {
+  <span class="pr">opacity</span>: <span class="nu">0</span>;
+  <span class="pr">transform</span>: <span class="fn">translateY</span>(<span class="nu">24px</span>);
+  <span class="pr">transition</span>: <span class="pr">opacity</span> <span class="nu">0.65s</span> <span class="fn">var</span>(<span class="pr">--ease-out</span>),
+              <span class="pr">transform</span> <span class="nu">0.65s</span> <span class="fn">var</span>(<span class="pr">--ease-out</span>);
+}
+<span class="cl">.js-fade.is-visible</span> { <span class="pr">opacity</span>: <span class="nu">1</span>; <span class="pr">transform</span>: <span class="kw">none</span>; }
+
+<span class="cm">/* Delay utilities */</span>
+<span class="cl">.delay-1</span> { <span class="pr">transition-delay</span>: <span class="nu">0.10s</span>; }
+<span class="cl">.delay-2</span> { <span class="pr">transition-delay</span>: <span class="nu">0.20s</span>; }
+<span class="cl">.delay-3</span> { <span class="pr">transition-delay</span>: <span class="nu">0.30s</span>; }
+<span class="cl">.delay-4</span> { <span class="pr">transition-delay</span>: <span class="nu">0.40s</span>; }</pre>
+      </div>
+
+      <h3>1.3 CSS読み込み順序とカスケード</h3>
+      <table>
+        <tr><th>順序</th><th>ファイル</th><th>スコープ</th></tr>
+        <tr><td>1</td><td>css/style.css</td><td>全ページ：トークン、リセット、ユーティリティ</td></tr>
+        <tr><td>2</td><td>css/nav.css</td><td>全ページ：ヘッダーナビ</td></tr>
+        <tr><td>3</td><td>css/hero.css</td><td>全ページ：ヒーロー・ボタンベース（services.htmlも読む）</td></tr>
+        <tr><td>4</td><td>css/sections.css</td><td>index.html：About/Services/Product/Company/Contact</td></tr>
+        <tr><td>5</td><td>css/services.css</td><td>services.htmlのみ：詳細ページ専用</td></tr>
+        <tr><td>6</td><td>css/animations.css</td><td>全ページ：アニメーションシステム（新規）</td></tr>
+        <tr><td>7</td><td>css/footer.css</td><td>全ページ：フッター</td></tr>
+      </table>
+    </section>
+
+    <!-- 2. コンポーネント仕様 -->
+    <section class="section" id="sec2">
+      <div class="section__num">Section 02</div>
+      <h2 class="section__title">コンポーネント仕様</h2>
+
+      <h3>2.1 ナビゲーション</h3>
+      <div class="spec-grid">
+        <div class="spec-card">
+          <div class="spec-card__name">Header Nav</div>
+          <div class="spec-card__prop"><strong>HTML:</strong> <code>&lt;header class="nav" id="nav"&gt;</code></div>
+          <div class="spec-card__prop"><strong>高さ:</strong> 72px (--nav-h)</div>
+          <div class="spec-card__prop"><strong>Position:</strong> fixed, top: 0, z-index: 1000</div>
+          <div class="spec-card__prop"><strong>初期 BG:</strong> transparent</div>
+          <div class="spec-card__prop"><strong>スクロール後:</strong> .is-scrolled → white + shadow</div>
+          <div class="spec-card__prop"><strong>Transition:</strong> background 0.35s, box-shadow 0.35s</div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-card__name">Hamburger Drawer</div>
+          <div class="spec-card__prop"><strong>Trigger:</strong> #hamburger button</div>
+          <div class="spec-card__prop"><strong>Drawer:</strong> #nav-drawer, position: fixed</div>
+          <div class="spec-card__prop"><strong>状態:</strong> .is-open でtranslateX(0)</div>
+          <div class="spec-card__prop"><strong>背景:</strong> rgba(0,0,0,.5) overlay</div>
+          <div class="spec-card__prop"><strong>閉じる:</strong> ドロワー内リンク click / 外側 tap</div>
+          <div class="spec-card__prop"><strong>Transition:</strong> transform 0.35s ease-out</div>
+        </div>
+      </div>
+
+      <h3>2.2 ヒーローセクション</h3>
+      <div class="code-block">
+        <div class="code-block__label">hero.css — ヒーロー構造</div>
+        <pre><span class="cl">.hero</span> {
+  <span class="pr">position</span>: relative;
+  <span class="pr">min-height</span>: <span class="nu">100svh</span>;
+  <span class="pr">background</span>: <span class="fn">linear-gradient</span>(<span class="nu">165deg</span>,
+    <span class="st">#050A14</span> <span class="nu">0%</span>, <span class="st">#0A1628</span> <span class="nu">60%</span>, <span class="st">#050A14</span> <span class="nu">100%</span>);
+  <span class="pr">overflow</span>: hidden;
+}
+
+<span class="cm">/* Canvas particle overlay */</span>
+<span class="cl">#hero-canvas</span> {
+  <span class="pr">position</span>: absolute;
+  <span class="pr">inset</span>: <span class="nu">0</span>;
+  <span class="pr">width</span>: <span class="nu">100%</span>;
+  <span class="pr">height</span>: <span class="nu">100%</span>;
+  <span class="pr">pointer-events</span>: none;
+}
+
+<span class="cm">/* Blob decorations */</span>
+<span class="cl">.hero__blob</span> {
+  <span class="pr">position</span>: absolute;
+  <span class="pr">border-radius</span>: <span class="nu">50%</span>;
+  <span class="pr">filter</span>: <span class="fn">blur</span>(<span class="nu">90px</span>);
+  <span class="pr">animation</span>: <span class="fn">blobDrift</span> <span class="nu">12s</span> ease-in-out infinite;
+}</pre>
+      </div>
+
+      <h3>2.3 Service Card</h3>
+      <div class="spec-grid">
+        <div class="spec-card">
+          <div class="spec-card__name">Service Card (.svc-card)</div>
+          <div class="spec-card__prop"><strong>BG:</strong> white</div>
+          <div class="spec-card__prop"><strong>Border:</strong> 1px solid rgba(10,132,255,0.10)</div>
+          <div class="spec-card__prop"><strong>Border-radius:</strong> 16px</div>
+          <div class="spec-card__prop"><strong>Padding:</strong> 32px</div>
+          <div class="spec-card__prop"><strong>Hover:</strong> translateY(-6px) + shadow-card-hover</div>
+          <div class="spec-card__prop"><strong>Animation:</strong> .js-fade → .js-stagger-item 130ms stagger</div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-card__name">Service Link (.svc-card__link)</div>
+          <div class="spec-card__prop"><strong>Type:</strong> &lt;a href="services.html#anchor"&gt;</div>
+          <div class="spec-card__prop"><strong>Color:</strong> var(--color-primary)</div>
+          <div class="spec-card__prop"><strong>Font-weight:</strong> 600</div>
+          <div class="spec-card__prop"><strong>Text-decoration:</strong> none</div>
+          <div class="spec-card__prop"><strong>Hover:</strong> gap 増加 (SVG arrow 右移動)</div>
+          <div class="spec-card__prop"><strong>Display:</strong> inline-flex, align-items: center</div>
+        </div>
+      </div>
+
+      <h3>2.4 ボタンバリアント</h3>
+      <table>
+        <tr><th>クラス</th><th>背景</th><th>テキスト</th><th>ホバー</th><th>用途</th></tr>
+        <tr><td><code>.btn--primary</code></td><td>grad-primary</td><td>white</td><td>translateY(-2px) + shadow</td><td>ヒーロー主CTA</td></tr>
+        <tr><td><code>.btn--outline-dark</code></td><td>transparent</td><td>white</td><td>white fill</td><td>ヒーロー副CTA</td></tr>
+        <tr><td><code>.btn--primary-solid</code></td><td>#0A84FF</td><td>white</td><td>translateY(-2px)</td><td>セクションCTA</td></tr>
+        <tr><td><code>.btn--blue-outline</code></td><td>transparent</td><td>#0A84FF</td><td>blue fill + white text</td><td>セクション副CTA</td></tr>
+        <tr><td><code>.svc-cta-btn</code></td><td>各色 (--gold/--green/--purple)</td><td>white</td><td>opacity + translateY</td><td>サービス詳細ページCTA</td></tr>
+      </table>
+    </section>
+
+    <!-- 3. アニメーション詳細 -->
+    <section class="section" id="sec3">
+      <div class="section__num">Section 03</div>
+      <h2 class="section__title">アニメーション詳細仕様</h2>
+
+      <div class="anim-spec">
+        <div class="anim-spec__header">
+          <span class="anim-spec__name">📦 Page Load Curtain — ページロードカーテン</span>
+          <span class="anim-spec__trigger">TRIGGER: DOMContentLoaded + 50ms</span>
+        </div>
+        <div class="anim-spec__body">
+          <div class="anim-spec__row"><span class="anim-spec__key">要素</span><span class="anim-spec__val">#page-reveal (position: fixed, inset: 0)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">初期状態</span><span class="anim-spec__val">transform: scaleY(1), transform-origin: top</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">終了状態</span><span class="anim-spec__val">transform: scaleY(0) via .is-done class</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">Duration</span><span class="anim-spec__val">750ms</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">Easing</span><span class="anim-spec__val">cubic-bezier(0.76, 0, 0.24, 1) — snap easing</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">DOM削除</span><span class="anim-spec__val">element.remove() at 900ms</span></div>
+        </div>
+      </div>
+
+      <div class="anim-spec">
+        <div class="anim-spec__header">
+          <span class="anim-spec__name">⬆️ Stagger Animation — スタガーアニメーション</span>
+          <span class="anim-spec__trigger">TRIGGER: IntersectionObserver 8% visible</span>
+        </div>
+        <div class="anim-spec__body">
+          <div class="anim-spec__row"><span class="anim-spec__key">コンテナ</span><span class="anim-spec__val">.js-stagger (services-grid 等)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">子要素</span><span class="anim-spec__val">.js-stagger-item</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">初期状態</span><span class="anim-spec__val">opacity: 0; transform: translateY(28px)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">終了状態</span><span class="anim-spec__val">.is-visible → opacity: 1; transform: none</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">Duration</span><span class="anim-spec__val">620ms per item</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">Stagger interval</span><span class="anim-spec__val">130ms (setTimeout per index)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">Easing</span><span class="anim-spec__val">cubic-bezier(0.16, 1, 0.3, 1)</span></div>
+        </div>
+      </div>
+
+      <div class="anim-spec">
+        <div class="anim-spec__header">
+          <span class="anim-spec__name">🔢 Counter Animation — カウンターアニメーション</span>
+          <span class="anim-spec__trigger">TRIGGER: IntersectionObserver 50% visible</span>
+        </div>
+        <div class="anim-spec__body">
+          <div class="anim-spec__row"><span class="anim-spec__key">要素</span><span class="anim-spec__val">.js-counter</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">ターゲット値</span><span class="anim-spec__val">data-target="50" (数値)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">Duration</span><span class="anim-spec__val">data-duration="2000" ms (default: 2000)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">Easing</span><span class="anim-spec__val">ease-out cubic: 1 - (1-t)^3</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">Suffix</span><span class="anim-spec__val">data-suffix="+" (任意接尾辞)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">実装</span><span class="anim-spec__val">requestAnimationFrame loop</span></div>
+        </div>
+      </div>
+
+      <div class="anim-spec">
+        <div class="anim-spec__header">
+          <span class="anim-spec__name">🧲 Magnetic Button — マグネティックCTA</span>
+          <span class="anim-spec__trigger">TRIGGER: mousemove on .js-magnetic</span>
+        </div>
+        <div class="anim-spec__body">
+          <div class="anim-spec__row"><span class="anim-spec__key">効果</span><span class="anim-spec__val">カーソルに向かってボタンが吸い寄せられる</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">強度</span><span class="anim-spec__val">data-magnetic-strength="0.28" (28%移動)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">復帰</span><span class="anim-spec__val">mouseleave → translateX(0,0), 550ms ease-out</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">除外</span><span class="anim-spec__val">pointer: coarse (タッチデバイス) で無効</span></div>
+        </div>
+      </div>
+
+      <div class="anim-spec">
+        <div class="anim-spec__header">
+          <span class="anim-spec__name">🖱️ Custom Cursor — カスタムカーソル</span>
+          <span class="anim-spec__trigger">TRIGGER: mousemove (全ページ)</span>
+        </div>
+        <div class="anim-spec__body">
+          <div class="anim-spec__row"><span class="anim-spec__key">要素</span><span class="anim-spec__val">#custom-cursor (position: fixed)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">通常状態</span><span class="anim-spec__val">12×12px blue dot, mix-blend-mode: multiply</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">ホバー状態</span><span class="anim-spec__val">.is-hover → 36×36px ring, border: 1.5px primary</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">追従補間</span><span class="anim-spec__val">lerp coefficient: 0.14 (rAF loop)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">ホバー対象</span><span class="anim-spec__val">a, button, .js-magnetic, .svc-card, .about-strip__card</span></div>
+        </div>
+      </div>
+
+      <div class="anim-spec">
+        <div class="anim-spec__header">
+          <span class="anim-spec__name">📜 Scroll Progress Bar — スクロール進行バー</span>
+          <span class="anim-spec__trigger">TRIGGER: scroll event (passive)</span>
+        </div>
+        <div class="anim-spec__body">
+          <div class="anim-spec__row"><span class="anim-spec__key">要素</span><span class="anim-spec__val">#scroll-progress (position: fixed, top: 0)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">高さ</span><span class="anim-spec__val">2px</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">グラデーション</span><span class="anim-spec__val">primary → gold → #FF6B8A</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">実装</span><span class="anim-spec__val">transform: scaleX(scrollY / totalHeight)</span></div>
+          <div class="anim-spec__row"><span class="anim-spec__key">transform-origin</span><span class="anim-spec__val">left center</span></div>
+        </div>
+      </div>
+
+      <h3>3.1 Hero Keyframes（css/hero.css）</h3>
+      <div class="code-block">
+        <div class="code-block__label">blobDrift — Blob背景アニメーション</div>
+        <pre><span class="kw">@keyframes</span> <span class="fn">blobDrift</span> {
+  <span class="nu">0%</span>,<span class="nu">100%</span> { <span class="pr">transform</span>: <span class="fn">translate</span>(<span class="nu">0</span>,<span class="nu">0</span>); }
+  <span class="nu">33%</span>      { <span class="pr">transform</span>: <span class="fn">translate</span>(<span class="nu">30px</span>,<span class="nu">-20px</span>); }
+  <span class="nu">66%</span>      { <span class="pr">transform</span>: <span class="fn">translate</span>(<span class="nu">-20px</span>,<span class="nu">30px</span>); }
+}
+
+<span class="kw">@keyframes</span> <span class="fn">fadeUp</span> {
+  <span class="kw">from</span> { <span class="pr">opacity</span>: <span class="nu">0</span>; <span class="pr">transform</span>: <span class="fn">translateY</span>(<span class="nu">24px</span>); }
+  <span class="kw">to</span>   { <span class="pr">opacity</span>: <span class="nu">1</span>; <span class="pr">transform</span>: <span class="fn">translateY</span>(<span class="nu">0</span>); }
+}</pre>
+      </div>
+    </section>
+
+    <!-- 4. JavaScript設計 -->
+    <section class="section" id="sec4">
+      <div class="section__num">Section 04</div>
+      <h2 class="section__title">JavaScript設計</h2>
+
+      <h3>4.1 ファイル構成と役割</h3>
+      <table>
+        <tr><th>ファイル</th><th>パターン</th><th>関数</th></tr>
+        <tr><td>js/main.js</td><td>IIFE (即時実行関数)</td><td>initNavScroll, initHamburger, initScrollFade, initParticles, initSmoothScroll, initForm</td></tr>
+        <tr><td>js/animations.js</td><td>IIFE (即時実行関数)</td><td>initScrollProgress, initStagger, initCounters, initTextReveal, initParallax, initMagnetic, initCursor, initLineReveal, initNavHighlight, initCardTilt, initPageReveal</td></tr>
+      </table>
+
+      <h3>4.2 IntersectionObserver 設定</h3>
+      <div class="code-block">
+        <div class="code-block__label">js/animations.js — Stagger Observer</div>
+        <pre><span class="kw">var</span> <span class="va">io</span> = <span class="kw">new</span> <span class="fn">IntersectionObserver</span>(<span class="kw">function</span>(<span class="va">entries</span>) {
+  <span class="va">entries</span>.<span class="fn">forEach</span>(<span class="kw">function</span>(<span class="va">entry</span>) {
+    <span class="kw">if</span> (!<span class="va">entry</span>.<span class="pr">isIntersecting</span>) <span class="kw">return</span>;
+    <span class="kw">var</span> <span class="va">items</span> = <span class="va">entry</span>.<span class="pr">target</span>.<span class="fn">querySelectorAll</span>(<span class="st">'.js-stagger-item'</span>);
+    <span class="va">items</span>.<span class="fn">forEach</span>(<span class="kw">function</span>(<span class="va">item</span>, <span class="va">i</span>) {
+      <span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+        <span class="va">item</span>.<span class="pr">classList</span>.<span class="fn">add</span>(<span class="st">'is-visible'</span>);
+      }, <span class="va">i</span> * <span class="nu">130</span>);
+    });
+    <span class="va">io</span>.<span class="fn">unobserve</span>(<span class="va">entry</span>.<span class="pr">target</span>);  <span class="cm">// 1回のみ発火</span>
+  });
+}, { <span class="pr">threshold</span>: <span class="nu">0.08</span>, <span class="pr">rootMargin</span>: <span class="st">'0px 0px -40px 0px'</span> });</pre>
+      </div>
+
+      <h3>4.3 パーティクルシステム（js/main.js）</h3>
+      <ul class="doc-list">
+        <li>Canvas API でドット粒子を描画。数 = min(width×height/12000, 110)</li>
+        <li>3種類: gold(12%) / blue(33%) / white(55%) で彩度を持たせる</li>
+        <li>粒子間距離 ≤ 90px の場合に接続線を描画（opacity α連動）</li>
+        <li>window resize で canvas サイズ再計算・粒子再生成</li>
+      </ul>
+
+      <h3>4.4 エラーハンドリング方針</h3>
+      <div class="warn-box">
+        <strong>方針：</strong>各 init 関数は対象要素が存在しない場合 early return する。DOM存在チェックを必ず先頭で行い、不要なエラーを防ぐ。存在しない場合は何もしない（サイレント失敗）。
+      </div>
+      <div class="code-block">
+        <div class="code-block__label">Early Return Pattern</div>
+        <pre><span class="kw">function</span> <span class="fn">initScrollProgress</span>() {
+  <span class="kw">var</span> <span class="va">bar</span> = <span class="va">document</span>.<span class="fn">getElementById</span>(<span class="st">'scroll-progress'</span>);
+  <span class="kw">if</span> (!<span class="va">bar</span>) <span class="kw">return</span>;  <span class="cm">// 要素なければ即返す</span>
+  <span class="cm">// ... 処理続行</span>
+}</pre>
+      </div>
+    </section>
+
+    <!-- 5. アクセシビリティ設計 -->
+    <section class="section" id="sec5">
+      <div class="section__num">Section 05</div>
+      <h2 class="section__title">アクセシビリティ設計</h2>
+
+      <table>
+        <tr><th>対応項目</th><th>実装詳細</th><th>WCAG基準</th></tr>
+        <tr><td>コントラスト比</td><td>本文テキスト (#1C1C1E on white) 約 16:1。青ボタン (white on #0A84FF) 約 4.8:1</td><td>AA (4.5:1)</td></tr>
+        <tr><td>画像 alt</td><td>全 &lt;img&gt; に alt 必須。SVGアイコンは aria-hidden="true"</td><td>1.1.1</td></tr>
+        <tr><td>フォームラベル</td><td>各 &lt;input&gt; に &lt;label for="..."&gt; 関連付け</td><td>1.3.1</td></tr>
+        <tr><td>ハンバーガーボタン</td><td>aria-label="メニューを開く"、aria-expanded="true/false"</td><td>4.1.2</td></tr>
+        <tr><td>ドロワー</td><td>aria-hidden="true/false"、フォーカストラップ</td><td>2.1.1</td></tr>
+        <tr><td>ナビゲーション</td><td>&lt;nav aria-label="メインナビゲーション"&gt;</td><td>1.3.6</td></tr>
+        <tr><td>motion 考慮</td><td>prefers-reduced-motion: reduce で全アニメーション短縮</td><td>2.3.3 (AAA)</td></tr>
+        <tr><td>キーボード操作</td><td>全インタラクティブ要素 Tab フォーカス可能、Enter/Space で発火</td><td>2.1.1</td></tr>
+        <tr><td>スキップリンク</td><td>（将来実装）#main へのスキップリンク</td><td>2.4.1</td></tr>
+      </table>
+    </section>
+
+    <!-- 6. SEO詳細設計 -->
+    <section class="section" id="sec6">
+      <div class="section__num">Section 06</div>
+      <h2 class="section__title">SEO詳細設計</h2>
+
+      <h3>6.1 JSON-LD 構造化データ（index.html）</h3>
+      <div class="code-block">
+        <div class="code-block__label">JSON-LD — Organization Schema</div>
+        <pre>{
+  <span class="pr">"@context"</span>: <span class="st">"https://schema.org"</span>,
+  <span class="pr">"@type"</span>: <span class="st">"Organization"</span>,
+  <span class="pr">"name"</span>: <span class="st">"ITS合同会社"</span>,
+  <span class="pr">"url"</span>: <span class="st">"https://ktakahashi7755-creator.github.io/its-corporate-site/"</span>,
+  <span class="pr">"logo"</span>: <span class="st">"...images/logo.svg"</span>,
+  <span class="pr">"foundingDate"</span>: <span class="st">"2024"</span>,
+  <span class="pr">"address"</span>: {
+    <span class="pr">"@type"</span>: <span class="st">"PostalAddress"</span>,
+    <span class="pr">"streetAddress"</span>: <span class="st">"西新宿3-3-13 西新宿水間ビル2階"</span>,
+    <span class="pr">"addressLocality"</span>: <span class="st">"新宿区"</span>,
+    <span class="pr">"addressRegion"</span>: <span class="st">"東京都"</span>
+  },
+  <span class="pr">"hasOfferCatalog"</span>: {
+    <span class="pr">"@type"</span>: <span class="st">"OfferCatalog"</span>,
+    <span class="pr">"itemListElement"</span>: [
+      { <span class="pr">"@type"</span>: <span class="st">"Offer"</span>, <span class="pr">"name"</span>: <span class="st">"システム受託開発"</span> },
+      { <span class="pr">"@type"</span>: <span class="st">"Offer"</span>, <span class="pr">"name"</span>: <span class="st">"ITコンサルティング"</span> },
+      { <span class="pr">"@type"</span>: <span class="st">"Offer"</span>, <span class="pr">"name"</span>: <span class="st">"Web制作・LP制作"</span> },
+      { <span class="pr">"@type"</span>: <span class="st">"Offer"</span>, <span class="pr">"name"</span>: <span class="st">"バナー・デザイン制作"</span> }
+    ]
+  }
+}</pre>
+      </div>
+
+      <h3>6.2 ページ別 meta タグ設計</h3>
+      <table>
+        <tr><th>ページ</th><th>title</th><th>description (120字以内)</th></tr>
+        <tr><td>index.html</td><td>ITS合同会社 | テクノロジーで世界を輝かせる</td><td>システム受託開発・ITコンサルティング・Web制作・自社プロダクト開発を通じて、企業の課題解決と事業成長を支援します。</td></tr>
+        <tr><td>services.html</td><td>サービス詳細 | ITS合同会社</td><td>システム受託開発/SIer、ITコンサルティング、Web制作・LP制作、バナー・デザイン制作の4サービス詳細をご紹介します。</td></tr>
+        <tr><td>familink.html</td><td>Familink | 家族をチームに | ITS合同会社</td><td>子育て世代の予定共有・タスク管理・家計管理・健康管理をひとつにまとめた家族向けスマートアプリ「Familink」</td></tr>
+      </table>
+    </section>
+
+    <!-- 7. 品質チェックリスト -->
+    <section class="section" id="sec7">
+      <div class="section__num">Section 07</div>
+      <h2 class="section__title">品質チェックリスト</h2>
+
+      <h3>7.1 デザイン品質</h3>
+      <ul class="checklist">
+        <li class="done">ヒーローセクション: パーティクル + ブロブ + テキストアニメーション</li>
+        <li class="done">サービスカード: 4枚グリッド、ホバーエフェクト、サービス詳細リンク</li>
+        <li class="done">スクロール進行バー: primary→gold→pink グラデーション</li>
+        <li class="done">ページロードカーテン: 750ms cubic-bezier snap</li>
+        <li class="done">カスタムカーソル: 12px dot → 36px ring、lerp追従</li>
+        <li class="done">スタガーアニメーション: 130ms間隔でカード順次表示</li>
+        <li class="done">マグネティックCTA: 28% strength マウス吸着</li>
+        <li class="done">Familink ページ: hoku.png mix-blend-mode:multiply、CSSアプリデモ</li>
+        <li>カウンターアニメーション: .js-counter HTML追加後に確認</li>
+        <li>テキストリビール: .js-text-reveal HTML追加後に確認</li>
+      </ul>
+
+      <h3>7.2 SEO品質</h3>
+      <ul class="checklist">
+        <li class="done">JSON-LD Organization Schema (index.html)</li>
+        <li class="done">sitemap.xml (3ページ)</li>
+        <li class="done">robots.txt (Sitemap URL 含む)</li>
+        <li class="done">canonical URL (全ページ)</li>
+        <li class="done">OGP タグ (og:title, og:description, og:url)</li>
+        <li class="done">Twitter Card</li>
+        <li class="done">meta keywords</li>
+        <li>Google Search Console 登録 (本番後)</li>
+        <li>og:image 画像設定 (本番後)</li>
+      </ul>
+
+      <h3>7.3 アクセシビリティ品質</h3>
+      <ul class="checklist">
+        <li class="done">aria-label (ハンバーガー、ドロワー)</li>
+        <li class="done">aria-hidden (SVGアイコン、装飾要素)</li>
+        <li class="done">aria-expanded (ハンバーガーボタン)</li>
+        <li class="done">prefers-reduced-motion 対応</li>
+        <li class="done">pointer: coarse 対応 (タッチデバイスで磁石・カーソル無効)</li>
+        <li class="warn">Lighthouse Accessibility スコア確認 (本番デプロイ後)</li>
+      </ul>
+
+      <h3>7.4 パフォーマンス品質</h3>
+      <ul class="checklist">
+        <li class="done">scroll イベント { passive: true }</li>
+        <li class="done">IntersectionObserver で非ビューポート要素は animate しない</li>
+        <li class="done">canvas particle 数上限: 110</li>
+        <li class="done">CSS アニメーションは transform/opacity のみ</li>
+        <li class="done">フォント rel="preconnect" 最適化</li>
+        <li class="warn">Lighthouse Performance スコア 90+ 確認 (本番後)</li>
+        <li>画像 WebP 変換 (本番後)</li>
+      </ul>
+    </section>
+
+    <!-- 8. 将来拡張計画 -->
+    <section class="section" id="sec8">
+      <div class="section__num">Section 08</div>
+      <h2 class="section__title">将来拡張計画</h2>
+      <table>
+        <tr><th>フェーズ</th><th>機能</th><th>技術</th><th>優先度</th></tr>
+        <tr><td>Phase 2</td><td>フォームバックエンド連携</td><td>Netlify Forms / Formspree</td><td>高</td></tr>
+        <tr><td>Phase 2</td><td>実績・事例セクション (#works)</td><td>HTML追加 + 画像</td><td>高</td></tr>
+        <tr><td>Phase 2</td><td>og:image 設定</td><td>OGP画像生成</td><td>高</td></tr>
+        <tr><td>Phase 2</td><td>Google Analytics 4 導入</td><td>GA4 + gtag.js</td><td>中</td></tr>
+        <tr><td>Phase 3</td><td>カスタムドメイン設定</td><td>DNS + GitHub Pages</td><td>高</td></tr>
+        <tr><td>Phase 3</td><td>統計カードセクション追加</td><td>.stat-card + .js-counter</td><td>中</td></tr>
+        <tr><td>Phase 3</td><td>採用ページ</td><td>新 recruit.html</td><td>中</td></tr>
+        <tr><td>Phase 4</td><td>ブログ / プレスリリース</td><td>静的MDからHTML変換</td><td>低</td></tr>
+        <tr><td>Phase 4</td><td>多言語対応 (英語版)</td><td>en/ サブディレクトリ</td><td>低</td></tr>
+      </table>
+
+      <div class="doc-footer">
+        <span>ITS合同会社 — コーポレートサイト 詳細設計書 v1.0.0</span>
+        <span>最終更新：2026年06月20日</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>

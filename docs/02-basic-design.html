@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基本設計書 — ITS合同会社 コーポレートサイト</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-primary: #0A84FF;
+      --c-dark:    #050A14;
+      --c-accent:  #C9A84C;
+      --c-text:    #1C1C1E;
+      --c-text2:   #6C6C70;
+      --c-border:  #E5E7EB;
+      --c-bg:      #FAFAFA;
+      --c-row:     #F4F8FF;
+      --font-sans: 'Noto Sans JP', sans-serif;
+      --font-en:   'Poppins', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--c-text); background: var(--c-bg); line-height: 1.8; font-size: 14px; }
+
+    .cover {
+      background: linear-gradient(135deg, var(--c-dark) 0%, #0A2040 100%);
+      color: #fff; padding: 80px 60px 64px; position: relative; overflow: hidden;
+    }
+    .cover::before {
+      content: ''; position: absolute; bottom: -80px; left: -80px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(201,168,76,.25) 0%, transparent 70%);
+    }
+    .cover__tag { font-family: var(--font-en); font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--c-accent); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+    .cover__tag::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--c-accent); }
+    .cover__title { font-family: var(--font-en); font-size: clamp(28px, 4vw, 46px); font-weight: 700; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+    .cover__title span { color: var(--c-accent); }
+    .cover__subtitle { font-size: 18px; color: rgba(255,255,255,.8); margin-bottom: 48px; font-weight: 300; }
+    .cover__meta { display: grid; grid-template-columns: repeat(3, auto); gap: 32px 48px; border-top: 1px solid rgba(255,255,255,.12); padding-top: 32px; }
+    .cover__meta-item dt { font-size: 10px; letter-spacing: 0.15em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 4px; }
+    .cover__meta-item dd { font-size: 14px; color: rgba(255,255,255,.85); }
+
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar { width: 240px; flex-shrink: 0; background: #fff; border-right: 1px solid var(--c-border); padding: 32px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+    .sidebar__title { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-text2); padding: 0 20px 16px; border-bottom: 1px solid var(--c-border); margin-bottom: 12px; }
+    .sidebar a { display: flex; align-items: center; gap: 10px; padding: 8px 20px; font-size: 12.5px; color: var(--c-text2); text-decoration: none; transition: all .2s; border-left: 2px solid transparent; }
+    .sidebar a:hover { color: var(--c-primary); background: var(--c-row); }
+    .sidebar__num { font-family: var(--font-en); font-size: 10px; color: var(--c-accent); font-weight: 600; min-width: 20px; }
+
+    .content { flex: 1; padding: 48px 56px; max-width: 980px; }
+    .section { margin-bottom: 64px; }
+    .section__num { font-family: var(--font-en); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: var(--c-accent); text-transform: uppercase; margin-bottom: 6px; }
+    .section__title { font-size: 22px; font-weight: 700; color: var(--c-dark); margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--c-accent); }
+    h3 { font-size: 16px; font-weight: 700; color: var(--c-dark); margin: 28px 0 12px; }
+    h4 { font-size: 13px; font-weight: 700; color: var(--c-text2); margin: 20px 0 8px; letter-spacing: 0.05em; }
+    p  { margin-bottom: 12px; line-height: 1.85; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0 24px; }
+    th { background: var(--c-dark); color: #fff; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11.5px; letter-spacing: 0.05em; }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--c-border); vertical-align: top; }
+    tr:nth-child(even) td { background: var(--c-row); }
+
+    .info-box { background: #FFFBEB; border-left: 3px solid var(--c-accent); border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 16px 0; font-size: 13px; }
+    .blue-box  { background: #EBF4FF; border-left: 3px solid var(--c-primary); border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 16px 0; font-size: 13px; }
+
+    ul.doc-list { padding-left: 0; list-style: none; }
+    ul.doc-list li { padding: 6px 0 6px 22px; position: relative; border-bottom: 1px solid var(--c-border); font-size: 13.5px; }
+    ul.doc-list li::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--c-accent); }
+
+    /* ── Color Swatches ── */
+    .swatch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
+    .swatch { border-radius: 8px; overflow: hidden; border: 1px solid var(--c-border); }
+    .swatch__color { height: 60px; }
+    .swatch__info { padding: 8px 10px; background: #fff; }
+    .swatch__name { font-weight: 600; font-size: 11px; }
+    .swatch__hex  { font-family: var(--font-en); font-size: 11px; color: var(--c-text2); }
+
+    /* ── Type Scale Demo ── */
+    .type-demo { background: #fff; border: 1px solid var(--c-border); border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+    .type-demo .d1 { font-size: 42px; font-weight: 300; font-family: 'Cormorant Garamond', serif; line-height: 1.1; color: var(--c-dark); }
+    .type-demo .d2 { font-size: 28px; font-weight: 700; color: var(--c-dark); margin-top: 12px; }
+    .type-demo .d3 { font-size: 20px; font-weight: 700; color: var(--c-dark); margin-top: 8px; }
+    .type-demo .d4 { font-size: 16px; color: var(--c-text); margin-top: 8px; }
+    .type-demo .d5 { font-size: 13px; color: var(--c-text2); margin-top: 6px; }
+
+    /* ── Sitemap Tree ── */
+    .sitemap { font-size: 13px; }
+    .sitemap__root { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--c-dark); color: #fff; border-radius: 6px; font-weight: 600; margin-bottom: 4px; }
+    .sitemap__level1 { padding-left: 28px; }
+    .sitemap__item { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--c-border); border-radius: 6px; background: #fff; margin-bottom: 3px; }
+    .sitemap__item::before { content: '├─'; color: var(--c-text2); font-family: monospace; }
+    .sitemap__badge { display: inline-block; padding: 1px 8px; border-radius: 100px; font-size: 10px; font-weight: 600; font-family: var(--font-en); }
+    .badge-page { background: #D1FAE5; color: #065F46; }
+    .badge-section { background: #E0F2FE; color: #0369A1; }
+
+    /* ── Component Card ── */
+    .comp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
+    .comp-card { background: #fff; border: 1px solid var(--c-border); border-radius: 8px; padding: 16px; }
+    .comp-card__name { font-weight: 700; font-size: 13px; color: var(--c-dark); margin-bottom: 6px; }
+    .comp-card__class { font-family: monospace; font-size: 11px; background: #F3F4F6; padding: 2px 6px; border-radius: 4px; color: var(--c-primary); }
+    .comp-card__desc { font-size: 12px; color: var(--c-text2); margin-top: 8px; }
+
+    /* ── Breakpoint Visual ── */
+    .bp-visual { display: flex; gap: 8px; align-items: flex-end; margin: 16px 0; }
+    .bp-bar { background: var(--c-primary); border-radius: 4px 4px 0 0; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; color: #fff; font-size: 9px; font-weight: 600; letter-spacing: 0.05em; transition: all .3s; }
+
+    /* ── Animation Timeline ── */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--c-border); }
+    .timeline__item { position: relative; margin-bottom: 20px; }
+    .timeline__item::before { content: ''; position: absolute; left: -24px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--c-accent); border: 2px solid #fff; box-shadow: 0 0 0 2px var(--c-accent); }
+    .timeline__time { font-family: var(--font-en); font-size: 11px; font-weight: 700; color: var(--c-accent); }
+    .timeline__label { font-size: 13.5px; font-weight: 600; color: var(--c-dark); }
+    .timeline__desc { font-size: 12px; color: var(--c-text2); margin-top: 2px; }
+
+    .doc-footer { margin-top: 80px; padding: 24px 0; border-top: 1px solid var(--c-border); font-size: 11.5px; color: var(--c-text2); display: flex; justify-content: space-between; }
+    @media (max-width: 768px) { .sidebar { display: none; } .content { padding: 32px 24px; } .swatch-grid { grid-template-columns: repeat(2, 1fr); } .comp-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover__tag">Document — Version 1.0</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:8px;">ITS合同会社 — コーポレートサイト</div>
+  <h1 class="cover__title">基本設計書<br><span>Basic Design Document</span></h1>
+  <p class="cover__subtitle">システム構成・デザインシステム・アニメーション基本設計</p>
+  <dl class="cover__meta">
+    <div class="cover__meta-item"><dt>作成日</dt><dd>2026年06月20日</dd></div>
+    <div class="cover__meta-item"><dt>バージョン</dt><dd>v1.0.0</dd></div>
+    <div class="cover__meta-item"><dt>前提文書</dt><dd>要件定義書 v1.0.0</dd></div>
+    <div class="cover__meta-item"><dt>作成者</dt><dd>高橋 賢弥 / ITS合同会社</dd></div>
+    <div class="cover__meta-item"><dt>技術スタック</dt><dd>HTML / CSS / Vanilla JS</dd></div>
+    <div class="cover__meta-item"><dt>ホスティング</dt><dd>GitHub Pages</dd></div>
+  </dl>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar__title">目次</div>
+    <a href="#sec1"><span class="sidebar__num">01</span>システム構成</a>
+    <a href="#sec2"><span class="sidebar__num">02</span>ファイル構成</a>
+    <a href="#sec3"><span class="sidebar__num">03</span>サイトマップ</a>
+    <a href="#sec4"><span class="sidebar__num">04</span>デザインシステム</a>
+    <a href="#sec5"><span class="sidebar__num">05</span>画面設計概要</a>
+    <a href="#sec6"><span class="sidebar__num">06</span>ナビゲーション設計</a>
+    <a href="#sec7"><span class="sidebar__num">07</span>アニメーション基本設計</a>
+    <a href="#sec8"><span class="sidebar__num">08</span>レスポンシブ設計</a>
+    <a href="#sec9"><span class="sidebar__num">09</span>パフォーマンス設計</a>
+  </nav>
+
+  <main class="content">
+
+    <!-- 1 -->
+    <section class="section" id="sec1">
+      <div class="section__num">Section 01</div>
+      <h2 class="section__title">システム構成</h2>
+
+      <h3>1.1 全体アーキテクチャ</h3>
+      <div class="blue-box">
+        本サイトはサーバーサイド処理を持たない<strong>純粋な静的サイト</strong>である。ビルドツール・バンドラー不使用。HTML/CSS/JSファイルを GitHub Pages から直接配信する最もシンプルかつ高速な構成を採用。
+      </div>
+
+      <table>
+        <tr><th>レイヤー</th><th>技術</th><th>役割</th></tr>
+        <tr><td>マークアップ</td><td>HTML5 (セマンティック要素)</td><td>コンテンツ構造・アクセシビリティ</td></tr>
+        <tr><td>スタイリング</td><td>CSS3 (Cascade + Custom Properties)</td><td>デザイントークン・レイアウト・アニメーション</td></tr>
+        <tr><td>インタラクション</td><td>Vanilla JS (ES5 互換)</td><td>スクロール検知・アニメーション・フォームUI</td></tr>
+        <tr><td>フォント</td><td>Google Fonts CDN</td><td>Noto Sans JP / Poppins / Cormorant Garamond</td></tr>
+        <tr><td>アイコン</td><td>インラインSVG</td><td>追加HTTP不要・style変更可能</td></tr>
+        <tr><td>ホスティング</td><td>GitHub Pages</td><td>無料・HTTPS・カスタムドメイン対応</td></tr>
+        <tr><td>バージョン管理</td><td>Git / GitHub</td><td>変更履歴・ブランチ管理</td></tr>
+      </table>
+    </section>
+
+    <!-- 2 -->
+    <section class="section" id="sec2">
+      <div class="section__num">Section 02</div>
+      <h2 class="section__title">ファイル構成</h2>
+      <table>
+        <tr><th>パス</th><th>種別</th><th>役割</th></tr>
+        <tr><td><code>index.html</code></td><td>HTML</td><td>トップページ（ヒーロー・サービス・プロダクト・会社・CTA）</td></tr>
+        <tr><td><code>services.html</code></td><td>HTML</td><td>サービス詳細ページ（4サービス詳細）</td></tr>
+        <tr><td><code>familink.html</code></td><td>HTML</td><td>Familinkプロダクトページ</td></tr>
+        <tr><td><code>privacy.html</code></td><td>HTML</td><td>プライバシーポリシー</td></tr>
+        <tr><td><code>terms.html</code></td><td>HTML</td><td>利用規約</td></tr>
+        <tr><td><code>css/style.css</code></td><td>CSS</td><td>デザイントークン・リセット・ユーティリティ</td></tr>
+        <tr><td><code>css/nav.css</code></td><td>CSS</td><td>ナビゲーション・ドロワー</td></tr>
+        <tr><td><code>css/hero.css</code></td><td>CSS</td><td>ヒーローセクション・ボタンベース</td></tr>
+        <tr><td><code>css/sections.css</code></td><td>CSS</td><td>About・Services・Product・Company・Contact</td></tr>
+        <tr><td><code>css/services.css</code></td><td>CSS</td><td>サービス詳細ページ専用</td></tr>
+        <tr><td><code>css/animations.css</code></td><td>CSS</td><td>世界最高峰アニメーションシステム（新規）</td></tr>
+        <tr><td><code>css/footer.css</code></td><td>CSS</td><td>フッター</td></tr>
+        <tr><td><code>js/main.js</code></td><td>JS</td><td>ナビ・ハンバーガー・フェード・パーティクル・フォーム</td></tr>
+        <tr><td><code>js/animations.js</code></td><td>JS</td><td>高度アニメーション（スタガー・カウンター・磁石・カーソル等）（新規）</td></tr>
+        <tr><td><code>images/</code></td><td>資産</td><td>ロゴ・Hokuキャラクター画像</td></tr>
+        <tr><td><code>robots.txt</code></td><td>SEO</td><td>クローラー制御</td></tr>
+        <tr><td><code>sitemap.xml</code></td><td>SEO</td><td>全URL一覧</td></tr>
+        <tr><td><code>docs/</code></td><td>設計書</td><td>要件定義書・基本設計書・詳細設計書</td></tr>
+      </table>
+
+      <h3>2.1 CSS読み込み順序</h3>
+      <div class="info-box">
+        CSS は Cascade を活用し、以下の順序で読み込む。後のファイルが前のファイルを上書き可能。
+        <br><code>style.css → nav.css → hero.css → sections.css → [services.css] → animations.css → footer.css</code>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="section" id="sec3">
+      <div class="section__num">Section 03</div>
+      <h2 class="section__title">サイトマップ</h2>
+      <div class="sitemap">
+        <div class="sitemap__root">🌐 its-corporate-site/ (GitHub Pages)</div>
+        <div class="sitemap__level1">
+          <div class="sitemap__item"><span class="sitemap__badge badge-page">PAGE</span> index.html — トップページ (/, /index.html)</div>
+          <div class="sitemap__level1" style="padding-left:28px;">
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #about — 会社について</div>
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #services — 提供サービス</div>
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #product — 自社プロダクト (Familink)</div>
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #works — 実績・事例</div>
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #company — 会社概要</div>
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #contact — お問い合わせ</div>
+          </div>
+          <div class="sitemap__item"><span class="sitemap__badge badge-page">PAGE</span> services.html — サービス詳細</div>
+          <div class="sitemap__level1" style="padding-left:28px;">
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #systemdev — システム受託開発</div>
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #consulting — ITコンサルティング</div>
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #web — Web制作 / LP制作</div>
+            <div class="sitemap__item"><span class="sitemap__badge badge-section">SECTION</span> #design — バナー・デザイン制作</div>
+          </div>
+          <div class="sitemap__item"><span class="sitemap__badge badge-page">PAGE</span> familink.html — Familinkプロダクトページ</div>
+          <div class="sitemap__item"><span class="sitemap__badge badge-page">PAGE</span> privacy.html — プライバシーポリシー</div>
+          <div class="sitemap__item"><span class="sitemap__badge badge-page">PAGE</span> terms.html — 利用規約</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="section" id="sec4">
+      <div class="section__num">Section 04</div>
+      <h2 class="section__title">デザインシステム</h2>
+
+      <h3>4.1 カラーパレット</h3>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch__color" style="background:#050A14;"></div><div class="swatch__info"><div class="swatch__name">Dark BG</div><div class="swatch__hex">#050A14</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#0A84FF;"></div><div class="swatch__info"><div class="swatch__name">Primary Blue</div><div class="swatch__hex">#0A84FF</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#C9A84C;"></div><div class="swatch__info"><div class="swatch__name">Gold Accent</div><div class="swatch__hex">#C9A84C</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#1C1C1E;"></div><div class="swatch__info"><div class="swatch__name">Text Primary</div><div class="swatch__hex">#1C1C1E</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#6C6C70;"></div><div class="swatch__info"><div class="swatch__name">Text 2</div><div class="swatch__hex">#6C6C70</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#F0F8FF;"></div><div class="swatch__info"><div class="swatch__name">BG Alt</div><div class="swatch__hex">#F0F8FF</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#34C759;"></div><div class="swatch__info"><div class="swatch__name">Success Green</div><div class="swatch__hex">#34C759</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#FF9F0A;"></div><div class="swatch__info"><div class="swatch__name">Warning Orange</div><div class="swatch__hex">#FF9F0A</div></div></div>
+      </div>
+
+      <h3>4.2 タイポグラフィスケール</h3>
+      <div class="type-demo">
+        <div class="d1">Display — Cormorant Garamond 300</div>
+        <div class="d2">H1 / H2 — Noto Sans JP 700</div>
+        <div class="d3">H3 小見出し — Noto Sans JP 700</div>
+        <div class="d4">Body 本文 — Noto Sans JP 400, 1.8行間</div>
+        <div class="d5">Caption / Label — Poppins 600, 0.65rem, 0.15em tracking</div>
+      </div>
+
+      <h3>4.3 スペーシングシステム</h3>
+      <table>
+        <tr><th>変数</th><th>値</th><th>用途</th></tr>
+        <tr><td>--section-y</td><td>clamp(72px, 10vw, 128px)</td><td>セクション上下パディング</td></tr>
+        <tr><td>--pad-x</td><td>clamp(20px, 5vw, 80px)</td><td>コンテナ左右パディング</td></tr>
+        <tr><td>--container-max</td><td>1200px</td><td>最大コンテナ幅</td></tr>
+        <tr><td>--radius-sm/md/lg/xl</td><td>4 / 8 / 16 / 24px</td><td>角丸統一</td></tr>
+      </table>
+
+      <h3>4.4 コンポーネントライブラリ</h3>
+      <div class="comp-grid">
+        <div class="comp-card"><div class="comp-card__name">Primary Button</div><code class="comp-card__class">.btn.btn--primary</code><div class="comp-card__desc">CTA 主ボタン。グラデーション背景、シャドウ、マグネティック効果対応</div></div>
+        <div class="comp-card"><div class="comp-card__name">Outline Button</div><code class="comp-card__class">.btn.btn--outline-dark</code><div class="comp-card__desc">サブCTA。透明背景、ボーダー、ホバーで塗り</div></div>
+        <div class="comp-card"><div class="comp-card__name">Service Card</div><code class="comp-card__class">.svc-card</code><div class="comp-card__desc">番号・アイコン・タイトル・説明・リンク。3Dティルト対応</div></div>
+        <div class="comp-card"><div class="comp-card__name">Chip / Badge</div><code class="comp-card__class">.hero__chip</code><div class="comp-card__desc">Glassmorphism ピル型ナビチップ。backdrop-filter blur</div></div>
+        <div class="comp-card"><div class="comp-card__name">About Card</div><code class="comp-card__class">.about-strip__card</code><div class="comp-card__desc">Mission/Vision/Value/プロダクト4枚組。ホバーで青ボーダー</div></div>
+        <div class="comp-card"><div class="comp-card__name">Section Header</div><code class="comp-card__class">.section-header</code><div class="comp-card__desc">ラベル + H2 + ルール + 説明文の統一ブロック</div></div>
+        <div class="comp-card"><div class="comp-card__name">Stat Card</div><code class="comp-card__class">.stat-card</code><div class="comp-card__desc">数字 + ラベルのカウンターカード。js-counter対応</div></div>
+        <div class="comp-card"><div class="comp-card__name">iPhone Mockup</div><code class="comp-card__class">.iphone</code><div class="comp-card__desc">Pure CSSフレームのスマートフォンモックアップ</div></div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="section" id="sec5">
+      <div class="section__num">Section 05</div>
+      <h2 class="section__title">画面設計概要</h2>
+
+      <h3>5.1 index.html — トップページ</h3>
+      <table>
+        <tr><th>セクション</th><th>コンポーネント</th><th>目的</th></tr>
+        <tr><td>Hero</td><td>Canvas パーティクル + テキスト + CTA + チップ</td><td>第一印象・ブランド表現・サービス誘導</td></tr>
+        <tr><td>About Strip</td><td>テキスト + 4枚カード (Mission/Vision/Value/Product)</td><td>会社理念・差別化訴求</td></tr>
+        <tr><td>Services</td><td>4枚グリッドカード + サービス詳細リンク</td><td>サービス概要・詳細ページ誘導</td></tr>
+        <tr><td>Product</td><td>Familink説明 + iPhoneモックアップ</td><td>自社プロダクトPR</td></tr>
+        <tr><td>Works</td><td>（将来拡張：実績・事例カード）</td><td>信頼性強化</td></tr>
+        <tr><td>Company</td><td>会社概要テーブル + 所在地</td><td>企業情報開示・BtoBの信頼性</td></tr>
+        <tr><td>CTA</td><td>お問い合わせ誘導バナー</td><td>コンバージョン</td></tr>
+        <tr><td>Contact</td><td>入力フォーム (名前・メール・サービス・メッセージ)</td><td>問い合わせ受付</td></tr>
+      </table>
+
+      <h3>5.2 services.html — サービス詳細ページ</h3>
+      <table>
+        <tr><th>要素</th><th>内容</th></tr>
+        <tr><td>ページヘッダー</td><td>グラデーション背景 + パンくず + タイトル</td></tr>
+        <tr><td>スティッキーナビ</td><td>4サービスへの内部リンク（blur背景）</td></tr>
+        <tr><td>各サービスセクション</td><td>ヘッダー（番号・アイコン・タイトル）+ 2カラム本文（メイン + Aside）</td></tr>
+        <tr><td>Asideカード</td><td>技術スタック / プロセス / 料金感 / CTA</td></tr>
+        <tr><td>ページCTA</td><td>お問い合わせ誘導（index.html#contact）</td></tr>
+      </table>
+    </section>
+
+    <!-- 6 -->
+    <section class="section" id="sec6">
+      <div class="section__num">Section 06</div>
+      <h2 class="section__title">ナビゲーション設計</h2>
+
+      <h3>6.1 ヘッダーナビゲーション状態遷移</h3>
+      <table>
+        <tr><th>状態</th><th>条件</th><th>スタイル変化</th></tr>
+        <tr><td>透明（初期）</td><td>scrollY ≤ 60px</td><td>background: transparent, テキスト白</td></tr>
+        <tr><td>白転換（スクロール後）</td><td>scrollY &gt; 60px (.is-scrolled)</td><td>background: white, shadow 追加, テキスト黒</td></tr>
+        <tr><td>アクティブリンク</td><td>現在セクションが viewport 35% 以内</td><td>.nav__link.is-active — color: primary</td></tr>
+      </table>
+
+      <h3>6.2 モバイルドロワー</h3>
+      <ul class="doc-list">
+        <li>ハンバーガーボタン (#hamburger) クリックで .is-open クラストグル</li>
+        <li>ドロワー (#nav-drawer) は translateX(-100%) → 0 でスライドイン</li>
+        <li>ドロワー表示中は body.overflow: hidden でスクロールロック</li>
+        <li>ドロワー内リンクをタップ → 即時クローズ + スムーズスクロール</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section class="section" id="sec7">
+      <div class="section__num">Section 07</div>
+      <h2 class="section__title">アニメーション基本設計</h2>
+
+      <div class="info-box">
+        <strong>設計哲学：</strong>ポケモン株式会社サイトに代表される世界最高峰の日本語コーポレートサイトは「動きで驚かせない」。目的は「ユーザーを自然に次のコンテンツへ誘導すること」。アニメーションは情報の優先度と連動する。
+      </div>
+
+      <h3>7.1 アニメーション階層</h3>
+      <table>
+        <tr><th>層</th><th>種別</th><th>ファイル</th><th>説明</th></tr>
+        <tr><td>Layer 0</td><td>ページロード</td><td>css/animations.css + js/animations.js</td><td>カーテンが上に滑り出てページ露出（0.75s）</td></tr>
+        <tr><td>Layer 1</td><td>Hero常時アニメーション</td><td>css/hero.css (keyframes)</td><td>パーティクル・ブロブ・テキストフェードイン</td></tr>
+        <tr><td>Layer 2</td><td>スクロールフェード</td><td>css/style.css + js/main.js</td><td>.js-fade → .is-visible (opacity + translateY)</td></tr>
+        <tr><td>Layer 3</td><td>スタガー</td><td>css/animations.css + js/animations.js</td><td>.js-stagger-item を130ms間隔で表示</td></tr>
+        <tr><td>Layer 4</td><td>インタラクション</td><td>css/animations.css + js/animations.js</td><td>磁石ボタン・3Dティルト・カスタムカーソル</td></tr>
+        <tr><td>Layer 5</td><td>UI Micro-animation</td><td>css/sections.css + hero.css</td><td>ホバー変化・ナビ下線・チップスケール</td></tr>
+      </table>
+
+      <h3>7.2 アニメーション実行タイムライン（ページロード）</h3>
+      <div class="timeline">
+        <div class="timeline__item">
+          <div class="timeline__time">0ms</div>
+          <div class="timeline__label">ページロードカーテン表示</div>
+          <div class="timeline__desc">#page-reveal が画面全体を覆う（濃紺）</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__time">50ms</div>
+          <div class="timeline__label">カーテン上スライド開始</div>
+          <div class="timeline__desc">transform: scaleY(1 → 0), 750ms cubic-bezier(0.76,0,0.24,1)</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__time">400ms</div>
+          <div class="timeline__label">Heroテキスト フェードイン開始</div>
+          <div class="timeline__desc">.hero__eyebrow → .hero__title → .hero__en → .hero__desc → .hero__actions</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__time">800ms</div>
+          <div class="timeline__label">カーテン完全消去・DOM削除</div>
+          <div class="timeline__desc">#page-reveal.remove() 実行</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__time">1200ms</div>
+          <div class="timeline__label">Hero Chips アニメーション</div>
+          <div class="timeline__desc">.hero__chips fadeUp (CSS animation delay)</div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__time">スクロール時</div>
+          <div class="timeline__label">IntersectionObserver 発火</div>
+          <div class="timeline__desc">各セクション要素が viewport 10% 入った時点でアニメーション開始</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="section" id="sec8">
+      <div class="section__num">Section 08</div>
+      <h2 class="section__title">レスポンシブ設計</h2>
+
+      <h3>8.1 ブレークポイント体系</h3>
+      <div class="bp-visual">
+        <div class="bp-bar" style="width:40px;height:100px;background:#0A84FF;font-size:8px;">480</div>
+        <div class="bp-bar" style="width:60px;height:140px;background:#0060D8;font-size:8px;">768</div>
+        <div class="bp-bar" style="width:80px;height:160px;background:#0050B3;font-size:8px;">1024</div>
+        <div class="bp-bar" style="width:100px;height:180px;background:#C9A84C;font-size:8px;">1280+</div>
+      </div>
+
+      <table>
+        <tr><th>ブレークポイント</th><th>ナビ</th><th>Heroレイアウト</th><th>サービスグリッド</th><th>iPhone モック</th></tr>
+        <tr><td>≥ 1280px</td><td>水平ナビ + CTA ボタン</td><td>中央1カラム</td><td>4列</td><td>3台並列</td></tr>
+        <tr><td>1024〜1279px</td><td>水平ナビ + CTA ボタン</td><td>中央1カラム</td><td>2列</td><td>2台</td></tr>
+        <tr><td>768〜1023px</td><td>水平ナビ（CTAなし）</td><td>中央1カラム</td><td>2列</td><td>1台</td></tr>
+        <tr><td>480〜767px</td><td>ハンバーガー + ドロワー</td><td>中央1カラム</td><td>1列</td><td>1台</td></tr>
+        <tr><td>≤ 479px</td><td>ハンバーガー + ドロワー</td><td>中央1カラム</td><td>1列</td><td>1台 (縮小)</td></tr>
+      </table>
+
+      <h3>8.2 タッチデバイス考慮事項</h3>
+      <ul class="doc-list">
+        <li><code>(pointer: coarse)</code> 検知時、カスタムカーソル・磁石ボタン・3Dティルトを無効化</li>
+        <li>タップターゲット最小サイズ 44×44px 確保</li>
+        <li>スクロールイベントは <code>{ passive: true }</code> で登録（iOS対応）</li>
+        <li>ドロワーメニュー閉じた後 <code>body.overflow: ''</code> で戻す</li>
+      </ul>
+    </section>
+
+    <!-- 9 -->
+    <section class="section" id="sec9">
+      <div class="section__num">Section 09</div>
+      <h2 class="section__title">パフォーマンス設計</h2>
+
+      <h3>9.1 ロードパフォーマンス最適化</h3>
+      <table>
+        <tr><th>施策</th><th>実装方法</th><th>効果</th></tr>
+        <tr><td>フォント最適化</td><td>rel="preconnect" + display=swap</td><td>FOUT 短縮、LCP 改善</td></tr>
+        <tr><td>CSSモジュール分割</td><td>ページ固有CSS (services.css) は services.html のみロード</td><td>不要CSS 削減</td></tr>
+        <tr><td>SVGインライン</td><td>アイコンはHTMLにインライン記述</td><td>HTTP リクエスト削減</td></tr>
+        <tr><td>パーティクル最適化</td><td>particle数 = min(width*height/12000, 110)</td><td>低スペック端末への配慮</td></tr>
+        <tr><td>IntersectionObserver</td><td>ビューポート外要素は animate 実行しない</td><td>Jank・再描画抑制</td></tr>
+        <tr><td>will-change</td><td>アニメーション要素に will-change: transform</td><td>GPU合成レイヤー化</td></tr>
+        <tr><td>passive scroll</td><td>全 scroll listener に { passive: true }</td><td>スクロール応答性向上</td></tr>
+      </table>
+
+      <h3>9.2 Jank（カクつき）防止策</h3>
+      <ul class="doc-list">
+        <li>CSS アニメーションは transform・opacity のみ変更（layout/paint を発生させない）</li>
+        <li>JS でのスタイル変更は requestAnimationFrame 内で実行</li>
+        <li>カーソル追従は rAF ループで interpolate（lerp coefficient: 0.14）</li>
+        <li>視差スクロール要素は親の getBoundingClientRect() を使用（scroll 毎は最小限に）</li>
+      </ul>
+
+      <div class="doc-footer">
+        <span>ITS合同会社 — コーポレートサイト 基本設計書 v1.0.0</span>
+        <span>最終更新：2026年06月20日</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>

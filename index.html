@@ -23,9 +23,17 @@
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/hero.css">
   <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
+
+  <!-- ページロードカーテン -->
+  <div id="page-reveal" aria-hidden="true"></div>
+  <!-- スクロール進行バー -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+  <!-- カスタムカーソル (デスクトップのみ) -->
+  <div id="custom-cursor" aria-hidden="true"></div>
 
   <!-- ============================================================
        Navigation
@@ -98,7 +106,7 @@
         </p>
 
         <div class="hero__actions">
-          <a href="#contact"  class="btn btn--primary">お問い合わせ（無料）</a>
+          <a href="#contact"  class="btn btn--primary js-magnetic" data-magnetic-strength="0.22">お問い合わせ（無料）</a>
           <a href="#services" class="btn btn--outline-dark">サービスを見る</a>
         </div>
 
@@ -175,6 +183,36 @@
     </section>
 
     <!-- ============================================================
+         Stats Strip
+         ============================================================ -->
+    <div class="stat-grid" aria-label="実績・数値">
+      <div class="stat-card js-fade">
+        <div class="stat-card__num">
+          <span class="js-counter" data-target="50" data-suffix="+">50+</span>
+        </div>
+        <div class="stat-card__label">導入実績</div>
+      </div>
+      <div class="stat-card js-fade delay-1">
+        <div class="stat-card__num">
+          <span class="js-counter" data-target="3" data-suffix="年">3年</span>
+        </div>
+        <div class="stat-card__label">平均取引継続期間</div>
+      </div>
+      <div class="stat-card js-fade delay-2">
+        <div class="stat-card__num">
+          <span class="js-counter" data-target="100" data-suffix="%">100%</span>
+        </div>
+        <div class="stat-card__label">リピート率</div>
+      </div>
+      <div class="stat-card js-fade delay-3">
+        <div class="stat-card__num">
+          <span class="js-counter" data-target="4" data-suffix="事業">4事業</span>
+        </div>
+        <div class="stat-card__label">提供サービス</div>
+      </div>
+    </div>
+
+    <!-- ============================================================
          Services
          ============================================================ -->
     <section class="section section--alt" id="services">
@@ -188,9 +226,9 @@
           </p>
         </div>
 
-        <div class="services-grid">
+        <div class="services-grid js-stagger">
 
-          <article class="svc-card js-fade">
+          <article class="svc-card js-stagger-item js-tilt">
             <div class="svc-card__number">01</div>
             <div class="svc-card__icon" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -207,7 +245,7 @@
             </a>
           </article>
 
-          <article class="svc-card js-fade delay-1">
+          <article class="svc-card js-stagger-item js-tilt">
             <div class="svc-card__number">02</div>
             <div class="svc-card__icon" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -224,7 +262,7 @@
             </a>
           </article>
 
-          <article class="svc-card js-fade delay-2">
+          <article class="svc-card js-stagger-item js-tilt">
             <div class="svc-card__number">03</div>
             <div class="svc-card__icon" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -241,7 +279,7 @@
             </a>
           </article>
 
-          <article class="svc-card js-fade">
+          <article class="svc-card js-stagger-item js-tilt">
             <div class="svc-card__number">04</div>
             <div class="svc-card__icon" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -787,6 +825,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",

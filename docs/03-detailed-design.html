@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>詳細設計書 v2.0 — ITS合同会社 コーポレートサイト</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Poppins:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-primary: #0A84FF;
+      --c-dark:    #050A14;
+      --c-green:   #30D158;
+      --c-text:    #1C1C1E;
+      --c-text2:   #6C6C70;
+      --c-border:  #E5E7EB;
+      --c-bg:      #FAFAFA;
+      --c-row:     #F4F8FF;
+      --c-code-bg: #0D1117;
+      --font-sans: 'Noto Sans JP', sans-serif;
+      --font-en:   'Poppins', sans-serif;
+      --font-code: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--c-text); background: var(--c-bg); line-height: 1.8; font-size: 14px; }
+
+    /* Cover */
+    .cover {
+      background: linear-gradient(135deg, #001A3A 0%, #050A14 60%, #003A1A 100%);
+      color: #fff; padding: 80px 60px 64px; position: relative; overflow: hidden;
+    }
+    .cover::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 360px; height: 360px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(48,209,88,.08) 0%, transparent 70%);
+    }
+    .cover::after {
+      content: '03'; position: absolute; right: 40px; bottom: 20px;
+      font-family: var(--font-en); font-size: 180px; font-weight: 700;
+      color: rgba(255,255,255,.04); line-height: 1; pointer-events: none;
+    }
+    .cover__tag { font-family: var(--font-en); font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--c-green); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+    .cover__tag::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--c-green); }
+    .cover__title { font-family: var(--font-en); font-size: clamp(28px, 4vw, 46px); font-weight: 700; line-height: 1.1; color: #fff; margin-bottom: 12px; }
+    .cover__title span { color: var(--c-green); }
+    .cover__subtitle { font-size: 18px; color: rgba(255,255,255,.8); margin-bottom: 48px; font-weight: 300; }
+    .cover__ver { display: inline-flex; align-items: center; gap: 8px; background: rgba(48,209,88,.15); border: 1px solid rgba(48,209,88,.3); border-radius: 20px; padding: 4px 14px; font-size: 11px; font-weight: 600; color: var(--c-green); margin-bottom: 28px; }
+    .cover__meta { display: grid; grid-template-columns: repeat(3, auto); gap: 32px 48px; border-top: 1px solid rgba(255,255,255,.12); padding-top: 32px; }
+    .cover__meta-item dt { font-size: 10px; letter-spacing: 0.15em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 4px; }
+    .cover__meta-item dd { font-size: 14px; color: rgba(255,255,255,.85); }
+    .pokemon-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.15); border-radius: 6px; padding: 6px 12px; font-size: 11px; color: rgba(255,255,255,.7); margin-top: 20px; }
+
+    /* Layout */
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar { width: 240px; flex-shrink: 0; background: #fff; border-right: 1px solid var(--c-border); padding: 32px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+    .sidebar__title { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-text2); padding: 0 20px 16px; border-bottom: 1px solid var(--c-border); margin-bottom: 12px; }
+    .sidebar a { display: flex; align-items: center; gap: 10px; padding: 8px 20px; font-size: 12.5px; color: var(--c-text2); text-decoration: none; transition: all .2s; border-left: 2px solid transparent; }
+    .sidebar a:hover { color: var(--c-green); background: #F0FFF4; border-left-color: var(--c-green); }
+    .sidebar__num { font-family: var(--font-en); font-size: 10px; color: var(--c-green); font-weight: 600; min-width: 20px; }
+
+    /* Content */
+    .content { flex: 1; padding: 48px 56px; max-width: 980px; }
+    .section { margin-bottom: 72px; }
+    .section__num { font-family: var(--font-en); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: var(--c-green); text-transform: uppercase; margin-bottom: 6px; }
+    .section__title { font-size: 22px; font-weight: 700; color: var(--c-dark); margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--c-green); }
+    h3 { font-size: 16px; font-weight: 700; color: var(--c-dark); margin: 32px 0 12px; }
+    h4 { font-size: 13px; font-weight: 700; color: var(--c-text2); margin: 20px 0 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+    p  { margin-bottom: 12px; line-height: 1.85; color: #333; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0 28px; }
+    th { background: var(--c-dark); color: #fff; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11.5px; letter-spacing: 0.05em; }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--c-border); vertical-align: top; }
+    tr:nth-child(even) td { background: var(--c-row); }
+    td code { font-family: var(--font-code); font-size: 11.5px; background: #EEF3FF; padding: 1px 5px; border-radius: 3px; color: #0050CC; }
+
+    /* Code blocks */
+    .code-block { background: var(--c-code-bg); border-radius: 8px; padding: 20px; margin: 16px 0 24px; overflow-x: auto; position: relative; }
+    .code-block__label { font-family: var(--font-en); font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 10px; }
+    .code-block pre { font-family: var(--font-code); font-size: 12px; line-height: 1.7; color: #E2E8F0; }
+    .code-block .kw  { color: #FF79C6; }
+    .code-block .fn  { color: #50FA7B; }
+    .code-block .str { color: #F1FA8C; }
+    .code-block .num { color: #BD93F9; }
+    .code-block .cmt { color: #6272A4; font-style: italic; }
+    .code-block .sel { color: #8BE9FD; }
+    .code-block .val { color: #FFB86C; }
+    .code-block .prop{ color: #50FA7B; }
+
+    /* Callout boxes */
+    .callout { border-radius: 8px; padding: 16px 20px; margin: 16px 0; display: flex; gap: 12px; }
+    .callout--info  { background: #EFF6FF; border-left: 3px solid #0A84FF; }
+    .callout--warn  { background: #FFF8E7; border-left: 3px solid #C9A84C; }
+    .callout--green { background: #F0FFF4; border-left: 3px solid var(--c-green); }
+    .callout__icon  { font-size: 16px; flex-shrink: 0; }
+    .callout__body  { font-size: 13px; line-height: 1.75; color: #333; }
+    .callout__body strong { color: var(--c-dark); }
+
+    /* Section wireframe */
+    .wireframe { display: flex; flex-direction: column; gap: 3px; margin: 20px 0 28px; border: 1px solid var(--c-border); border-radius: 8px; overflow: hidden; }
+    .wf-row { display: flex; align-items: center; gap: 0; min-height: 36px; }
+    .wf-row__num { width: 36px; flex-shrink: 0; font-family: var(--font-en); font-size: 10px; font-weight: 700; color: rgba(255,255,255,.7); text-align: center; padding: 6px 4px; background: #1C1C1E; }
+    .wf-row__block { flex: 1; padding: 8px 14px; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+    .wf-row__badge { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 10px; }
+    .wf-dark  { background: #0A0E1A; color: rgba(255,255,255,.85); }
+    .wf-white { background: #FFFFFF; color: #1C1C1E; }
+    .wf-blue  { background: #EFF6FF; color: #0050CC; }
+    .wf-gold  { background: #FFFBEF; color: #7A5C00; }
+    .wf-mid   { background: #F5F5F7; color: #3A3A3C; }
+    .badge-new    { background: rgba(10,132,255,.12); color: #0A84FF; }
+    .badge-enh    { background: rgba(201,168,76,.15); color: #7A5C00; }
+    .badge-exist  { background: rgba(142,142,147,.12); color: #636366; }
+
+    /* Animation timeline */
+    .timeline { position: relative; margin: 20px 0 28px; }
+    .timeline__track { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--c-border); }
+    .timeline__seg { height: 100%; }
+    .timeline__seg--init  { background: #0A84FF; }
+    .timeline__seg--load  { background: #C9A84C; }
+    .timeline__seg--scroll{ background: #30D158; }
+    .timeline__labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--c-text2); margin-top: 6px; }
+    .timeline__events { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .tl-item { display: flex; gap: 12px; align-items: flex-start; }
+    .tl-item__dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .tl-item__dot--blue  { background: #0A84FF; }
+    .tl-item__dot--gold  { background: #C9A84C; }
+    .tl-item__dot--green { background: #30D158; }
+    .tl-item__content { flex: 1; }
+    .tl-item__time  { font-family: var(--font-en); font-size: 11px; font-weight: 700; color: var(--c-text2); }
+    .tl-item__label { font-size: 13px; color: var(--c-dark); line-height: 1.6; }
+
+    /* Checklist */
+    .checklist { list-style: none; padding: 0; margin: 12px 0 20px; display: flex; flex-direction: column; gap: 8px; }
+    .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; padding: 8px 12px; border-radius: 6px; background: #fff; border: 1px solid var(--c-border); }
+    .checklist li::before { content: '○'; font-size: 14px; color: var(--c-text2); flex-shrink: 0; }
+    .checklist li.done::before { content: '✓'; color: var(--c-green); font-weight: 700; }
+    .checklist li.warn::before { content: '⚠'; color: #C9A84C; }
+    .checklist li.done { opacity: 0.9; }
+
+    /* Component spec card */
+    .comp-card { border: 1px solid var(--c-border); border-radius: 10px; overflow: hidden; margin: 16px 0 24px; }
+    .comp-card__head { background: var(--c-dark); color: #fff; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; }
+    .comp-card__head h4 { color: #fff; margin: 0; font-size: 13px; letter-spacing: 0; text-transform: none; }
+    .comp-card__tag { font-family: var(--font-en); font-size: 10px; background: rgba(255,255,255,.1); padding: 2px 10px; border-radius: 10px; color: rgba(255,255,255,.7); }
+    .comp-card__body { padding: 16px 18px; background: #fff; }
+    .comp-card__body table { margin: 0; }
+
+    /* Pokemon ref box */
+    .poke-ref { background: linear-gradient(135deg, #1A0033 0%, #0A0E1A 100%); border-radius: 8px; padding: 16px 20px; margin: 16px 0; border: 1px solid rgba(255,204,0,.2); }
+    .poke-ref__label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #FFCC00; margin-bottom: 6px; }
+    .poke-ref__text { font-size: 13px; color: rgba(255,255,255,.8); line-height: 1.7; }
+
+    /* Footer */
+    .doc-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--c-border); padding-top: 20px; margin-top: 48px; font-size: 12px; color: var(--c-text2); }
+
+    /* Prop grid */
+    .prop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 20px; }
+    .prop-item { background: #fff; border: 1px solid var(--c-border); border-radius: 8px; padding: 12px 14px; }
+    .prop-item__key { font-family: var(--font-code); font-size: 11px; color: var(--c-primary); margin-bottom: 4px; }
+    .prop-item__val { font-size: 12.5px; color: #333; }
+  </style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="cover">
+  <div class="cover__tag">ITS合同会社 — Detailed Design</div>
+  <div class="cover__title">詳細設計書<br><span>Detailed Design v2.0</span></div>
+  <div class="cover__subtitle">コーポレートサイト — ポケモンインスパイアド世界最高峰リデザイン</div>
+  <div class="cover__ver">★ VERSION 2.0 — Pokémon-Inspired Premium Redesign</div>
+  <div class="cover__meta">
+    <div class="cover__meta-item"><dt>Document</dt><dd>Detailed Design — DD-2.0</dd></div>
+    <div class="cover__meta-item"><dt>Date</dt><dd>2026年06月20日</dd></div>
+    <div class="cover__meta-item"><dt>Status</dt><dd>Implementation Ready</dd></div>
+    <div class="cover__meta-item"><dt>Author</dt><dd>ITS合同会社</dd></div>
+    <div class="cover__meta-item"><dt>Branch</dt><dd>claude/its-corporate-site-WOQhD</dd></div>
+    <div class="cover__meta-item"><dt>Prev Version</dt><dd>v1.0.0 → v2.0.0</dd></div>
+  </div>
+  <div class="pokemon-badge">★ Pokémon株式会社コーポレートサイト インスパイアド設計</div>
+</div>
+
+<!-- Layout -->
+<div class="layout">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar__title">Contents</div>
+    <a href="#sec1"><span class="sidebar__num">01</span>改訂概要</a>
+    <a href="#sec2"><span class="sidebar__num">02</span>HTML詳細仕様 — 全14セクション</a>
+    <a href="#sec3"><span class="sidebar__num">03</span>CSS詳細仕様</a>
+    <a href="#sec4"><span class="sidebar__num">04</span>JS詳細仕様</a>
+    <a href="#sec5"><span class="sidebar__num">05</span>新規コンポーネント詳細</a>
+    <a href="#sec6"><span class="sidebar__num">06</span>アニメーション仕様</a>
+    <a href="#sec7"><span class="sidebar__num">07</span>レスポンシブ詳細仕様</a>
+    <a href="#sec8"><span class="sidebar__num">08</span>パフォーマンス実装</a>
+    <a href="#sec9"><span class="sidebar__num">09</span>品質チェックリスト</a>
+    <a href="#sec10"><span class="sidebar__num">10</span>将来拡張計画</a>
+  </nav>
+
+  <!-- Content -->
+  <main class="content">
+
+    <!-- 1. 改訂概要 -->
+    <section class="section" id="sec1">
+      <div class="section__num">Section 01</div>
+      <h2 class="section__title">改訂概要 — v1.0 → v2.0</h2>
+
+      <p>v2.0リデザインはポケモン株式会社コーポレートサイトの設計哲学を ITS 合同会社ブランドへ適応させる大幅なアップグレードである。白基調・大型タイポグラフィ・余白の贅沢な使用・セクション間の演劇的なコントラスト転換を核心設計原理とし、世界最高峰レベルのビジュアルクオリティを目指す。</p>
+
+      <div class="poke-ref">
+        <div class="poke-ref__label">★ Pokémon Reference Design</div>
+        <div class="poke-ref__text">ポケモン株式会社サイトの主要設計パターン： (1) ヒーローにダーク背景＋大型ロゴ、(2) 白背景フルワイドのPhilosophy/CEOメッセージ、(3) キャラクター図鑑風グリッド、(4) マーキーテキストバンド、(5) 事業紹介の縦積みセクション。これらをITSブランドへ1:1変換する。</div>
+      </div>
+
+      <h3>1.1 v2.0変更サマリー</h3>
+      <table>
+        <tr><th>カテゴリ</th><th>v1.0</th><th>v2.0</th><th>変更種別</th></tr>
+        <tr><td>index.html セクション数</td><td>8</td><td>14</td><td>追加 +6</td></tr>
+        <tr><td>マーキーバンド</td><td>なし</td><td>ダーク背景キーワードスクロール</td><td>NEW ★</td></tr>
+        <tr><td>Philosophyセクション</td><td>なし</td><td>白BG・Cormorant大型クォート</td><td>NEW ★</td></tr>
+        <tr><td>Familinkショーケース</td><td>基本紹介</td><td>ダークグラデ・2 iPhone・hoku.png</td><td>ENHANCED ★</td></tr>
+        <tr><td>CEOメッセージ</td><td>なし</td><td>Cormorant大型クォート＋写真</td><td>NEW ★</td></tr>
+        <tr><td>実績ストリップ</td><td>なし</td><td>4カウンター統計カード</td><td>NEW</td></tr>
+        <tr><td>強みセクション</td><td>なし</td><td>6項目スタガー</td><td>NEW</td></tr>
+        <tr><td>css/animations.css</td><td>なし</td><td>完全実装 (386行)</td><td>NEW</td></tr>
+        <tr><td>js/animations.js</td><td>なし</td><td>完全実装 (11アニメ関数)</td><td>NEW</td></tr>
+        <tr><td>css/sections.css</td><td>基本</td><td>マーキー・Philosophy・FL新クラス追加</td><td>UPDATED</td></tr>
+      </table>
+
+      <h3>1.2 対象ファイル</h3>
+      <table>
+        <tr><th>ファイル</th><th>操作</th><th>主要変更</th></tr>
+        <tr><td><code>index.html</code></td><td>大幅書き換え</td><td>14セクション構造、新HTML要素追加</td></tr>
+        <tr><td><code>css/sections.css</code></td><td>追加</td><td>marquee-band、philosophy、fl-showcase新クラス</td></tr>
+        <tr><td><code>css/animations.css</code></td><td>新規作成✓</td><td>全アニメーションCSS (既完了)</td></tr>
+        <tr><td><code>js/animations.js</code></td><td>新規作成✓</td><td>11アニメーション関数 (既完了)</td></tr>
+        <tr><td><code>css/style.css</code></td><td>軽微調整</td><td>Cormorant Garamondフォント追加</td></tr>
+        <tr><td><code>familink.html</code></td><td>更新✓</td><td>animations統合 (既完了)</td></tr>
+        <tr><td><code>services.html</code></td><td>更新✓</td><td>animations統合 (既完了)</td></tr>
+      </table>
+    </section>
+
+    <!-- 2. HTML詳細仕様 -->
+    <section class="section" id="sec2">
+      <div class="section__num">Section 02</div>
+      <h2 class="section__title">HTML詳細仕様 — 全14セクション構造</h2>
+
+      <h3>2.0 ページ全体ワイヤーフレーム (index.html)</h3>
+      <div class="wireframe">
+        <div class="wf-row"><div class="wf-row__num">NAV</div><div class="wf-row__block wf-dark">グローバルナビゲーション (sticky, backdrop-blur) <span class="wf-row__badge badge-exist">EXIST</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">01</div><div class="wf-row__block wf-dark">HERO — パーティクル・Canvas・大型テキスト・2CTA・テクチップス <span class="wf-row__badge badge-exist">EXIST</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">02</div><div class="wf-row__block wf-dark">MARQUEE BAND — ダーク背景 技術キーワードティッカー <span class="wf-row__badge badge-new">NEW ★</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">03</div><div class="wf-row__block wf-white">PHILOSOPHY — 白BG・Cormorant大型哲学クォート・テキストリビール <span class="wf-row__badge badge-new">NEW ★</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">04</div><div class="wf-row__block wf-mid">ABOUT — 会社説明テキスト + Mission/Vision/Value/Product 4カード <span class="wf-row__badge badge-exist">EXIST</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">05</div><div class="wf-row__block wf-blue">STATS — 50+導入実績 / 100%満足度 / 3年 / 4事業 カウンター <span class="wf-row__badge badge-new">NEW</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">06</div><div class="wf-row__block wf-white">SERVICES — 4カード (IT支援/Familink/教育/AI) js-stagger・js-tilt <span class="wf-row__badge badge-exist">EXIST</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">07</div><div class="wf-row__block wf-dark">FAMILINK SHOWCASE — ダークグラデ・2iPhone・hoku.png・特徴リスト <span class="wf-row__badge badge-enh">ENHANCED ★</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">08</div><div class="wf-row__block wf-mid">STRENGTHS — 6項目 (スピード/品質/サポート/AI/教育/協創) <span class="wf-row__badge badge-new">NEW</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">09</div><div class="wf-row__block wf-white">WORKS — 導入事例 3カード (画像・会社名・成果) <span class="wf-row__badge badge-new">NEW</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">10</div><div class="wf-row__block wf-dark">CEO MESSAGE — Cormorant大型クォート・代表者写真・署名 <span class="wf-row__badge badge-enh">ENHANCED ★</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">11</div><div class="wf-row__block wf-mid">COMPANY — 会社情報テーブル <span class="wf-row__badge badge-exist">EXIST</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">12</div><div class="wf-row__block wf-blue">CTA BAND — 青グラデ・行動喚起バナー <span class="wf-row__badge badge-exist">EXIST</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">13</div><div class="wf-row__block wf-white">CONTACT — お問い合わせフォーム <span class="wf-row__badge badge-exist">EXIST</span></div></div>
+        <div class="wf-row"><div class="wf-row__num">FT</div><div class="wf-row__block wf-dark">FOOTER — 4カラム (会社/事業/リンク/SNS) <span class="wf-row__badge badge-exist">EXIST</span></div></div>
+      </div>
+
+      <h3>2.1 ナビゲーション (NAV)</h3>
+      <div class="comp-card">
+        <div class="comp-card__head"><h4>&lt;header class="nav"&gt;</h4><span class="comp-card__tag">EXISTING</span></div>
+        <div class="comp-card__body">
+          <table>
+            <tr><th>属性</th><th>値</th></tr>
+            <tr><td>構造</td><td>logo + nav__links (PC) + hamburger button + nav__drawer (SP)</td></tr>
+            <tr><td>v2.0変更</td><td>ナビリンクに <code>#philosophy</code>, <code>#strengths</code>, <code>#works</code> 追加</td></tr>
+            <tr><td>スクロール挙動</td><td><code>initNavHighlight()</code> が <code>.is-active</code> を付与</td></tr>
+            <tr><td>背景</td><td><code>rgba(5,10,20,.85)</code> + <code>backdrop-filter: blur(20px)</code></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <h3>2.2 ヒーローセクション (HERO)</h3>
+      <div class="comp-card">
+        <div class="comp-card__head"><h4>&lt;section id="hero" class="hero"&gt;</h4><span class="comp-card__tag">EXISTING + ENHANCED</span></div>
+        <div class="comp-card__body">
+          <table>
+            <tr><th>要素</th><th>詳細</th></tr>
+            <tr><td><code>&lt;canvas id="hero-canvas"&gt;</code></td><td>パーティクル 110粒、接続線、ブロブ (main.js管理)</td></tr>
+            <tr><td><code>.hero__eyebrow</code></td><td>section-eyebrow バッジ "ITS合同会社"</td></tr>
+            <tr><td><code>.hero__title</code></td><td>js-text-reveal 対象。2行分割 <code>.js-text-reveal__line</code> 2個</td></tr>
+            <tr><td><code>.hero__sub</code></td><td>サブタイトル文字列</td></tr>
+            <tr><td>CTA primary</td><td><code>.btn-primary.js-magnetic</code> + <code>data-magnetic-strength="0.22"</code></td></tr>
+            <tr><td>CTA secondary</td><td><code>.btn-ghost</code></td></tr>
+            <tr><td><code>.hero__chips</code></td><td>技術バッジ (AI × DX / Web × Mobile / React × Node.js)</td></tr>
+            <tr><td>スクロールインジケーター</td><td><code>.scroll-indicator</code> + <code>.scroll-indicator__line</code></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <h3>2.3 マーキーバンド (MARQUEE BAND) ★NEW</h3>
+      <div class="comp-card">
+        <div class="comp-card__head"><h4>&lt;section class="marquee-band"&gt;</h4><span class="comp-card__tag">NEW v2.0</span></div>
+        <div class="comp-card__body">
+          <div class="code-block">
+            <div class="code-block__label">HTML Structure</div>
+            <pre><span class="sel">&lt;section</span> <span class="val">class</span>=<span class="str">"marquee-band"</span> <span class="val">aria-hidden</span>=<span class="str">"true"</span><span class="sel">&gt;</span>
+  <span class="sel">&lt;div</span> <span class="val">class</span>=<span class="str">"marquee-inner"</span><span class="sel">&gt;</span>
+    <span class="sel">&lt;div</span> <span class="val">class</span>=<span class="str">"marquee-track"</span><span class="sel">&gt;</span>
+      <span class="cmt">&lt;!-- 12キーワード × 2回 = 24アイテム (シームレスループ) --&gt;</span>
+      <span class="sel">&lt;span</span> <span class="val">class</span>=<span class="str">"marquee-item"</span><span class="sel">&gt;</span>DX推進<span class="sel">&lt;/span&gt;</span>
+      <span class="sel">&lt;span</span> <span class="val">class</span>=<span class="str">"marquee-sep"</span><span class="sel">&gt;</span>★<span class="sel">&lt;/span&gt;</span>
+      <span class="sel">&lt;span</span> <span class="val">class</span>=<span class="str">"marquee-item"</span><span class="sel">&gt;</span>AI活用<span class="sel">&lt;/span&gt;</span>
+      <span class="sel">&lt;span</span> <span class="val">class</span>=<span class="str">"marquee-sep"</span><span class="sel">&gt;</span>★<span class="sel">&lt;/span&gt;</span>
+      <span class="cmt">&lt;!-- ... 残り10キーワード --&gt;</span>
+      <span class="cmt">&lt;!-- 同一セットを繰り返し --&gt;</span>
+    <span class="sel">&lt;/div&gt;</span>
+  <span class="sel">&lt;/div&gt;</span>
+<span class="sel">&lt;/section&gt;</span></pre>
+          </div>
+          <table>
+            <tr><th>プロパティ</th><th>値</th></tr>
+            <tr><td>背景色</td><td><code>#050A14</code> (hero同一ダーク)</td></tr>
+            <tr><td>高さ</td><td>52px</td></tr>
+            <tr><td>キーワード (12個)</td><td>DX推進 / AI活用 / Web開発 / モバイルアプリ / 業務自動化 / クラウド設計 / React / Node.js / Python / データ分析 / IT教育 / Familink</td></tr>
+            <tr><td>セパレーター</td><td>★ (gold色 <code>#C9A84C</code>)</td></tr>
+            <tr><td>アニメーション</td><td>CSS only: <code>anim-marquee 40s linear infinite</code></td></tr>
+            <tr><td>ホバー</td><td><code>animation-play-state: paused</code></td></tr>
+            <tr><td>aria</td><td><code>aria-hidden="true"</code> (装飾)</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <h3>2.4 Philosophyセクション ★NEW</h3>
+      <div class="comp-card">
+        <div class="comp-card__head"><h4>&lt;section id="philosophy" class="philosophy"&gt;</h4><span class="comp-card__tag">NEW v2.0 — Pokémon Philosophy Ref</span></div>
+        <div class="comp-card__body">
+          <div class="poke-ref">
+            <div class="poke-ref__label">★ Pokémon Reference</div>
+            <div class="poke-ref__text">ポケモン株式会社サイトの "Our Philosophy" セクションは白背景に大型サンセリフで企業理念を一文掲載。CEO写真左・テキスト右の2カラムで深い余白を持つ。ITSでは日本語Cormorant Garamondを用いた詩的な哲学クォートを実装する。</div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__label">HTML Structure</div>
+            <pre><span class="sel">&lt;section</span> <span class="val">id</span>=<span class="str">"philosophy"</span> <span class="val">class</span>=<span class="str">"philosophy"</span><span class="sel">&gt;</span>
+  <span class="sel">&lt;div</span> <span class="val">class</span>=<span class="str">"philosophy__inner container"</span><span class="sel">&gt;</span>
+    <span class="sel">&lt;p</span> <span class="val">class</span>=<span class="str">"philosophy__eyebrow js-line-reveal"</span><span class="sel">&gt;</span>Our Philosophy<span class="sel">&lt;/p&gt;</span>
+    <span class="sel">&lt;blockquote</span> <span class="val">class</span>=<span class="str">"philosophy__text js-text-reveal"</span><span class="sel">&gt;</span>
+      <span class="sel">&lt;span</span> <span class="val">class</span>=<span class="str">"js-text-reveal__line"</span><span class="sel">&gt;</span>テクノロジーは、目的ではない。<span class="sel">&lt;/span&gt;</span>
+      <span class="sel">&lt;span</span> <span class="val">class</span>=<span class="str">"js-text-reveal__line"</span><span class="sel">&gt;</span>人の暮らしを豊かにするための、手段だ。<span class="sel">&lt;/span&gt;</span>
+    <span class="sel">&lt;/blockquote&gt;</span>
+    <span class="sel">&lt;p</span> <span class="val">class</span>=<span class="str">"philosophy__sub js-stagger-item"</span><span class="sel">&gt;</span>
+      ITS合同会社は「技術で社会課題を解決する」という信念のもと、...
+    <span class="sel">&lt;/p&gt;</span>
+  <span class="sel">&lt;/div&gt;</span>
+<span class="sel">&lt;/section&gt;</span></pre>
+          </div>
+          <table>
+            <tr><th>プロパティ</th><th>値</th></tr>
+            <tr><td>背景</td><td><code>#FFFFFF</code> (純白)</td></tr>
+            <tr><td>パディング</td><td><code>clamp(80px, 10vw, 140px) 0</code></td></tr>
+            <tr><td>フォント</td><td>Cormorant Garamond (Google Fonts)</td></tr>
+            <tr><td>クォートサイズ</td><td><code>clamp(2rem, 5vw, 4rem)</code></td></tr>
+            <tr><td>フォントウェイト</td><td>300 (Light — 余白感)</td></tr>
+            <tr><td>アニメーション</td><td><code>js-text-reveal</code> + <code>js-line-reveal</code></td></tr>
+            <tr><td>最大幅</td><td><code>720px</code> (narrow, focused)</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <h3>2.5 統計カード (STATS)</h3>
+      <div class="comp-card">
+        <div class="comp-card__head"><h4>&lt;div class="stat-grid"&gt;</h4><span class="comp-card__tag">NEW</span></div>
+        <div class="comp-card__body">
+          <table>
+            <tr><th>カード</th><th>data-target</th><th>data-suffix</th><th>ラベル</th></tr>
+            <tr><td>1</td><td>50</td><td>+</td><td>導入実績</td></tr>
+            <tr><td>2</td><td>100</td><td>%</td><td>クライアント満足度</td></tr>
+            <tr><td>3</td><td>3</td><td>年</td><td>サービス提供年数</td></tr>
+            <tr><td>4</td><td>4</td><td>事業</td><td>展開中の事業数</td></tr>
+          </table>
+          <p>各 <code>.js-counter</code> 要素は <code>initCounters()</code> が IntersectionObserver で捕捉し、easeOutCubic 2000ms でカウントアップを実行する。</p>
+        </div>
+      </div>
+
+      <h3>2.6 Familinkショーケース (FAMILINK SHOWCASE) ★ENHANCED</h3>
+      <div class="comp-card">
+        <div class="comp-card__head"><h4>&lt;section id="familink" class="fl-showcase"&gt;</h4><span class="comp-card__tag">ENHANCED v2.0</span></div>
+        <div class="comp-card__body">
+          <div class="code-block">
+            <div class="code-block__label">HTML Structure</div>
+            <pre><span class="sel">&lt;section</span> <span class="val">id</span>=<span class="str">"familink"</span> <span class="val">class</span>=<span class="str">"fl-showcase"</span><span class="sel">&gt;</span>
+  <span class="sel">&lt;div</span> <span class="val">class</span>=<span class="str">"fl-showcase__inner container"</span><span class="sel">&gt;</span>
+    <span class="sel">&lt;div</span> <span class="val">class</span>=<span class="str">"fl-showcase__content"</span><span class="sel">&gt;</span>
+      <span class="sel">&lt;p</span> <span class="val">class</span>=<span class="str">"fl-showcase__eyebrow"</span><span class="sel">&gt;</span>Featured Product<span class="sel">&lt;/p&gt;</span>
+      <span class="sel">&lt;h2</span> <span class="val">class</span>=<span class="str">"fl-showcase__name"</span><span class="sel">&gt;</span>Familink<span class="sel">&lt;/h2&gt;</span>
+      <span class="sel">&lt;p</span> <span class="val">class</span>=<span class="str">"fl-showcase__badge"</span><span class="sel">&gt;</span>家族をつなぐ、かんたん連絡アプリ<span class="sel">&lt;/p&gt;</span>
+      <span class="sel">&lt;ul</span> <span class="val">class</span>=<span class="str">"fl-showcase__features js-stagger"</span><span class="sel">&gt;</span>
+        <span class="sel">&lt;li</span> <span class="val">class</span>=<span class="str">"js-stagger-item"</span><span class="sel">&gt;</span>タップひとつで家族に既読通知<span class="sel">&lt;/li&gt;</span>
+        <span class="cmt">&lt;!-- 4 items total --&gt;</span>
+      <span class="sel">&lt;/ul&gt;</span>
+      <span class="sel">&lt;a</span> <span class="val">href</span>=<span class="str">"familink.html"</span> <span class="val">class</span>=<span class="str">"btn-primary js-magnetic"</span><span class="sel">&gt;</span>詳しく見る<span class="sel">&lt;/a&gt;</span>
+    <span class="sel">&lt;/div&gt;</span>
+    <span class="sel">&lt;div</span> <span class="val">class</span>=<span class="str">"fl-showcase__mockups"</span><span class="sel">&gt;</span>
+      <span class="sel">&lt;div</span> <span class="val">class</span>=<span class="str">"iphone-frame iphone-frame--back float-anim"</span><span class="sel">&gt;</span>
+        <span class="sel">&lt;img</span> <span class="val">src</span>=<span class="str">"images/hoku.png"</span> <span class="val">alt</span>=<span class="str">"Familink"</span><span class="sel">&gt;</span>
+      <span class="sel">&lt;/div&gt;</span>
+      <span class="sel">&lt;div</span> <span class="val">class</span>=<span class="str">"iphone-frame iphone-frame--front float-anim"</span> <span class="val">style</span>=<span class="str">"animation-delay:.6s"</span><span class="sel">&gt;</span>
+        <span class="cmt">&lt;!-- CSSアプリ画面デモ --&gt;</span>
+      <span class="sel">&lt;/div&gt;</span>
+    <span class="sel">&lt;/div&gt;</span>
+  <span class="sel">&lt;/div&gt;</span>
+<span class="sel">&lt;/section&gt;</span></pre>
+          </div>
+          <table>
+            <tr><th>プロパティ</th><th>値</th></tr>
+            <tr><td>背景</td><td><code>linear-gradient(135deg, #050A14 0%, #0A1428 50%, #0D1F0D 100%)</code></td></div>
+            <tr><td>レイアウト</td><td>2カラム (content 1fr / mockups 1fr)</td></tr>
+            <tr><td>iPhone 後ろ</td><td>hoku.png 表示、<code>mix-blend-mode: screen</code></td></tr>
+            <tr><td>iPhone 前</td><td>CSSアプリデモ画面</td></tr>
+            <tr><td>フローティング</td><td><code>float-anim</code> 前後でdelayずらし</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <h3>2.7 CEOメッセージ ★ENHANCED</h3>
+      <div class="comp-card">
+        <div class="comp-card__head"><h4>&lt;section id="message" class="ceo-message"&gt;</h4><span class="comp-card__tag">NEW v2.0</span></div>
+        <div class="comp-card__body">
+          <div class="poke-ref">
+            <div class="poke-ref__label">★ Pokémon Reference</div>
+            <div class="poke-ref__text">ポケモン社サイトのCEOメッセージセクションは、ダーク背景に大型Garamondクォートを左寄せで配置し、代表者の写真を右側にフルハイト表示する。ITSではこれを再現し、Cormorant Garamond・光の演出・代表者写真で高級感を演出する。</div>
+          </div>
+          <table>
+            <tr><th>要素</th><th>詳細</th></tr>
+            <tr><td>背景</td><td><code>#050A14</code> ダーク</td></tr>
+            <tr><td>大型クォート</td><td>Cormorant Garamond 300weight / <code>clamp(2.5rem, 5vw, 5rem)</code> / 白文字</td></tr>
+            <tr><td>クォートテキスト</td><td>"すべての判断基準は、人の役に立てるかどうかだ。"</td></tr>
+            <tr><td>サブテキスト</td><td>代表メッセージ本文 (3〜4文)</td></tr>
+            <tr><td>署名</td><td>代表者名 + 役職 (Cormorant Garamond italic)</td></tr>
+            <tr><td>アニメーション</td><td><code>js-text-reveal</code> (クォート) + <code>js-stagger-item</code> (本文)</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. CSS詳細仕様 -->
+    <section class="section" id="sec3">
+      <div class="section__num">Section 03</div>
+      <h2 class="section__title">CSS詳細仕様</h2>
+
+      <h3>3.1 CSS変数 (カスタムプロパティ)</h3>
+      <p>v2.0では <code>css/style.css</code> の <code>:root</code> に以下を追加・確認する。2重定義（longform + shorthand）は familink.html との互換性のために維持する。</p>
+      <div class="prop-grid">
+        <div class="prop-item"><div class="prop-item__key">--color-primary / --c-primary</div><div class="prop-item__val">#0A84FF (ITS Blue)</div></div>
+        <div class="prop-item"><div class="prop-item__key">--color-gold / --c-gold</div><div class="prop-item__val">#C9A84C</div></div>
+        <div class="prop-item"><div class="prop-item__key">--color-hero-bg / --c-hero</div><div class="prop-item__val">#050A14</div></div>
+        <div class="prop-item"><div class="prop-item__key">--color-bg / --c-bg</div><div class="prop-item__val">#FFFFFF</div></div>
+        <div class="prop-item"><div class="prop-item__key">--font-display</div><div class="prop-item__val">'Cormorant Garamond', serif</div></div>
+        <div class="prop-item"><div class="prop-item__key">--font-product</div><div class="prop-item__val">'Poppins', sans-serif</div></div>
+        <div class="prop-item"><div class="prop-item__key">--ease-out</div><div class="prop-item__val">cubic-bezier(0.16, 1, 0.3, 1)</div></div>
+        <div class="prop-item"><div class="prop-item__key">--ease-snap</div><div class="prop-item__val">cubic-bezier(0.76, 0, 0.24, 1)</div></div>
+        <div class="prop-item"><div class="prop-item__key">--grad-primary</div><div class="prop-item__val">linear-gradient(135deg, #0A84FF, #0055CC)</div></div>
+        <div class="prop-item"><div class="prop-item__key">--container-max</div><div class="prop-item__val">1160px</div></div>
+        <div class="prop-item"><div class="prop-item__key">--pad-x</div><div class="prop-item__val">clamp(20px, 5vw, 60px)</div></div>
+        <div class="prop-item"><div class="prop-item__key">--radius-xl</div><div class="prop-item__val">20px</div></div>
+      </div>
+
+      <h3>3.2 Cormorant Garamondフォント追加</h3>
+      <div class="code-block">
+        <div class="code-block__label">css/style.css — Google Fonts追加</div>
+        <pre><span class="cmt">/* style.css の @import に追加 */</span>
+<span class="sel">&lt;link</span> <span class="val">href</span>=<span class="str">"https://fonts.googleapis.com/css2?
+  family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&
+  family=Noto+Sans+JP:wght@300;400;500;700&
+  family=Poppins:wght@400;600;700&
+  display=swap"</span> <span class="val">rel</span>=<span class="str">"stylesheet"</span><span class="sel">&gt;</span></pre>
+      </div>
+
+      <h3>3.3 新規CSSクラス仕様 (css/sections.css 追加分)</h3>
+
+      <h4>マーキーバンド</h4>
+      <div class="code-block">
+        <div class="code-block__label">css/sections.css — .marquee-band</div>
+        <pre><span class="sel">.marquee-band</span> {
+  <span class="prop">background</span>: <span class="val">var(--color-hero-bg)</span>;
+  <span class="prop">height</span>: <span class="val">52px</span>;
+  <span class="prop">overflow</span>: <span class="val">hidden</span>;
+  <span class="prop">border-top</span>: <span class="val">1px solid rgba(255,255,255,.06)</span>;
+  <span class="prop">border-bottom</span>: <span class="val">1px solid rgba(255,255,255,.06)</span>;
+}
+<span class="sel">.marquee-inner</span> {
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">height</span>: <span class="val">100%</span>;
+  <span class="prop">overflow</span>: <span class="val">hidden</span>;
+}
+<span class="sel">.marquee-track</span> {
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">white-space</span>: <span class="val">nowrap</span>;
+  <span class="prop">animation</span>: <span class="val">anim-marquee 40s linear infinite</span>;
+  <span class="prop">will-change</span>: <span class="val">transform</span>;
+}
+<span class="sel">.marquee-track:hover</span> {
+  <span class="prop">animation-play-state</span>: <span class="val">paused</span>;
+}
+<span class="sel">.marquee-item</span> {
+  <span class="prop">font-family</span>: <span class="val">var(--font-product)</span>;
+  <span class="prop">font-size</span>: <span class="val">12px</span>;
+  <span class="prop">font-weight</span>: <span class="val">600</span>;
+  <span class="prop">letter-spacing</span>: <span class="val">0.12em</span>;
+  <span class="prop">text-transform</span>: <span class="val">uppercase</span>;
+  <span class="prop">color</span>: <span class="val">rgba(255,255,255,.55)</span>;
+  <span class="prop">padding</span>: <span class="val">0 20px</span>;
+}
+<span class="sel">.marquee-sep</span> {
+  <span class="prop">color</span>: <span class="val">var(--color-gold)</span>;
+  <span class="prop">font-size</span>: <span class="val">10px</span>;
+}</pre>
+      </div>
+
+      <h4>Philosophyセクション</h4>
+      <div class="code-block">
+        <div class="code-block__label">css/sections.css — .philosophy</div>
+        <pre><span class="sel">.philosophy</span> {
+  <span class="prop">background</span>: <span class="val">#FFFFFF</span>;
+  <span class="prop">padding</span>: <span class="val">clamp(80px, 10vw, 140px) 0</span>;
+  <span class="prop">text-align</span>: <span class="val">center</span>;
+}
+<span class="sel">.philosophy__inner</span> {
+  <span class="prop">max-width</span>: <span class="val">760px</span>;
+}
+<span class="sel">.philosophy__eyebrow</span> {
+  <span class="prop">font-family</span>: <span class="val">var(--font-product)</span>;
+  <span class="prop">font-size</span>: <span class="val">11px</span>;
+  <span class="prop">font-weight</span>: <span class="val">700</span>;
+  <span class="prop">letter-spacing</span>: <span class="val">0.25em</span>;
+  <span class="prop">text-transform</span>: <span class="val">uppercase</span>;
+  <span class="prop">color</span>: <span class="val">var(--color-primary)</span>;
+  <span class="prop">margin-bottom</span>: <span class="val">40px</span>;
+}
+<span class="sel">.philosophy__text</span> {
+  <span class="prop">font-family</span>: <span class="val">var(--font-display)</span>;
+  <span class="prop">font-size</span>: <span class="val">clamp(2rem, 5vw, 4rem)</span>;
+  <span class="prop">font-weight</span>: <span class="val">300</span>;
+  <span class="prop">line-height</span>: <span class="val">1.4</span>;
+  <span class="prop">color</span>: <span class="val">var(--color-dark)</span>;
+  <span class="prop">margin-bottom</span>: <span class="val">48px</span>;
+  <span class="prop">quotes</span>: <span class="val">none</span>;
+}
+<span class="sel">.philosophy__sub</span> {
+  <span class="prop">font-size</span>: <span class="val">15px</span>;
+  <span class="prop">line-height</span>: <span class="val">1.9</span>;
+  <span class="prop">color</span>: <span class="val">var(--color-text-2)</span>;
+  <span class="prop">max-width</span>: <span class="val">560px</span>;
+  <span class="prop">margin</span>: <span class="val">0 auto</span>;
+}</pre>
+      </div>
+
+      <h4>Familinkショーケース</h4>
+      <div class="code-block">
+        <div class="code-block__label">css/sections.css — .fl-showcase</div>
+        <pre><span class="sel">.fl-showcase</span> {
+  <span class="prop">background</span>: <span class="val">linear-gradient(135deg, #050A14 0%, #0A1428 50%, #0D1F0D 100%)</span>;
+  <span class="prop">padding</span>: <span class="val">clamp(80px, 10vw, 120px) 0</span>;
+  <span class="prop">overflow</span>: <span class="val">hidden</span>;
+}
+<span class="sel">.fl-showcase__inner</span> {
+  <span class="prop">display</span>: <span class="val">grid</span>;
+  <span class="prop">grid-template-columns</span>: <span class="val">1fr 1fr</span>;
+  <span class="prop">gap</span>: <span class="val">60px</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+}
+<span class="sel">.fl-showcase__eyebrow</span> {
+  <span class="prop">font-family</span>: <span class="val">var(--font-product)</span>;
+  <span class="prop">font-size</span>: <span class="val">10px</span>;
+  <span class="prop">letter-spacing</span>: <span class="val">0.3em</span>;
+  <span class="prop">text-transform</span>: <span class="val">uppercase</span>;
+  <span class="prop">color</span>: <span class="val">var(--color-gold)</span>;
+  <span class="prop">margin-bottom</span>: <span class="val">16px</span>;
+}
+<span class="sel">.fl-showcase__name</span> {
+  <span class="prop">font-family</span>: <span class="val">var(--font-display)</span>;
+  <span class="prop">font-size</span>: <span class="val">clamp(2.5rem, 5vw, 4rem)</span>;
+  <span class="prop">font-weight</span>: <span class="val">300</span>;
+  <span class="prop">color</span>: <span class="val">#fff</span>;
+  <span class="prop">margin-bottom</span>: <span class="val">12px</span>;
+}
+<span class="sel">.fl-showcase__features</span> {
+  <span class="prop">list-style</span>: <span class="val">none</span>;
+  <span class="prop">padding</span>: <span class="val">0</span>;
+  <span class="prop">margin</span>: <span class="val">28px 0 40px</span>;
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">flex-direction</span>: <span class="val">column</span>;
+  <span class="prop">gap</span>: <span class="val">12px</span>;
+}
+<span class="sel">.fl-showcase__features li</span> {
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">gap</span>: <span class="val">10px</span>;
+  <span class="prop">font-size</span>: <span class="val">14px</span>;
+  <span class="prop">color</span>: <span class="val">rgba(255,255,255,.8)</span>;
+}
+<span class="sel">.fl-showcase__features li::before</span> {
+  <span class="prop">content</span>: <span class="val">'✓'</span>;
+  <span class="prop">color</span>: <span class="val">#30D158</span>;
+  <span class="prop">font-weight</span>: <span class="val">700</span>;
+  <span class="prop">flex-shrink</span>: <span class="val">0</span>;
+}
+<span class="sel">.fl-showcase__mockups</span> {
+  <span class="prop">position</span>: <span class="val">relative</span>;
+  <span class="prop">height</span>: <span class="val">480px</span>;
+}
+<span class="sel">.iphone-frame</span> {
+  <span class="prop">position</span>: <span class="val">absolute</span>;
+  <span class="prop">width</span>: <span class="val">180px</span>;
+  <span class="prop">background</span>: <span class="val">#1C1C1E</span>;
+  <span class="prop">border-radius</span>: <span class="val">28px</span>;
+  <span class="prop">padding</span>: <span class="val">12px</span>;
+  <span class="prop">box-shadow</span>: <span class="val">0 40px 80px rgba(0,0,0,.6)</span>;
+}
+<span class="sel">.iphone-frame--back</span>  { <span class="prop">left</span>: <span class="val">0</span>; <span class="prop">top</span>: <span class="val">60px</span>; <span class="prop">transform</span>: <span class="val">rotate(-6deg)</span>; <span class="prop">z-index</span>: <span class="val">1</span>; }
+<span class="sel">.iphone-frame--front</span> { <span class="prop">left</span>: <span class="val">120px</span>; <span class="prop">top</span>: <span class="val">0</span>; <span class="prop">transform</span>: <span class="val">rotate(3deg)</span>; <span class="prop">z-index</span>: <span class="val">2</span>; }
+
+<span class="sel">@media (max-width: 768px)</span> {
+  <span class="sel">.fl-showcase__inner</span> { <span class="prop">grid-template-columns</span>: <span class="val">1fr</span>; }
+  <span class="sel">.fl-showcase__mockups</span> { <span class="prop">display</span>: <span class="val">none</span>; }
+}</pre>
+      </div>
+    </section>
+
+    <!-- 4. JS詳細仕様 -->
+    <section class="section" id="sec4">
+      <div class="section__num">Section 04</div>
+      <h2 class="section__title">JS詳細仕様 (js/animations.js)</h2>
+
+      <h3>4.1 ファイル構造概要</h3>
+      <div class="code-block">
+        <div class="code-block__label">js/animations.js — IIFE構造</div>
+        <pre><span class="kw">(function</span> () {
+  <span class="str">'use strict'</span>;
+  <span class="kw">var</span> prefersReduced = window.matchMedia(<span class="str">'(prefers-reduced-motion: reduce)'</span>).matches;
+
+  <span class="kw">function</span> <span class="fn">initScrollProgress</span>() { <span class="cmt">/* スクロールバー */</span> }
+  <span class="kw">function</span> <span class="fn">initStagger</span>()        { <span class="cmt">/* スタガー表示 */</span> }
+  <span class="kw">function</span> <span class="fn">initCounters</span>()       { <span class="cmt">/* カウンターアップ */</span> }
+  <span class="kw">function</span> <span class="fn">initTextReveal</span>()     { <span class="cmt">/* clip-pathリビール */</span> }
+  <span class="kw">function</span> <span class="fn">initParallax</span>()       { <span class="cmt">/* パラレックス */</span> }
+  <span class="kw">function</span> <span class="fn">initMagnetic</span>()       { <span class="cmt">/* 磁石ボタン */</span> }
+  <span class="kw">function</span> <span class="fn">initCursor</span>()         { <span class="cmt">/* カスタムカーソル */</span> }
+  <span class="kw">function</span> <span class="fn">initLineReveal</span>()     { <span class="cmt">/* ラインリビール */</span> }
+  <span class="kw">function</span> <span class="fn">initNavHighlight</span>()   { <span class="cmt">/* ナビアクティブ */</span> }
+  <span class="kw">function</span> <span class="fn">initCardTilt</span>()       { <span class="cmt">/* 3Dチルト */</span> }
+  <span class="kw">function</span> <span class="fn">initPageReveal</span>()     { <span class="cmt">/* ページカーテン */</span> }
+
+  document.addEventListener(<span class="str">'DOMContentLoaded'</span>, <span class="kw">function</span>() {
+    <span class="fn">initPageReveal</span>();
+    <span class="fn">initScrollProgress</span>();
+    <span class="fn">initStagger</span>();
+    <span class="fn">initCounters</span>();
+    <span class="fn">initTextReveal</span>();
+    <span class="fn">initLineReveal</span>();
+    <span class="fn">initNavHighlight</span>();
+    <span class="kw">if</span> (!prefersReduced) {
+      <span class="fn">initParallax</span>();
+      <span class="fn">initMagnetic</span>();
+      <span class="fn">initCursor</span>();
+      <span class="fn">initCardTilt</span>();
+    }
+  });
+}());
+        </pre>
+      </div>
+
+      <h3>4.2 各関数詳細仕様</h3>
+      <table>
+        <tr><th>関数名</th><th>対象要素</th><th>トリガー</th><th>動作詳細</th></tr>
+        <tr>
+          <td><code>initPageReveal</code></td>
+          <td><code>#page-reveal</code></td>
+          <td>DOMContentLoaded</td>
+          <td>requestAnimationFrame → <code>.is-done</code>付与 → 900ms後 remove()</td>
+        </tr>
+        <tr>
+          <td><code>initScrollProgress</code></td>
+          <td><code>#scroll-progress</code></td>
+          <td>scroll (passive)</td>
+          <td>scrollY / (scrollHeight - clientHeight) → <code>scaleX(ratio)</code></td>
+        </tr>
+        <tr>
+          <td><code>initStagger</code></td>
+          <td><code>.js-stagger</code>内の<code>.js-stagger-item</code></td>
+          <td>IntersectionObserver threshold:0.15</td>
+          <td>各item に 130ms*index delay → <code>.is-visible</code>付与</td>
+        </tr>
+        <tr>
+          <td><code>initCounters</code></td>
+          <td><code>.js-counter</code></td>
+          <td>IntersectionObserver threshold:0.5</td>
+          <td>data-target → rAF easeOutCubic 2000ms でカウントアップ</td>
+        </tr>
+        <tr>
+          <td><code>initTextReveal</code></td>
+          <td><code>.js-text-reveal__line</code></td>
+          <td>IntersectionObserver threshold:0.3</td>
+          <td>100ms*index delay → <code>.is-revealed</code>付与 (clip-path + translateY)</td>
+        </tr>
+        <tr>
+          <td><code>initLineReveal</code></td>
+          <td><code>.js-line-reveal</code></td>
+          <td>IntersectionObserver threshold:0.5</td>
+          <td><code>.is-revealed</code>付与 → <code>::after</code> width 0→48px</td>
+        </tr>
+        <tr>
+          <td><code>initNavHighlight</code></td>
+          <td><code>.nav__link</code></td>
+          <td>scroll (passive)</td>
+          <td>各セクションY位置と scrollY+100 比較 → <code>.is-active</code>付与</td>
+        </tr>
+        <tr>
+          <td><code>initParallax</code></td>
+          <td><code>.js-parallax</code></td>
+          <td>scroll (passive)</td>
+          <td>data-parallax-speed × scrollY → <code>translateY(Xpx)</code></td>
+        </tr>
+        <tr>
+          <td><code>initMagnetic</code></td>
+          <td><code>.js-magnetic</code></td>
+          <td>mousemove / mouseleave</td>
+          <td>pointer:coarse スキップ / strength 0.28 / mouseleave でtransform:none</td>
+        </tr>
+        <tr>
+          <td><code>initCursor</code></td>
+          <td><code>#custom-cursor</code></td>
+          <td>mousemove / rAF</td>
+          <td>lerp coefficient 0.14 / <code>.js-magnetic</code> hover → <code>.is-hover</code></td>
+        </tr>
+        <tr>
+          <td><code>initCardTilt</code></td>
+          <td><code>.js-tilt</code></td>
+          <td>mousemove / mouseleave</td>
+          <td>perspective 800px / max ±5deg / pointer:coarse スキップ</td>
+        </tr>
+      </table>
+
+      <h3>4.3 easeOutCubic 実装</h3>
+      <div class="code-block">
+        <div class="code-block__label">js/animations.js — Counter easeOutCubic</div>
+        <pre><span class="kw">function</span> <span class="fn">initCounters</span>() {
+  document.querySelectorAll(<span class="str">'.js-counter'</span>).forEach(<span class="kw">function</span>(el) {
+    <span class="kw">var</span> target   = +el.dataset.target;
+    <span class="kw">var</span> suffix   = el.dataset.suffix || <span class="str">''</span>;
+    <span class="kw">var</span> duration = <span class="num">2000</span>;
+    <span class="kw">var</span> obs = <span class="kw">new</span> IntersectionObserver(<span class="kw">function</span>(entries) {
+      entries.forEach(<span class="kw">function</span>(entry) {
+        <span class="kw">if</span> (!entry.isIntersecting) <span class="kw">return</span>;
+        obs.unobserve(el);
+        <span class="kw">var</span> start = performance.now();
+        <span class="kw">function</span> <span class="fn">tick</span>(now) {
+          <span class="kw">var</span> t = Math.min((now - start) / duration, <span class="num">1</span>);
+          <span class="kw">var</span> ease = <span class="num">1</span> - Math.pow(<span class="num">1</span> - t, <span class="num">3</span>);  <span class="cmt">// easeOutCubic</span>
+          el.textContent = Math.round(target * ease) + suffix;
+          <span class="kw">if</span> (t < <span class="num">1</span>) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: <span class="num">0.5</span> });
+    obs.observe(el);
+  });
+}</pre>
+      </div>
+    </section>
+
+    <!-- 5. 新規コンポーネント詳細 -->
+    <section class="section" id="sec5">
+      <div class="section__num">Section 05</div>
+      <h2 class="section__title">新規コンポーネント詳細仕様</h2>
+
+      <h3>5.1 マーキーバンド — 完全仕様</h3>
+      <p>CSSのみで実装するシームレスキーワードスクロール。JavaScriptは一切不使用。</p>
+      <table>
+        <tr><th>項目</th><th>仕様</th></tr>
+        <tr><td>キーワード順序</td><td>DX推進 ★ AI活用 ★ Web開発 ★ モバイルアプリ ★ 業務自動化 ★ クラウド設計 ★ React ★ Node.js ★ Python ★ データ分析 ★ IT教育 ★ Familink ★</td></tr>
+        <tr><td>繰り返し回数</td><td>同一セット×2 (シームレスループのため)</td></tr>
+        <tr><td>アニメーション時間</td><td>40秒 (低速・読みやすい)</td></tr>
+        <tr><td>方向</td><td>右から左 (<code>translateX(0) → translateX(-50%)</code>)</td></tr>
+        <tr><td>ホバー停止</td><td>CSS <code>animation-play-state: paused</code></td></tr>
+        <tr><td>reduced-motion対応</td><td>display:none (CSS media query)</td></tr>
+        <tr><td>SEO</td><td><code>aria-hidden="true"</code> (検索エンジンには非表示)</td></tr>
+      </table>
+
+      <h3>5.2 Philosophyセクション — Cormorant Garamond実装</h3>
+      <div class="callout callout--info">
+        <div class="callout__icon">ℹ</div>
+        <div class="callout__body">
+          <strong>Cormorant Garamondについて:</strong> 16世紀のガラモンド体を現代にリバイバルしたWebフォント。weight 300 (Light) での使用が最も洗練されて見える。日本語テキストとの組み合わせでは、Cormorant + Noto Sans JPのペアリングが美しい。
+        </div>
+      </div>
+      <table>
+        <tr><th>テキスト</th><th>フォント</th><th>サイズ</th><th>ウェイト</th><th>カラー</th></tr>
+        <tr><td>eyebrow "Our Philosophy"</td><td>Poppins</td><td>11px</td><td>700</td><td>#0A84FF</td></tr>
+        <tr><td>クォート行1</td><td>Cormorant Garamond</td><td>clamp(2rem,5vw,4rem)</td><td>300</td><td>#050A14</td></tr>
+        <tr><td>クォート行2</td><td>Cormorant Garamond</td><td>clamp(2rem,5vw,4rem)</td><td>300</td><td>#050A14</td></tr>
+        <tr><td>サブテキスト</td><td>Noto Sans JP</td><td>15px</td><td>400</td><td>#6C6C70</td></tr>
+      </table>
+
+      <h3>5.3 CEOメッセージ — Cormorant大型クォート実装</h3>
+      <table>
+        <tr><th>要素</th><th>値</th></tr>
+        <tr><td>背景</td><td>#050A14 (ダーク)</td></tr>
+        <tr><td>大型クォート</td><td>Cormorant Garamond Light / clamp(2.5rem,5vw,5rem) / #fff</td></tr>
+        <tr><td>クォートテキスト</td><td>"すべての判断基準は、<br>人の役に立てるかどうかだ。"</td></tr>
+        <tr><td>左装飾</td><td>縦線 3px / linear-gradient(#0A84FF, #C9A84C) / height 80px</td></tr>
+        <tr><td>本文</td><td>15px / rgba(255,255,255,.7) / max-width 520px</td></tr>
+        <tr><td>署名</td><td>Cormorant Garamond italic / "代表 高橋" 形式</td></tr>
+      </table>
+
+      <h3>5.4 強みセクション — 6項目グリッド</h3>
+      <table>
+        <tr><th>#</th><th>アイコン</th><th>タイトル</th><th>説明</th></tr>
+        <tr><td>1</td><td>⚡</td><td>スピード</td><td>最短1日でプロトタイプ提供</td></tr>
+        <tr><td>2</td><td>✓</td><td>品質保証</td><td>コードレビュー・テスト完備</td></tr>
+        <tr><td>3</td><td>◎</td><td>サポート体制</td><td>導入後も継続的に伴走</td></tr>
+        <tr><td>4</td><td>★</td><td>AI・最新技術</td><td>GPT/Claude API活用可能</td></tr>
+        <tr><td>5</td><td>▲</td><td>IT教育</td><td>スタッフへのDXリテラシー研修</td></tr>
+        <tr><td>6</td><td>◆</td><td>協創精神</td><td>クライアントと一緒に考える</td></tr>
+      </table>
+      <p>実装クラス: <code>.strengths-grid.js-stagger</code> / 各 <code>.strength-item.js-stagger-item</code></p>
+    </section>
+
+    <!-- 6. アニメーション仕様 -->
+    <section class="section" id="sec6">
+      <div class="section__num">Section 06</div>
+      <h2 class="section__title">アニメーション仕様</h2>
+
+      <h3>6.1 ロード順序タイムライン</h3>
+      <div class="timeline">
+        <div class="timeline__events">
+          <div class="tl-item">
+            <div class="tl-item__dot tl-item__dot--blue"></div>
+            <div class="tl-item__content">
+              <div class="tl-item__time">0ms — DOMContentLoaded</div>
+              <div class="tl-item__label"><code>initPageReveal()</code> 実行。<code>#page-reveal</code>が画面を覆っている状態。</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item__dot tl-item__dot--blue"></div>
+            <div class="tl-item__content">
+              <div class="tl-item__time">16ms (次のrAF)</div>
+              <div class="tl-item__label"><code>#page-reveal.is-done</code>付与 → <code>transform: scaleY(0)</code> 開始。カーテンが上へ収縮。</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item__dot tl-item__dot--gold"></div>
+            <div class="tl-item__content">
+              <div class="tl-item__time">750ms</div>
+              <div class="tl-item__label">ページカーテンアニメーション完了 (cubic-bezier snap)。</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item__dot tl-item__dot--gold"></div>
+            <div class="tl-item__content">
+              <div class="tl-item__time">900ms</div>
+              <div class="tl-item__label"><code>#page-reveal</code> を DOM から削除。メモリ解放。</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item__dot tl-item__dot--blue"></div>
+            <div class="tl-item__content">
+              <div class="tl-item__time">0ms (並行)</div>
+              <div class="tl-item__label"><code>initScrollProgress()</code>: scroll イベント登録 (passive)。</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item__dot tl-item__dot--blue"></div>
+            <div class="tl-item__content">
+              <div class="tl-item__time">0ms (並行)</div>
+              <div class="tl-item__label"><code>initStagger / initCounters / initTextReveal / initLineReveal</code>: IntersectionObserver 登録完了。</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item__dot tl-item__dot--green"></div>
+            <div class="tl-item__content">
+              <div class="tl-item__time">スクロール時</div>
+              <div class="tl-item__label">各 IntersectionObserver が発火 → <code>.is-visible / .is-revealed</code> 付与。スタガー130ms間隔。カウンター2000ms easeOutCubic。</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-item__dot tl-item__dot--green"></div>
+            <div class="tl-item__content">
+              <div class="tl-item__time">マウス移動時 (PC)</div>
+              <div class="tl-item__label"><code>initCursor()</code>: rAF lerp 0.14係数で追従。<code>initMagnetic()</code>: .js-magnetic要素に吸着。<code>initCardTilt()</code>: .js-tilt要素3D傾斜。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>6.2 全アニメーション一覧</h3>
+      <table>
+        <tr><th>#</th><th>アニメーション名</th><th>CSSクラス/ID</th><th>ファイル</th><th>duration</th><th>easing</th></tr>
+        <tr><td>1</td><td>ページカーテン</td><td><code>#page-reveal</code></td><td>animations.css</td><td>750ms</td><td>cubic-bezier(0.76,0,0.24,1)</td></tr>
+        <tr><td>2</td><td>スクロールバー</td><td><code>#scroll-progress</code></td><td>animations.css + animations.js</td><td>連続</td><td>—</td></tr>
+        <tr><td>3</td><td>スタガー表示</td><td><code>.js-stagger-item</code></td><td>animations.css + animations.js</td><td>620ms+delay</td><td>ease-out (0.16,1,0.3,1)</td></tr>
+        <tr><td>4</td><td>カウンターアップ</td><td><code>.js-counter</code></td><td>animations.js</td><td>2000ms</td><td>easeOutCubic</td></tr>
+        <tr><td>5</td><td>テキストリビール</td><td><code>.js-text-reveal__line</code></td><td>animations.css + animations.js</td><td>700ms+delay</td><td>ease-out (0.16,1,0.3,1)</td></tr>
+        <tr><td>6</td><td>ラインリビール</td><td><code>.js-line-reveal</code></td><td>animations.css + animations.js</td><td>900ms</td><td>ease-out 0.2s delay</td></tr>
+        <tr><td>7</td><td>カスタムカーソル</td><td><code>#custom-cursor</code></td><td>animations.css + animations.js</td><td>rAF lerp</td><td>lerp 0.14</td></tr>
+        <tr><td>8</td><td>磁石ボタン</td><td><code>.js-magnetic</code></td><td>animations.js</td><td>400ms</td><td>ease-out</td></tr>
+        <tr><td>9</td><td>3Dチルト</td><td><code>.js-tilt</code></td><td>animations.css + animations.js</td><td>300ms</td><td>ease-out</td></tr>
+        <tr><td>10</td><td>マーキー</td><td><code>.marquee-track</code></td><td>animations.css (CSS only)</td><td>40s</td><td>linear</td></tr>
+        <tr><td>11</td><td>フロート</td><td><code>.float-anim</code></td><td>animations.css (CSS only)</td><td>4.2s</td><td>ease-in-out</td></tr>
+        <tr><td>12</td><td>パルスリング</td><td><code>.pulse-dot</code></td><td>animations.css (CSS only)</td><td>2.2s</td><td>ease-out infinite</td></tr>
+        <tr><td>13</td><td>スクロールインジケーター</td><td><code>.scroll-indicator__line::after</code></td><td>animations.css (CSS only)</td><td>1.8s</td><td>ease-in-out infinite</td></tr>
+        <tr><td>14</td><td>グラデーションシフト</td><td><code>.gradient-shift</code></td><td>animations.css (CSS only)</td><td>8s</td><td>ease infinite</td></tr>
+      </table>
+    </section>
+
+    <!-- 7. レスポンシブ詳細 -->
+    <section class="section" id="sec7">
+      <div class="section__num">Section 07</div>
+      <h2 class="section__title">レスポンシブ詳細仕様</h2>
+
+      <h3>7.1 ブレイクポイント定義</h3>
+      <table>
+        <tr><th>名前</th><th>範囲</th><th>主要変更点</th></tr>
+        <tr><td>Desktop Large</td><td>1280px+</td><td>最大幅 1160px コンテナ / 14px ベースフォント</td></tr>
+        <tr><td>Desktop</td><td>1024px–1279px</td><td>標準レイアウト / stat-grid 4列</td></tr>
+        <tr><td>Tablet</td><td>768px–1023px</td><td>stat-grid 2列 / fl-showcase 1列 / services 2列</td></tr>
+        <tr><td>Mobile Large</td><td>480px–767px</td><td>stat-card padding縮小 / nav drawer / hero縦積み</td></tr>
+        <tr><td>Mobile Small</td><td>〜479px</td><td>marquee-item font-size: 10px / philosophy quote 1.8rem</td></tr>
+      </table>
+
+      <h3>7.2 新セクションのレスポンシブ挙動</h3>
+      <table>
+        <tr><th>セクション</th><th>Desktop</th><th>Tablet (≤768px)</th><th>Mobile (≤480px)</th></tr>
+        <tr><td>marquee-band</td><td>height: 52px / 12px font</td><td>同左</td><td>height: 44px / 10px font</td></tr>
+        <tr><td>philosophy</td><td>テキスト中央 / 4rem max</td><td>同左 / 2.5rem max</td><td>左寄せ / 1.8rem</td></tr>
+        <tr><td>fl-showcase</td><td>2カラムグリッド</td><td>1カラム (mockups hidden)</td><td>1カラム (mockups hidden)</td></tr>
+        <tr><td>stat-grid</td><td>4列</td><td>2列</td><td>2列 (padding縮小)</td></tr>
+        <tr><td>strengths-grid</td><td>3列</td><td>2列</td><td>1列</td></tr>
+        <tr><td>ceo-message</td><td>2カラム (quote + photo)</td><td>1カラム</td><td>1カラム</td></tr>
+      </table>
+    </section>
+
+    <!-- 8. パフォーマンス実装 -->
+    <section class="section" id="sec8">
+      <div class="section__num">Section 08</div>
+      <h2 class="section__title">パフォーマンス実装</h2>
+
+      <h3>8.1 実装済みパフォーマンス最適化</h3>
+      <table>
+        <tr><th>戦略</th><th>実装方法</th><th>効果</th><th>ステータス</th></tr>
+        <tr><td>passive scroll</td><td><code>{ passive: true }</code></td><td>スクロールジャンク防止</td><td>✓完了</td></tr>
+        <tr><td>IntersectionObserver</td><td>scroll監視をIO化</td><td>scroll計算コスト削減</td><td>✓完了</td></tr>
+        <tr><td>unobserve後解放</td><td>一度発火後に<code>unobserve()</code></td><td>メモリリーク防止</td><td>✓完了</td></tr>
+        <tr><td>CSS transform/opacity only</td><td>レイアウト再計算を行わない</td><td>60fps維持</td><td>✓完了</td></tr>
+        <tr><td>will-change 限定使用</td><td>カーソル・マーキーのみ</td><td>GPU合成レイヤー最適化</td><td>✓完了</td></tr>
+        <tr><td>Canvas粒子上限</td><td>110粒 (main.js定数)</td><td>GPU負荷軽減</td><td>✓完了</td></tr>
+        <tr><td>font display=swap</td><td>Google Fonts パラメータ</td><td>FOIT防止</td><td>✓完了</td></tr>
+        <tr><td>reduced-motion対応</td><td>CSS media query + JS判定</td><td>前庭障害ユーザー配慮</td><td>✓完了</td></tr>
+        <tr><td>pointer:coarse対応</td><td>タッチデバイスでcursor/magnetic/tilt無効</td><td>モバイルCPU省力</td><td>✓完了</td></tr>
+        <tr><td>#page-reveal remove()</td><td>トランジション完了後 DOM削除</td><td>非表示要素のリソース解放</td><td>✓完了</td></tr>
+      </table>
+
+      <h3>8.2 目標パフォーマンス指標</h3>
+      <table>
+        <tr><th>指標</th><th>目標値</th><th>計測方法</th></tr>
+        <tr><td>Lighthouse Performance</td><td>90+</td><td>Chrome DevTools / PageSpeed Insights</td></tr>
+        <tr><td>LCP (Largest Contentful Paint)</td><td>≤ 2.5秒</td><td>Chrome DevTools</td></tr>
+        <tr><td>CLS (Cumulative Layout Shift)</td><td>≤ 0.1</td><td>Chrome DevTools</td></tr>
+        <tr><td>FID / INP</td><td>≤ 100ms</td><td>Chrome DevTools</td></tr>
+        <tr><td>Lighthouse Accessibility</td><td>90+</td><td>Lighthouse</td></tr>
+        <tr><td>Lighthouse SEO</td><td>95+</td><td>Lighthouse</td></tr>
+        <tr><td>フォントロード</td><td>preconnect + display=swap</td><td>Network tab</td></tr>
+      </table>
+    </section>
+
+    <!-- 9. 品質チェックリスト -->
+    <section class="section" id="sec9">
+      <div class="section__num">Section 09</div>
+      <h2 class="section__title">品質チェックリスト</h2>
+
+      <h3>9.1 実装完了チェック</h3>
+      <ul class="checklist">
+        <li class="done">css/animations.css — 全アニメーションCSS実装 (386行)</li>
+        <li class="done">js/animations.js — 11アニメーション関数IIFE実装</li>
+        <li class="done">index.html — animations.css / js 読み込み追加</li>
+        <li class="done">index.html — #page-reveal / #scroll-progress / #custom-cursor 追加</li>
+        <li class="done">index.html — stat-grid 4カード追加</li>
+        <li class="done">index.html — .js-stagger / .js-stagger-item / .js-tilt 追加</li>
+        <li class="done">familink.html — animations統合完了</li>
+        <li class="done">services.html — animations統合完了</li>
+        <li class="done">docs/01-requirements.html — v2.0ポケモンインスパイアド改訂</li>
+        <li class="done">docs/02-basic-design.html — v2.0ポケモンインスパイアド改訂</li>
+        <li class="done">docs/03-detailed-design.html — v2.0ポケモンインスパイアド改訂 (本文書)</li>
+        <li>index.html — marquee-band セクション追加</li>
+        <li>index.html — philosophy セクション追加</li>
+        <li>index.html — fl-showcase 強化版置換</li>
+        <li>index.html — ceo-message セクション追加</li>
+        <li>index.html — strengths セクション追加</li>
+        <li>css/sections.css — .marquee-band, .philosophy, .fl-showcase クラス追加</li>
+        <li>css/style.css — Cormorant Garamond フォント追加</li>
+      </ul>
+
+      <h3>9.2 SEO・アクセシビリティ品質</h3>
+      <ul class="checklist">
+        <li class="done">JSON-LD Organization Schema (index.html)</li>
+        <li class="done">sitemap.xml (3ページ)</li>
+        <li class="done">robots.txt (Sitemap URL含む)</li>
+        <li class="done">canonical URL (全ページ)</li>
+        <li class="done">OGP タグ (og:title, og:description, og:url)</li>
+        <li class="done">aria-label (ハンバーガー、ドロワー)</li>
+        <li class="done">aria-hidden (SVGアイコン、装飾要素)</li>
+        <li class="done">prefers-reduced-motion 対応</li>
+        <li class="done">pointer:coarse 対応 (タッチでcursor/magnetic/tilt無効)</li>
+        <li class="warn">marquee-band aria-hidden="true" 確認必須</li>
+        <li class="warn">philosophy blockquote ARIA適切か確認</li>
+        <li class="warn">Lighthouse Accessibility スコア確認 (本番デプロイ後)</li>
+      </ul>
+    </section>
+
+    <!-- 10. 将来拡張計画 -->
+    <section class="section" id="sec10">
+      <div class="section__num">Section 10</div>
+      <h2 class="section__title">将来拡張計画 v2.0</h2>
+      <table>
+        <tr><th>フェーズ</th><th>機能</th><th>技術スタック</th><th>優先度</th></tr>
+        <tr><td>Phase 2</td><td>お問い合わせフォームバックエンド連携</td><td>Netlify Forms / Formspree</td><td>高</td></tr>
+        <tr><td>Phase 2</td><td>og:image 設定</td><td>OGP画像生成ツール</td><td>高</td></tr>
+        <tr><td>Phase 2</td><td>Works (実績) セクション 実データ入力</td><td>HTML画像差し替え</td><td>高</td></tr>
+        <tr><td>Phase 2</td><td>Google Analytics 4 導入</td><td>GA4 + gtag.js</td><td>中</td></tr>
+        <tr><td>Phase 3</td><td>カスタムドメイン設定</td><td>DNS + GitHub Pages</td><td>高</td></tr>
+        <tr><td>Phase 3</td><td>採用ページ (recruit.html)</td><td>新HTMLページ</td><td>中</td></tr>
+        <tr><td>Phase 3</td><td>Familinkページ 実機スクリーンショット</td><td>画像差し替え</td><td>中</td></tr>
+        <tr><td>Phase 3</td><td>代表者プロフィール写真</td><td>ceo-messageセクションに適用</td><td>中</td></tr>
+        <tr><td>Phase 4</td><td>ブログ / プレスリリース</td><td>静的MD→HTML変換</td><td>低</td></tr>
+        <tr><td>Phase 4</td><td>多言語対応 (英語版)</td><td>en/ サブディレクトリ</td><td>低</td></tr>
+        <tr><td>Phase 4</td><td>ダークモード対応</td><td>CSS prefers-color-scheme</td><td>低</td></tr>
+        <tr><td>Phase 5</td><td>アニメーション v3.0 (Three.js / GSAP)</td><td>3Dシーン・ScrollTrigger</td><td>参考</td></tr>
+      </table>
+
+      <div class="callout callout--green">
+        <div class="callout__icon">★</div>
+        <div class="callout__body">
+          <strong>v2.0実装完了後のゴール:</strong> Lighthouse Performance 90+ / LCP ≤2.5s / CLS ≤0.1 / Accessibility 90+ / SEO 95+ を達成し、日本のIT企業コーポレートサイトとして世界最高峰の品質を確立する。
+        </div>
+      </div>
+
+      <div class="doc-footer">
+        <span>ITS合同会社 — コーポレートサイト 詳細設計書 v2.0.0</span>
+        <span>最終更新：2026年06月20日</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>

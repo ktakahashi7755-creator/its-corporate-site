@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ktakahashi7755-creator.github.io/its-corporate-site/sitemap.xml

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基本設計書 v2.0 — ITS合同会社 × Familink コーポレートサイト</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Poppins:wght@300;400;600;700&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-primary:#0A84FF; --c-dark:#050A14; --c-gold:#C9A84C; --c-green:#34C759;
+      --c-text:#1C1C1E; --c-text2:#6C6C70; --c-border:#E5E7EB;
+      --c-bg:#FAFAFA; --c-row:#F4F8FF;
+      --font-sans:'Noto Sans JP',sans-serif; --font-en:'Poppins',sans-serif;
+      --font-ser:'Cormorant Garamond',serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-sans);color:var(--c-text);background:var(--c-bg);line-height:1.8;font-size:14px}
+
+    .cover{background:linear-gradient(135deg,#001A3A 0%,#050A14 55%,#0A0A00 100%);color:#fff;padding:80px 64px 72px;position:relative;overflow:hidden}
+    .cover::before{content:'BD';position:absolute;right:48px;bottom:24px;font-family:var(--font-en);font-size:200px;font-weight:700;color:rgba(201,168,76,.04);line-height:1;pointer-events:none}
+    .cover::after{content:'';position:absolute;bottom:-80px;right:-80px;width:360px;height:360px;background:radial-gradient(circle,rgba(201,168,76,.15) 0%,transparent 70%);pointer-events:none}
+    .cover__ver{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-en);font-size:10px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--c-gold);margin-bottom:28px}
+    .cover__ver::before{content:'';width:32px;height:1.5px;background:var(--c-gold)}
+    .cover__co{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:10px}
+    .cover__title{font-family:var(--font-en);font-size:clamp(32px,4.5vw,54px);font-weight:700;line-height:1.08;color:#fff;margin-bottom:16px}
+    .cover__title span{color:var(--c-gold)}
+    .cover__sub{font-family:var(--font-ser);font-size:22px;font-weight:300;font-style:italic;color:rgba(255,255,255,.55);margin-bottom:52px}
+    .cover__meta{display:grid;grid-template-columns:repeat(3,auto);gap:28px 52px;border-top:1px solid rgba(255,255,255,.1);padding-top:32px}
+    .cover__meta dt{font-size:9px;letter-spacing:0.2em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:4px;font-family:var(--font-en)}
+    .cover__meta dd{font-size:13.5px;color:rgba(255,255,255,.82)}
+
+    .layout{display:flex;min-height:100vh}
+    .sidebar{width:248px;flex-shrink:0;background:#fff;border-right:1px solid var(--c-border);padding:36px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
+    .sidebar__brand{padding:0 22px 20px;border-bottom:1px solid var(--c-border);margin-bottom:14px;font-family:var(--font-en);font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--c-text2)}
+    .sidebar a{display:flex;align-items:center;gap:11px;padding:9px 22px;font-size:12.5px;color:var(--c-text2);text-decoration:none;transition:all .18s;border-left:2px solid transparent}
+    .sidebar a:hover{color:var(--c-gold);background:#FFFDF5}
+    .sidebar__num{font-family:var(--font-en);font-size:10px;color:var(--c-gold);font-weight:700;min-width:22px}
+    .content{flex:1;padding:52px 60px;max-width:980px}
+    .section{margin-bottom:68px;padding-top:8px}
+    .section__badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-en);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--c-gold);margin-bottom:8px}
+    .section__badge::before{content:'';width:24px;height:1.5px;background:var(--c-gold)}
+    .section__title{font-size:23px;font-weight:700;color:var(--c-dark);margin-bottom:26px;padding-bottom:16px;border-bottom:2px solid var(--c-gold)}
+    h3{font-size:16px;font-weight:700;color:var(--c-dark);margin:30px 0 14px}
+    h4{font-size:13px;font-weight:700;color:var(--c-text2);margin:18px 0 8px}
+    p{margin-bottom:14px;line-height:1.88}
+    table{width:100%;border-collapse:collapse;font-size:13px;margin:18px 0 28px}
+    th{background:var(--c-dark);color:#fff;padding:11px 15px;text-align:left;font-weight:600;font-size:11.5px;letter-spacing:0.06em}
+    td{padding:11px 15px;border-bottom:1px solid var(--c-border);vertical-align:top;line-height:1.7}
+    tr:nth-child(even) td{background:var(--c-row)}
+    code{font-size:11.5px;background:#F3F4F6;padding:2px 6px;border-radius:3px;color:var(--c-primary)}
+    .callout{border-left:3px solid var(--c-gold);background:#FFFBEB;border-radius:0 8px 8px 0;padding:16px 20px;margin:18px 0;font-size:13.5px;line-height:1.8}
+    .callout--blue{border-color:var(--c-primary);background:#EBF4FF}
+    .callout__title{font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;color:var(--c-gold)}
+    .callout--blue .callout__title{color:var(--c-primary)}
+    ul.doc-list{padding-left:0;list-style:none}
+    ul.doc-list li{padding:7px 0 7px 22px;position:relative;border-bottom:1px solid var(--c-border);font-size:13.5px}
+    ul.doc-list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:var(--c-gold)}
+
+    /* COLOR SWATCHES */
+    .swatch-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 24px}
+    .swatch{border-radius:10px;overflow:hidden;border:1px solid var(--c-border)}
+    .swatch__color{height:64px}
+    .swatch__info{padding:10px 12px;background:#fff}
+    .swatch__name{font-weight:700;font-size:11.5px;color:var(--c-dark)}
+    .swatch__hex{font-size:11px;color:var(--c-text2);margin-top:2px}
+    .swatch__role{font-size:10px;color:var(--c-text2);margin-top:2px}
+
+    /* TYPE DEMO */
+    .type-demo{background:#fff;border:1px solid var(--c-border);border-radius:10px;padding:24px 28px;margin:16px 0 24px}
+    .t-display{font-family:var(--font-ser);font-size:clamp(32px,4vw,52px);font-weight:300;font-style:italic;color:var(--c-dark);line-height:1.2;margin-bottom:8px}
+    .t-h1{font-size:32px;font-weight:700;color:var(--c-dark);margin-bottom:6px}
+    .t-h2{font-size:22px;font-weight:700;color:var(--c-dark);margin-bottom:6px}
+    .t-h3{font-size:16px;font-weight:700;color:var(--c-dark);margin-bottom:6px}
+    .t-body{font-size:15px;color:var(--c-text);line-height:1.85;margin-bottom:6px}
+    .t-label{font-family:var(--font-en);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--c-primary)}
+    .t-sep{height:1px;background:var(--c-border);margin:12px 0}
+
+    /* SECTION WIREFRAME */
+    .wireframe{background:#fff;border:1px solid var(--c-border);border-radius:10px;overflow:hidden;margin:16px 0 24px}
+    .wf-bar{background:var(--c-dark);color:#fff;padding:8px 14px;font-family:var(--font-en);font-size:10px;font-weight:700;letter-spacing:0.15em;display:flex;align-items:center;justify-content:space-between}
+    .wf-bar__tag{font-size:9px;background:rgba(201,168,76,.3);color:var(--c-gold);padding:2px 8px;border-radius:100px;font-weight:600}
+    .wf-body{padding:20px;font-size:12.5px}
+    .wf-row{display:grid;gap:8px;margin:8px 0}
+    .wf-block{background:var(--c-row);border:1px dashed var(--c-border);border-radius:6px;padding:10px 12px;font-size:11.5px;color:var(--c-text2);text-align:center}
+    .wf-block--dark{background:#0A1628;border-color:#1A2A4A;color:rgba(255,255,255,.5)}
+    .wf-block--gold{background:#FFF9E6;border-color:var(--c-gold);color:#8B6914}
+    .wf-block--green{background:#F0FFF4;border-color:var(--c-green);color:#065F46}
+
+    /* ANIMATION TIMELINE */
+    .timeline{position:relative;padding-left:30px;margin:18px 0}
+    .timeline::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--c-gold),var(--c-primary))}
+    .tl-item{position:relative;margin-bottom:24px}
+    .tl-item::before{content:'';position:absolute;left:-24px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--c-gold);border:2px solid #fff;box-shadow:0 0 0 2px var(--c-gold)}
+    .tl-time{font-family:var(--font-en);font-size:11px;font-weight:700;color:var(--c-gold);margin-bottom:3px}
+    .tl-label{font-size:14px;font-weight:700;color:var(--c-dark);margin-bottom:2px}
+    .tl-desc{font-size:12.5px;color:var(--c-text2)}
+
+    /* RESPONSIVE TABLE */
+    .bp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:16px 0}
+    .bp-col{border-radius:6px;overflow:hidden;font-size:11px;text-align:center}
+    .bp-col__head{padding:8px;font-weight:700;font-family:var(--font-en);font-size:9px;letter-spacing:0.1em}
+    .bp-col__body{padding:6px;background:#fff;border:1px solid var(--c-border);border-top:none;font-size:11px;color:var(--c-text2)}
+    .bp-col--1{} .bp-col--1 .bp-col__head{background:#E0F2FE;color:#0369A1}
+    .bp-col--2 .bp-col__head{background:#D1FAE5;color:#065F46}
+    .bp-col--3 .bp-col__head{background:#FEF3C7;color:#92400E}
+    .bp-col--4 .bp-col__head{background:#FEE2E2;color:#991B1B}
+    .bp-col--5 .bp-col__head{background:var(--c-dark);color:var(--c-gold)}
+
+    .doc-footer{margin-top:84px;padding:24px 0;border-top:1px solid var(--c-border);font-size:11.5px;color:var(--c-text2);display:flex;justify-content:space-between;align-items:center}
+    .doc-footer__logo{font-family:var(--font-en);font-weight:700;font-size:13px;color:var(--c-dark)}
+    @media(max-width:860px){.sidebar{display:none}.content{padding:32px 24px}.cover{padding:48px 24px 44px}.cover__meta{grid-template-columns:1fr 1fr}.swatch-row{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover__ver">Basic Design — v2.0</div>
+  <div class="cover__co">ITS合同会社 × Familink — Corporate Website</div>
+  <h1 class="cover__title">基本設計書<br><span>Basic Design Document</span></h1>
+  <p class="cover__sub">Pokémon-Inspired World-Class Design System</p>
+  <dl class="cover__meta">
+    <div><dt>作成日</dt><dd>2026年06月20日</dd></div>
+    <div><dt>バージョン</dt><dd>v2.0.0</dd></div>
+    <div><dt>前提文書</dt><dd>要件定義書 v2.0.0</dd></div>
+    <div><dt>作成者</dt><dd>高橋 賢弥 / ITS合同会社</dd></div>
+    <div><dt>設計モデル</dt><dd>ポケモン株式会社コーポレートサイト</dd></div>
+    <div><dt>次フェーズ</dt><dd>詳細設計書 → index.html 全面刷新</dd></div>
+  </dl>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar__brand">Basic Design</div>
+    <a href="#s1"><span class="sidebar__num">01</span>システム・ファイル構成</a>
+    <a href="#s2"><span class="sidebar__num">02</span>ページ・セクション設計</a>
+    <a href="#s3"><span class="sidebar__num">03</span>デザインシステム</a>
+    <a href="#s4"><span class="sidebar__num">04</span>ナビゲーション設計</a>
+    <a href="#s5"><span class="sidebar__num">05</span>新セクション詳細設計</a>
+    <a href="#s6"><span class="sidebar__num">06</span>アニメーション基本設計</a>
+    <a href="#s7"><span class="sidebar__num">07</span>レスポンシブ設計</a>
+    <a href="#s8"><span class="sidebar__num">08</span>パフォーマンス設計</a>
+  </nav>
+
+  <main class="content">
+
+    <!-- 01 システム -->
+    <section class="section" id="s1">
+      <div class="section__badge">Section 01</div>
+      <h2 class="section__title">システム・ファイル構成</h2>
+
+      <h3>1.1 技術スタック</h3>
+      <table>
+        <tr><th>レイヤー</th><th>技術</th><th>役割</th><th>特記</th></tr>
+        <tr><td>マークアップ</td><td>HTML5</td><td>構造・意味論・アクセシビリティ</td><td>セマンティック要素必須（section/article/header/footer/main）</td></tr>
+        <tr><td>スタイリング</td><td>CSS3 + Custom Properties</td><td>デザイントークン・レイアウト・アニメーション</td><td>フレームワーク不使用。Cascade活用</td></tr>
+        <tr><td>インタラクション</td><td>Vanilla JS (ES5互換)</td><td>アニメーション・UI制御・フォーム</td><td>IIFE パターン。外部ライブラリ不使用</td></tr>
+        <tr><td>フォント</td><td>Google Fonts CDN</td><td>Noto Sans JP / Poppins / Cormorant Garamond</td><td>preconnect + display=swap で最適化</td></tr>
+        <tr><td>アイコン</td><td>インラインSVG</td><td>全アイコン</td><td>HTTP削減 + stroke変更可能</td></tr>
+        <tr><td>ホスティング</td><td>GitHub Pages</td><td>静的配信・HTTPS・CI</td><td>ブランチ: claude/its-corporate-site-WOQhD</td></tr>
+      </table>
+
+      <h3>1.2 ファイル構成 v2.0</h3>
+      <table>
+        <tr><th>パス</th><th>種別</th><th>v2.0での変更</th></tr>
+        <tr><td><code>index.html</code></td><td>HTML</td><td>★全面刷新 — 14セクション構成、Pokémon-inspired</td></tr>
+        <tr><td><code>services.html</code></td><td>HTML</td><td>維持（animations.css/js 追加済み）</td></tr>
+        <tr><td><code>familink.html</code></td><td>HTML</td><td>維持（animations.css/js 追加済み）</td></tr>
+        <tr><td><code>css/style.css</code></td><td>CSS</td><td>維持（デザイントークン完備）</td></tr>
+        <tr><td><code>css/animations.css</code></td><td>CSS</td><td>★更新 — marquee/philosophy新スタイル追加</td></tr>
+        <tr><td><code>css/sections.css</code></td><td>CSS</td><td>★大幅更新 — 新セクション（marquee/philosophy/fl-showcase）</td></tr>
+        <tr><td><code>css/nav.css</code></td><td>CSS</td><td>維持</td></tr>
+        <tr><td><code>css/hero.css</code></td><td>CSS</td><td>維持</td></tr>
+        <tr><td><code>css/services.css</code></td><td>CSS</td><td>維持</td></tr>
+        <tr><td><code>css/footer.css</code></td><td>CSS</td><td>維持</td></tr>
+        <tr><td><code>js/main.js</code></td><td>JS</td><td>維持</td></tr>
+        <tr><td><code>js/animations.js</code></td><td>JS</td><td>維持</td></tr>
+        <tr><td><code>docs/</code></td><td>設計書</td><td>★v2.0 3本（本書）</td></tr>
+      </table>
+
+      <h3>1.3 CSS読み込み順序（v2.0）</h3>
+      <div class="callout callout--blue">
+        <div class="callout__title">Load Order</div>
+        <code>style.css → nav.css → hero.css → sections.css → animations.css → footer.css</code>
+        <br>後続ファイルが前のファイルを上書き可能。sections.cssに新セクションスタイルを追加。
+      </div>
+    </section>
+
+    <!-- 02 ページ設計 -->
+    <section class="section" id="s2">
+      <div class="section__badge">Section 02</div>
+      <h2 class="section__title">ページ・セクション設計</h2>
+
+      <h3>2.1 index.html — 14セクション構成</h3>
+
+      <div class="wireframe">
+        <div class="wf-bar">WIREFRAME — index.html (Desktop) <span class="wf-bar__tag">Pokémon-Inspired</span></div>
+        <div class="wf-body">
+          <div class="wf-row" style="grid-template-columns:1fr"><div class="wf-block wf-block--dark">🧭 NAV — 固定ヘッダー [ロゴ] [メニュー5項目] [CTA]  z-index:1000</div></div>
+          <div class="wf-row" style="grid-template-columns:1fr"><div class="wf-block wf-block--dark">🌟 HERO (min-height:100svh) — Canvas Particles + Blobs + 大型テキスト + 2CTA + Chips</div></div>
+          <div class="wf-row" style="grid-template-columns:1fr"><div class="wf-block wf-block--dark">📜 MARQUEE BAND — テクノロジーキーワード左スクロール (height:48px) ★NEW</div></div>
+          <div class="wf-row" style="grid-template-columns:1fr"><div class="wf-block wf-block--gold">💬 PHILOSOPHY — 白BG・大型Cormorant引用文 「テクノロジーは、目的ではない。」 ★NEW</div></div>
+          <div class="wf-row" style="grid-template-columns:1.6fr 1fr"><div class="wf-block">📖 ABOUT — 会社説明テキスト + リンク</div><div class="wf-block">🃏 4 CARDS — Mission/Vision/Value/Product</div></div>
+          <div class="wf-row" style="grid-template-columns:repeat(4,1fr)"><div class="wf-block">📊 50+<br>導入実績</div><div class="wf-block">📊 100%<br>リピート</div><div class="wf-block">📊 3年<br>継続</div><div class="wf-block">📊 4事業<br>提供</div></div>
+          <div class="wf-row" style="grid-template-columns:repeat(4,1fr)"><div class="wf-block">💻 01<br>システム<br>開発</div><div class="wf-block">📈 02<br>ITコンサル</div><div class="wf-block">🖥 03<br>Web制作</div><div class="wf-block">🎨 04<br>デザイン</div></div>
+          <div class="wf-row" style="grid-template-columns:1fr 1fr"><div class="wf-block wf-block--dark">📱 FAMILINK SHOWCASE (dark gradient) — テキスト + CTA ★ENHANCED</div><div class="wf-block wf-block--dark">📱 iPhoneモックアップ × 2</div></div>
+          <div class="wf-row" style="grid-template-columns:repeat(3,1fr)"><div class="wf-block">💪 01 強み</div><div class="wf-block">💪 02 強み</div><div class="wf-block">💪 … × 6</div></div>
+          <div class="wf-row" style="grid-template-columns:repeat(3,1fr)"><div class="wf-block">🗂 Works 1</div><div class="wf-block">🗂 Works 2</div><div class="wf-block">🗂 Works 3</div></div>
+          <div class="wf-row" style="grid-template-columns:1fr 1.4fr"><div class="wf-block">👔 CEO 写真</div><div class="wf-block wf-block--gold">「 引用文 」★ENHANCED</div></div>
+          <div class="wf-row" style="grid-template-columns:1fr"><div class="wf-block">🏢 COMPANY TABLE</div></div>
+          <div class="wf-row" style="grid-template-columns:1fr"><div class="wf-block" style="background:#EBF4FF;border-color:var(--c-primary)">📣 CTA BAND — Blue Gradient</div></div>
+          <div class="wf-row" style="grid-template-columns:1fr"><div class="wf-block">📧 CONTACT FORM</div></div>
+          <div class="wf-row" style="grid-template-columns:1fr"><div class="wf-block wf-block--dark">🔗 FOOTER — 4カラム</div></div>
+        </div>
+      </div>
+
+      <h3>2.2 新セクション — Marquee Band 詳細</h3>
+      <table>
+        <tr><th>要素</th><th>仕様</th></tr>
+        <tr><td>背景色</td><td>#050A14 (ヒーローから継続するダークトーン)</td></tr>
+        <tr><td>高さ</td><td>48px</td></tr>
+        <tr><td>アニメーション</td><td>CSS keyframes 40s linear infinite。ホバーで一時停止</td></tr>
+        <tr><td>コンテンツ</td><td>10キーワード × 2複製（シームレスループ）</td></tr>
+        <tr><td>フォント</td><td>Poppins 700, 10px, 0.22em tracking, uppercase</td></tr>
+        <tr><td>テキスト色</td><td>rgba(255,255,255,.35)</td></tr>
+        <tr><td>区切り記号</td><td>5px × 5px gold circle（◆）</td></tr>
+        <tr><td>キーワードリスト</td><td>SYSTEM DEVELOPMENT · IT CONSULTING · WEB PRODUCTION · DESIGN · DX PROMOTION · DIGITAL TRANSFORMATION · FAMILINK · CLOUD SOLUTION · UI/UX DESIGN · DATA ANALYTICS</td></tr>
+      </table>
+
+      <h3>2.3 新セクション — Philosophy 詳細</h3>
+      <table>
+        <tr><th>要素</th><th>仕様</th></tr>
+        <tr><td>背景色</td><td>#FFFFFF (純白)</td></tr>
+        <tr><td>Padding</td><td>clamp(80px, 12vw, 160px) 上下</td></tr>
+        <tr><td>引用文フォント</td><td>Cormorant Garamond 300 italic, clamp(28px, 4vw, 52px)</td></tr>
+        <tr><td>引用文テキスト</td><td>「テクノロジーは、目的ではない。<br>企業と人の可能性を広げるための、<br>最も強力な手段だ。」</td></tr>
+        <tr><td>アニメーション</td><td>.js-text-reveal__line → clip-path:inset(0 0 100%→0%), 100ms stagger</td></tr>
+        <tr><td>サブテキスト</td><td>ITS合同会社説明。Noto Sans JP, 15px, color:text-3</td></tr>
+        <tr><td>ポケモン参照</td><td>ポケモン社サイトの「Philosophy」ページの大型ステートメント手法を参照</td></tr>
+      </table>
+    </section>
+
+    <!-- 03 デザインシステム -->
+    <section class="section" id="s3">
+      <div class="section__badge">Section 03</div>
+      <h2 class="section__title">デザインシステム v2.0</h2>
+
+      <h3>3.1 カラーパレット</h3>
+      <div class="swatch-row">
+        <div class="swatch"><div class="swatch__color" style="background:#050A14"></div><div class="swatch__info"><div class="swatch__name">Dark BG</div><div class="swatch__hex">#050A14</div><div class="swatch__role">Hero / Footer / Marquee</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#0A84FF"></div><div class="swatch__info"><div class="swatch__name">Primary Blue</div><div class="swatch__hex">#0A84FF</div><div class="swatch__role">CTA / Links / Accent</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#C9A84C"></div><div class="swatch__info"><div class="swatch__name">Gold</div><div class="swatch__hex">#C9A84C</div><div class="swatch__role">Premium / Rules / Badges</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#FFFFFF;border:1px solid #E5E7EB"></div><div class="swatch__info"><div class="swatch__name">White</div><div class="swatch__hex">#FFFFFF</div><div class="swatch__role">Philosophy / About / Company</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#F8FAFE"></div><div class="swatch__info"><div class="swatch__name">Alt BG</div><div class="swatch__hex">#F8FAFE</div><div class="swatch__role">Services / Strengths / Works</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#1C1C1E"></div><div class="swatch__info"><div class="swatch__name">Text</div><div class="swatch__hex">#1C1C1E</div><div class="swatch__role">Body text</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#6C6C70"></div><div class="swatch__info"><div class="swatch__name">Text Sub</div><div class="swatch__hex">#6C6C70</div><div class="swatch__role">Labels / Caption</div></div></div>
+        <div class="swatch"><div class="swatch__color" style="background:#34C759"></div><div class="swatch__info"><div class="swatch__name">Familink Green</div><div class="swatch__hex">#34C759</div><div class="swatch__role">Familink brand / Success</div></div></div>
+      </div>
+
+      <div class="callout">
+        <div class="callout__title">ポケモン配色との対応</div>
+        ポケモン社サイトが「赤（#E3350D）×白」を使うように、ITS は「青（#0A84FF）×白」を基軸とし、金（#C9A84C）をプレミアム感演出に使用。白背景が主体で青がアクセント役を担う構成はポケモン社手法と同一。
+      </div>
+
+      <h3>3.2 タイポグラフィスケール</h3>
+      <div class="type-demo">
+        <div class="t-display">テクノロジーは、目的ではない。— Display (Cormorant 300 italic)</div>
+        <div class="t-sep"></div>
+        <div class="t-h1">テクノロジーで世界を輝かせる — H1 (Noto Sans JP 700)</div>
+        <div class="t-h2">提供サービス — H2 (Noto Sans JP 700)</div>
+        <div class="t-h3">システム受託開発 — H3 (Noto Sans JP 700)</div>
+        <div class="t-sep"></div>
+        <div class="t-body">企業の課題・業務フローに合わせ、必要なシステムを設計・開発。要件整理から改善提案まで一貫対応。— Body (Noto Sans JP 400)</div>
+        <div class="t-sep"></div>
+        <div class="t-label">Our Services — LABEL (Poppins 700, uppercase, 0.22em tracking)</div>
+      </div>
+
+      <h3>3.3 スペーシング・レイアウトトークン</h3>
+      <table>
+        <tr><th>トークン</th><th>値</th><th>用途</th></tr>
+        <tr><td><code>--section-y</code></td><td>clamp(72px, 10vw, 128px)</td><td>セクション上下パディング（標準）</td></tr>
+        <tr><td>Philosophy padding</td><td>clamp(80px, 12vw, 160px)</td><td>哲学セクション（大きめ余白）</td></tr>
+        <tr><td><code>--pad-x</code></td><td>clamp(20px, 5vw, 80px)</td><td>コンテナ左右パディング</td></tr>
+        <tr><td><code>--container-max</code></td><td>1200px</td><td>最大コンテナ幅</td></tr>
+        <tr><td><code>--radius-lg</code></td><td>16px</td><td>カード角丸</td></tr>
+        <tr><td><code>--radius-xl</code></td><td>24px</td><td>大型カード・モックアップ角丸</td></tr>
+      </table>
+
+      <h3>3.4 コンポーネント一覧 v2.0</h3>
+      <table>
+        <tr><th>コンポーネント</th><th>CSSクラス</th><th>状態</th></tr>
+        <tr><td>Sticky Nav</td><td><code>.nav / .nav.is-scrolled</code></td><td>v1.0から維持</td></tr>
+        <tr><td>Hamburger Drawer</td><td><code>.nav__drawer / .is-open</code></td><td>v1.0から維持</td></tr>
+        <tr><td>Hero Section</td><td><code>.hero / .hero__inner</code></td><td>v1.0から維持</td></tr>
+        <tr><td>Hero Chip</td><td><code>.hero__chip</code></td><td>v1.0から維持</td></tr>
+        <tr><td>Marquee Band</td><td><code>.marquee-band / .marquee-track / .marquee-item</code></td><td>★v2.0新規</td></tr>
+        <tr><td>Philosophy Section</td><td><code>.philosophy / .philosophy__text</code></td><td>★v2.0新規</td></tr>
+        <tr><td>Service Card</td><td><code>.svc-card / .js-stagger-item / .js-tilt</code></td><td>v1.0から拡張</td></tr>
+        <tr><td>Stat Card</td><td><code>.stat-card / .js-counter</code></td><td>v1.0から維持</td></tr>
+        <tr><td>Familink Showcase</td><td><code>.fl-showcase / .fl-showcase__inner</code></td><td>★v2.0刷新</td></tr>
+        <tr><td>Strength Item</td><td><code>.str-item / .js-stagger-item</code></td><td>スタガー化</td></tr>
+        <tr><td>Work Card</td><td><code>.work-card</code></td><td>v1.0から維持</td></tr>
+        <tr><td>CEO Section</td><td><code>.ceo-teaser / .ceo-teaser__quote</code></td><td>格上げ</td></tr>
+        <tr><td>Primary Button</td><td><code>.btn.btn--primary / .js-magnetic</code></td><td>磁石効果付き</td></tr>
+        <tr><td>Text Reveal</td><td><code>.js-text-reveal / .js-text-reveal__line</code></td><td>★v2.0新規適用</td></tr>
+      </table>
+    </section>
+
+    <!-- 04 ナビゲーション -->
+    <section class="section" id="s4">
+      <div class="section__badge">Section 04</div>
+      <h2 class="section__title">ナビゲーション設計</h2>
+
+      <h3>4.1 ヘッダー状態遷移</h3>
+      <table>
+        <tr><th>状態</th><th>条件</th><th>スタイル変化</th></tr>
+        <tr><td>透明（初期）</td><td>scrollY ≤ 60px</td><td>background: transparent, ロゴ/テキスト白</td></tr>
+        <tr><td>白転換</td><td>scrollY &gt; 60px → .is-scrolled</td><td>background: white, box-shadow追加, テキスト黒</td></tr>
+        <tr><td>アクティブリンク</td><td>現在セクションが viewport 35%以内</td><td>.nav__link.is-active (color: primary)</td></tr>
+      </table>
+
+      <h3>4.2 スムーズスクロール offset</h3>
+      <p>ナビゲーション高さ 72px（<code>--nav-h</code>）を offset として引算。<code>target.getBoundingClientRect().top + scrollY - 72</code></p>
+
+      <h3>4.3 メニュー項目（index.html）</h3>
+      <table>
+        <tr><th>ラベル</th><th>href</th></tr>
+        <tr><td>会社について</td><td>#about</td></tr>
+        <tr><td>サービス</td><td>#services</td></tr>
+        <tr><td>プロダクト</td><td>#product</td></tr>
+        <tr><td>実績</td><td>#works</td></tr>
+        <tr><td>会社概要</td><td>#company</td></tr>
+      </table>
+    </section>
+
+    <!-- 05 新セクション詳細 -->
+    <section class="section" id="s5">
+      <div class="section__badge">Section 05</div>
+      <h2 class="section__title">新セクション詳細設計</h2>
+
+      <h3>5.1 Familink Showcase（全面刷新）</h3>
+      <table>
+        <tr><th>要素</th><th>仕様</th></tr>
+        <tr><td>背景</td><td>linear-gradient(135deg, #050A14 0%, #0A1628 50%, #050A14 100%)</td></tr>
+        <tr><td>レイアウト</td><td>2カラム（テキスト左1fr + モックアップ右1fr）。900px以下でスタック</td></tr>
+        <tr><td>バッジ</td><td>「自社プロダクト」グリーン小バッジ。点滅アニメーション付き</td></tr>
+        <tr><td>アプリ名</td><td>Familink — Poppins 700, 64px, グラデーションテキスト</td></tr>
+        <tr><td>タグライン</td><td>「家族をチームに。予定も、やることも、ひとつに。」</td></tr>
+        <tr><td>機能リスト</td><td>4項目（カレンダー / タスク / 家計 / ボード）チェックマーク付き</td></tr>
+        <tr><td>CTA</td><td>2ボタン（「Familinkを詳しく見る」+ 「料金を見る」）</td></tr>
+        <tr><td>モックアップ</td><td>iPhoneフレーム × 2台（メイン＋サブ斜め配置）</td></tr>
+      </table>
+
+      <h3>5.2 CEO Message（格上げ）</h3>
+      <table>
+        <tr><th>要素</th><th>仕様</th></tr>
+        <tr><td>背景</td><td>#FFFFFF</td></tr>
+        <tr><td>引用文フォント</td><td>Cormorant Garamond 300 italic。clamp(24px,3.5vw,40px)</td></tr>
+        <tr><td>引用文テキスト</td><td>「テクノロジーは目的ではなく、人と企業の可能性を広げる手段です。」</td></tr>
+        <tr><td>写真</td><td>代表写真。border-radius:50% または カード型</td></tr>
+        <tr><td>署名</td><td>高橋 賢弥 / ITS合同会社 代表</td></tr>
+        <tr><td>ポケモン参照</td><td>ポケモン社の「代表メッセージ」ページ構造を参照</td></tr>
+      </table>
+    </section>
+
+    <!-- 06 アニメーション基本設計 -->
+    <section class="section" id="s6">
+      <div class="section__badge">Section 06</div>
+      <h2 class="section__title">アニメーション基本設計</h2>
+
+      <h3>6.1 ページロードタイムライン</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">0ms</div>
+          <div class="tl-label">ページロードカーテン表示</div>
+          <div class="tl-desc">#page-reveal 全画面覆い（#050A14）</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">50ms</div>
+          <div class="tl-label">カーテンスライドアップ開始</div>
+          <div class="tl-desc">transform: scaleY(1→0), 750ms cubic-bezier(0.76,0,0.24,1)</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">~200ms</div>
+          <div class="tl-label">Heroテキスト フェードイン開始</div>
+          <div class="tl-desc">CSS animation delay で eyebrow→title→en→desc→actions 順次</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">800ms</div>
+          <div class="tl-label">カーテン完全消去・DOM削除</div>
+          <div class="tl-desc">element.remove() 実行</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">1200ms</div>
+          <div class="tl-label">Hero Chips フェードアップ</div>
+          <div class="tl-desc">CSS animation delay 1.2s</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">スクロール時</div>
+          <div class="tl-label">IntersectionObserver発火</div>
+          <div class="tl-desc">各要素 viewport 10%以内で .is-visible 付与</div>
+        </div>
+      </div>
+
+      <h3>6.2 アニメーション一覧</h3>
+      <table>
+        <tr><th>名前</th><th>ファイル</th><th>クラス / ID</th><th>Duration</th></tr>
+        <tr><td>ページロードカーテン</td><td>animations.css + animations.js</td><td>#page-reveal → .is-done</td><td>750ms</td></tr>
+        <tr><td>スクロール進行バー</td><td>animations.css + animations.js</td><td>#scroll-progress</td><td>scroll連動</td></tr>
+        <tr><td>カスタムカーソル</td><td>animations.css + animations.js</td><td>#custom-cursor</td><td>rAF lerp 0.14</td></tr>
+        <tr><td>フェードアップ</td><td>style.css + main.js</td><td>.js-fade → .is-visible</td><td>650ms</td></tr>
+        <tr><td>スタガー</td><td>animations.css + animations.js</td><td>.js-stagger → .js-stagger-item</td><td>620ms × 130ms間隔</td></tr>
+        <tr><td>テキストリビール</td><td>animations.css + animations.js</td><td>.js-text-reveal → .js-text-reveal__line</td><td>700ms × 100ms間隔</td></tr>
+        <tr><td>カウンター</td><td>animations.js</td><td>.js-counter</td><td>2000ms</td></tr>
+        <tr><td>マーキー</td><td>animations.css (CSS only)</td><td>.marquee-track</td><td>40s linear infinite</td></tr>
+        <tr><td>マグネティックCTA</td><td>animations.js</td><td>.js-magnetic</td><td>150ms move + 550ms return</td></tr>
+        <tr><td>3Dティルト</td><td>animations.js</td><td>.js-tilt</td><td>400ms return</td></tr>
+        <tr><td>Blobドリフト</td><td>hero.css (CSS only)</td><td>.hero__blob</td><td>12s ease-in-out infinite</td></tr>
+        <tr><td>Canvasパーティクル</td><td>main.js</td><td>#hero-canvas</td><td>requestAnimationFrame常時</td></tr>
+      </table>
+    </section>
+
+    <!-- 07 レスポンシブ -->
+    <section class="section" id="s7">
+      <div class="section__badge">Section 07</div>
+      <h2 class="section__title">レスポンシブ設計</h2>
+
+      <h3>7.1 ブレークポイント体系</h3>
+      <div class="bp-grid">
+        <div class="bp-col bp-col--1">
+          <div class="bp-col__head">≤ 480px<br>Mobile</div>
+          <div class="bp-col__body">1カラム全般<br>ハンバーガーメニュー<br>Services 1列<br>Stats 2×2</div>
+        </div>
+        <div class="bp-col bp-col--2">
+          <div class="bp-col__head">≤ 768px<br>Tablet</div>
+          <div class="bp-col__body">Services 2列<br>Strengths 2列<br>FL Showcase スタック<br>Works 1列</div>
+        </div>
+        <div class="bp-col bp-col--3">
+          <div class="bp-col__head">≤ 1024px<br>Small Desktop</div>
+          <div class="bp-col__body">Services 2列<br>Works 2列<br>About 1カラム</div>
+        </div>
+        <div class="bp-col bp-col--4">
+          <div class="bp-col__head">≤ 1280px<br>Desktop</div>
+          <div class="bp-col__body">Services 4列<br>Strengths 3列<br>Works 3列<br>Stats 4列</div>
+        </div>
+        <div class="bp-col bp-col--5">
+          <div class="bp-col__head">&gt; 1280px<br>Large</div>
+          <div class="bp-col__body">最大幅1200px<br>余白自動拡大</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 パフォーマンス -->
+    <section class="section" id="s8">
+      <div class="section__badge">Section 08</div>
+      <h2 class="section__title">パフォーマンス設計</h2>
+      <table>
+        <tr><th>施策</th><th>実装</th><th>効果</th></tr>
+        <tr><td>フォントpreconnect</td><td><code>rel="preconnect"</code> × 2 + display=swap</td><td>FOUT短縮, LCP改善</td></tr>
+        <tr><td>Lazy Load</td><td>Works画像に <code>loading="lazy"</code></td><td>初回描画高速化</td></tr>
+        <tr><td>Passive Scroll</td><td>全scroll listenerに <code>{passive:true}</code></td><td>Jank防止</td></tr>
+        <tr><td>GPU合成</td><td>アニメーション要素に <code>will-change:transform</code></td><td>GPU layer化</td></tr>
+        <tr><td>IntersectionObserver</td><td>ビューポート外要素はanimate実行しない</td><td>不要計算削減</td></tr>
+        <tr><td>CSSのみアニメーション</td><td>transform/opacity のみ変更（layout再計算なし）</td><td>60fps確保</td></tr>
+        <tr><td>SVGインライン</td><td>アイコンHTMLに直接記述</td><td>HTTPリクエスト削減</td></tr>
+        <tr><td>パーティクル上限</td><td>min(width×height/12000, 110)</td><td>低スペック端末配慮</td></tr>
+      </table>
+
+      <div class="doc-footer">
+        <span class="doc-footer__logo">ITS合同会社</span>
+        <span>基本設計書 v2.0.0 — 2026年06月20日</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

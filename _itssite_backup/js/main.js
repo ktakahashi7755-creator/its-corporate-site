@@ -1,41 +1,42 @@
 /* ==========================================================================
-   ITS合同会社 — main.js
+   ITS — main.js  (段階的に追記していく)
    ========================================================================== */
 
 (function () {
   'use strict';
 
   /* ------------------------------------------------------------------
-     1. Nav: スクロールで白背景に切り替え
+     1. Nav: スクロールで背景を付ける
      ------------------------------------------------------------------ */
   function initNavScroll() {
-    var nav = document.getElementById('nav');
+    const nav = document.getElementById('nav');
     if (!nav) return;
 
     function update() {
-      nav.classList.toggle('is-scrolled', window.scrollY > 60);
+      nav.classList.toggle('is-scrolled', window.scrollY > 40);
     }
 
     window.addEventListener('scroll', update, { passive: true });
-    update();
+    update(); // 初期実行
   }
 
   /* ------------------------------------------------------------------
-     2. ハンバーガーメニュー
+     2. Nav: ハンバーガーメニュー開閉
      ------------------------------------------------------------------ */
   function initHamburger() {
-    var btn    = document.getElementById('hamburger');
-    var drawer = document.getElementById('nav-drawer');
+    const btn    = document.getElementById('hamburger');
+    const drawer = document.getElementById('nav-drawer');
     if (!btn || !drawer) return;
 
     btn.addEventListener('click', function () {
-      var isOpen = drawer.classList.toggle('is-open');
+      const isOpen = drawer.classList.toggle('is-open');
       btn.classList.toggle('is-open', isOpen);
       btn.setAttribute('aria-expanded', isOpen);
       drawer.setAttribute('aria-hidden', !isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
+    // ドロワー内リンクをタップしたら閉じる
     drawer.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
         drawer.classList.remove('is-open');
@@ -51,17 +52,17 @@
      3. スクロールフェードイン
      ------------------------------------------------------------------ */
   function initScrollFade() {
-    var els = document.querySelectorAll('.js-fade');
+    const els = document.querySelectorAll('.js-fade');
     if (!els.length) return;
 
-    var io = new IntersectionObserver(function (entries) {
+    const io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
 
     els.forEach(function (el) { io.observe(el); });
   }
@@ -75,7 +76,6 @@
 
     var ctx = canvas.getContext('2d');
     var particles = [];
-    var raf;
 
     function resize() {
       canvas.width  = canvas.offsetWidth;
@@ -83,27 +83,20 @@
     }
 
     function makeParticle() {
-      var roll = Math.random();
       return {
         x:    Math.random() * canvas.width,
         y:    Math.random() * canvas.height,
-        vx:   (Math.random() - 0.5) * 0.28,
-        vy:   (Math.random() - 0.5) * 0.28,
-        r:    Math.random() * 1.4 + 0.4,
-        a:    Math.random() * 0.45 + 0.15,
-        type: roll < 0.12 ? 'gold' : (roll < 0.45 ? 'blue' : 'white')
+        vx:   (Math.random() - 0.5) * 0.3,
+        vy:   (Math.random() - 0.5) * 0.3,
+        r:    Math.random() * 1.3 + 0.4,
+        a:    Math.random() * 0.5 + 0.15,
+        gold: Math.random() < 0.12
       };
-    }
-
-    function particleColor(p) {
-      if (p.type === 'gold')  return 'rgba(201,168,76,'  + p.a + ')';
-      if (p.type === 'blue')  return 'rgba(10,132,255,'  + p.a + ')';
-      return                         'rgba(180,210,255,' + p.a + ')';
     }
 
     function init() {
       resize();
-      var count = Math.min(Math.floor(canvas.width * canvas.height / 12000), 110);
+      var count = Math.min(Math.floor(canvas.width * canvas.height / 14000), 100);
       particles = [];
       for (var i = 0; i < count; i++) particles.push(makeParticle());
     }
@@ -111,24 +104,24 @@
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      /* 接続線 */
+      // 接続線
       for (var i = 0; i < particles.length; i++) {
         for (var j = i + 1; j < particles.length; j++) {
           var dx = particles[i].x - particles[j].x;
           var dy = particles[i].y - particles[j].y;
           var d  = Math.sqrt(dx * dx + dy * dy);
-          if (d < 90) {
+          if (d < 100) {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = 'rgba(10,132,255,' + ((1 - d / 90) * 0.08) + ')';
+            ctx.strokeStyle = 'rgba(201,168,76,' + ((1 - d / 100) * 0.1) + ')';
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
       }
 
-      /* ドット */
+      // 点
       particles.forEach(function (p) {
         p.x += p.vx;
         p.y += p.vy;
@@ -137,72 +130,19 @@
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = particleColor(p);
+        ctx.fillStyle = p.gold
+          ? 'rgba(201,168,76,' + p.a + ')'
+          : 'rgba(139,160,184,' + p.a + ')';
         ctx.fill();
       });
 
-      raf = requestAnimationFrame(draw);
+      requestAnimationFrame(draw);
     }
 
     init();
     draw();
 
-    window.addEventListener('resize', function () {
-      cancelAnimationFrame(raf);
-      init();
-      draw();
-    }, { passive: true });
-  }
-
-  /* ------------------------------------------------------------------
-     5. スムーズスクロール (anchor links)
-     ------------------------------------------------------------------ */
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        var target = document.querySelector(a.getAttribute('href'));
-        if (!target) return;
-        e.preventDefault();
-        var offset = 72;
-        var top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top: top, behavior: 'smooth' });
-      });
-    });
-  }
-
-  /* ------------------------------------------------------------------
-     6. コンタクトフォーム バリデーション
-     ------------------------------------------------------------------ */
-  function initForm() {
-    var form = document.querySelector('.contact-form');
-    if (!form) return;
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var name    = form.querySelector('[name="name"]');
-      var email   = form.querySelector('[name="email"]');
-      var message = form.querySelector('[name="message"]');
-      var ok = true;
-
-      [name, email, message].forEach(function (el) {
-        if (!el) return;
-        el.classList.remove('is-error');
-        if (!el.value.trim()) { el.classList.add('is-error'); ok = false; }
-      });
-
-      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-        email.classList.add('is-error'); ok = false;
-      }
-
-      if (ok) {
-        var btn = form.querySelector('[type="submit"]');
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = '送信しました';
-          btn.classList.add('is-sent');
-        }
-      }
-    });
+    window.addEventListener('resize', init, { passive: true });
   }
 
   /* ------------------------------------------------------------------
@@ -212,8 +152,7 @@
     initNavScroll();
     initHamburger();
     initScrollFade();
-    initSmoothScroll();
-    initForm();
+    initParticles();
   });
 
 }());

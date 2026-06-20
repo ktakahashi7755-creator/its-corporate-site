@@ -3,170 +3,729 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>サービス一覧 | ITS合同会社</title>
-  <meta name="description" content="ITS合同会社のサービス一覧。システム受託開発・ITコンサルティング・Web制作/LP制作を提供しています。">
+  <title>サービス詳細 | ITS合同会社 — システム受託開発・ITコンサルティング・Web制作・バナー制作</title>
+  <meta name="description" content="ITS合同会社のサービス詳細。システム受託開発（Webアプリ・業務システム・API・モバイル）、ITコンサルティング（DX推進・IT戦略）、Web制作・LP制作、バナー・デザイン制作まで一貫対応。">
+  <meta name="keywords" content="システム受託開発,ITコンサルティング,Web制作,LP制作,バナー制作,DX推進,東京,新宿">
+  <meta property="og:title"       content="サービス詳細 | ITS合同会社">
+  <meta property="og:description" content="システム受託開発・ITコンサルティング・Web制作・バナー制作まで、企業のIT課題を一貫して解決します。">
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://ktakahashi7755-creator.github.io/its-corporate-site/services.html">
+  <meta name="twitter:card"       content="summary_large_image">
+  <link rel="canonical"           href="https://ktakahashi7755-creator.github.io/its-corporate-site/services.html">
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
+  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/hero.css">
   <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/services.css">
+  <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/footer.css">
-  <link rel="stylesheet" href="css/page.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "サービス詳細 | ITS合同会社",
+    "description": "ITS合同会社のサービス詳細ページ。システム受託開発・ITコンサルティング・Web制作・バナー制作",
+    "url": "https://ktakahashi7755-creator.github.io/its-corporate-site/services.html",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "ITS合同会社",
+      "url": "https://ktakahashi7755-creator.github.io/its-corporate-site/"
+    }
+  }
+  </script>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <header class="nav" id="nav">
+  <div id="scroll-progress" aria-hidden="true"></div>
+  <div id="custom-cursor" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       Navigation
+       ============================================================ -->
+  <header class="nav is-scrolled" id="nav">
     <div class="nav__inner">
+
       <a href="index.html" class="nav__logo">
-        <span class="nav__logo-mark">ITS</span>
-        <span class="nav__logo-text">合同会社</span>
+        <img src="images/logo.svg" alt="ITS" class="nav__logo-img" width="36" height="36">
+        <span class="nav__logo-text">ITS合同会社</span>
       </a>
+
       <nav class="nav__menu" aria-label="メインナビゲーション">
-        <a href="services.html" class="nav__link" style="color:var(--color-white)">サービス</a>
-        <a href="works.html"    class="nav__link">実績</a>
-        <a href="company.html"  class="nav__link">会社概要</a>
-        <a href="faq.html"      class="nav__link">よくある質問</a>
+        <a href="index.html#about"    class="nav__link">会社について</a>
+        <a href="index.html#services" class="nav__link nav__link--active">サービス</a>
+        <a href="index.html#product"  class="nav__link">プロダクト</a>
+        <a href="index.html#works"    class="nav__link">実績</a>
+        <a href="index.html#company"  class="nav__link">会社概要</a>
       </nav>
-      <a href="contact.html" class="nav__cta">お問い合わせ</a>
+
+      <a href="index.html#contact" class="nav__cta">お問い合わせ</a>
+
       <button class="nav__hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
+  <!-- Mobile Drawer -->
   <div class="nav__drawer" id="nav-drawer" aria-hidden="true">
     <nav aria-label="モバイルナビゲーション">
-      <a href="index.html"    class="nav__drawer-link">ホーム</a>
-      <a href="services.html" class="nav__drawer-link">サービス</a>
-      <a href="works.html"    class="nav__drawer-link">実績</a>
-      <a href="company.html"  class="nav__drawer-link">会社概要</a>
-      <a href="faq.html"      class="nav__drawer-link">よくある質問</a>
-      <a href="contact.html"  class="nav__drawer-link nav__drawer-link--cta">お問い合わせ</a>
+      <a href="index.html#about"    class="nav__drawer-link">会社について</a>
+      <a href="index.html#services" class="nav__drawer-link">サービス</a>
+      <a href="index.html#product"  class="nav__drawer-link">プロダクト</a>
+      <a href="index.html#works"    class="nav__drawer-link">実績</a>
+      <a href="index.html#company"  class="nav__drawer-link">会社概要</a>
+      <a href="index.html#contact"  class="nav__drawer-link nav__drawer-link--cta">お問い合わせ</a>
     </nav>
   </div>
 
-  <main>
+  <main id="main">
 
-    <!-- Page Hero -->
-    <section class="page-hero">
-      <div class="container">
-        <div class="breadcrumb">
-          <a href="index.html">Home</a>
-          <span class="breadcrumb__sep">/</span>
-          <span>サービス一覧</span>
+    <!-- ============================================================
+         Page Hero
+         ============================================================ -->
+    <section class="svc-page-hero">
+      <div class="svc-page-hero__inner container">
+        <div class="svc-page-hero__breadcrumb">
+          <a href="index.html">ホーム</a>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>サービス</span>
         </div>
-        <span class="page-hero__label">Services</span>
-        <h1 class="page-hero__title">提供サービス</h1>
-        <p class="page-hero__desc">事業課題の整理から設計・開発・改善まで、一貫してサポートします。コンサルだけで終わらず、制作や実装まで落とし込むのがITSの強みです。</p>
+        <span class="section-label">Services</span>
+        <h1 class="svc-page-hero__title">提供サービス</h1>
+        <p class="svc-page-hero__desc">事業課題の整理から設計・開発・改善まで、ITで「成果を出す」ことに特化したサポートを提供します。</p>
       </div>
     </section>
 
-    <!-- Services Grid -->
-    <section class="section">
+    <!-- ============================================================
+         Service Navigation Bar
+         ============================================================ -->
+    <nav class="svc-nav-bar" aria-label="サービスナビゲーション">
       <div class="container">
-        <div class="services-grid">
+        <div class="svc-nav-bar__inner">
+          <a href="#systemdev" class="svc-nav-bar__link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            システム受託開発
+          </a>
+          <a href="#consulting" class="svc-nav-bar__link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+            ITコンサルティング
+          </a>
+          <a href="#web" class="svc-nav-bar__link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Web制作 / LP制作
+          </a>
+          <a href="#design" class="svc-nav-bar__link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg>
+            バナー・デザイン制作
+          </a>
+        </div>
+      </div>
+    </nav>
 
-          <!-- システム受託開発 -->
-          <article class="svc-card js-fade">
-            <div class="svc-card__number">01</div>
-            <div class="svc-card__icon" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-              </svg>
-            </div>
-            <h2 class="svc-card__title">システム受託開発</h2>
-            <p class="svc-card__desc">
-              企業ごとの課題・業務フローに合わせ、必要なシステムを設計・開発。要件整理から設計、開発、改善提案まで一貫して対応します。既製品では対応できない独自の業務課題を解決します。
+    <!-- ============================================================
+         01: システム受託開発
+         ============================================================ -->
+    <section class="section svc-detail" id="systemdev">
+      <div class="container">
+
+        <div class="svc-detail__header js-fade">
+          <div class="svc-detail__num">01</div>
+          <div class="svc-detail__icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <h2 class="svc-detail__title">システム受託開発 / SIer</h2>
+          <p class="svc-detail__subtitle">業務に合わせたシステムを、要件整理から本番運用まで一貫して構築</p>
+        </div>
+
+        <div class="svc-detail__body">
+
+          <!-- 左: 説明 + サブサービス -->
+          <div class="svc-detail__main js-fade">
+            <p class="svc-detail__lead">
+              「既存のパッケージでは対応しきれない」「社内の業務フローに完全に合わせたシステムが欲しい」という企業様に対し、要件定義・設計・開発・テスト・運用保守まで一気通貫で対応します。SIer（システムインテグレーター）として、複数のシステム間の連携や大規模な業務システム構築も担います。
             </p>
-            <a href="service-development.html" class="svc-card__link">
-              詳しく見る
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </article>
 
-          <!-- ITコンサルティング -->
-          <article class="svc-card js-fade delay-1">
-            <div class="svc-card__number">02</div>
-            <div class="svc-card__icon" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
-              </svg>
+            <h3 class="svc-detail__sub-heading">対応できる開発領域</h3>
+            <ul class="svc-feature-list">
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>Webアプリケーション開発</strong>
+                  <p>社内ポータル、受発注管理システム、予約管理、勤怠管理など、業務に特化したWebシステムを構築。要件整理・UI設計から本番リリースまで対応。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>業務システム・CRM/SFA開発</strong>
+                  <p>顧客管理・営業管理・在庫管理・帳票出力など、業務フローに合わせたオーダーメイドシステム。Excelや既存ツールからの移行・統合も対応。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>API開発・システム間連携</strong>
+                  <p>RESTful API・GraphQL APIの設計・開発。既存システムやSaaSツール（Salesforce、Kintone、Slack等）との連携・自動化を実現。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>モバイルアプリ開発</strong>
+                  <p>iOS・Android向けネイティブアプリ、またはFlutter・React Nativeを用いたクロスプラットフォームアプリの設計・開発。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>クラウドインフラ構築・移行</strong>
+                  <p>AWS・GCP・Azureを活用したクラウドネイティブなインフラ設計・構築。オンプレミスからのクラウド移行、コスト最適化も対応。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>レガシーシステムのモダナイゼーション</strong>
+                  <p>老朽化した既存システムの刷新・クラウド化・API化。段階的な移行計画で、業務継続性を維持しながらシステムを近代化。</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 右: 技術スタック + 進め方 -->
+          <div class="svc-detail__aside js-fade delay-2">
+
+            <div class="svc-aside-card">
+              <h3 class="svc-aside-card__title">技術スタック</h3>
+              <div class="tech-stack-group">
+                <p class="tech-stack-group__label">フロントエンド</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">React</span>
+                  <span class="tech-tag">Next.js</span>
+                  <span class="tech-tag">Vue.js</span>
+                  <span class="tech-tag">TypeScript</span>
+                  <span class="tech-tag">Tailwind CSS</span>
+                </div>
+              </div>
+              <div class="tech-stack-group">
+                <p class="tech-stack-group__label">バックエンド</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Laravel</span>
+                  <span class="tech-tag">Ruby on Rails</span>
+                  <span class="tech-tag">Node.js</span>
+                  <span class="tech-tag">Spring Boot</span>
+                  <span class="tech-tag">Python</span>
+                </div>
+              </div>
+              <div class="tech-stack-group">
+                <p class="tech-stack-group__label">データベース</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">PostgreSQL</span>
+                  <span class="tech-tag">MySQL</span>
+                  <span class="tech-tag">MongoDB</span>
+                  <span class="tech-tag">Redis</span>
+                </div>
+              </div>
+              <div class="tech-stack-group">
+                <p class="tech-stack-group__label">インフラ・DevOps</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">AWS</span>
+                  <span class="tech-tag">GCP</span>
+                  <span class="tech-tag">Docker</span>
+                  <span class="tech-tag">Kubernetes</span>
+                  <span class="tech-tag">GitHub Actions</span>
+                </div>
+              </div>
             </div>
-            <h2 class="svc-card__title">ITコンサルティング</h2>
-            <p class="svc-card__desc">
-              事業・業務課題に対し、ITをどう活用すべきかを整理。導入方針から改善施策まで、抽象論ではなく実務で使えるレベルまで具体化します。現状分析・ロードマップ策定から伴走支援まで対応。
-            </p>
-            <a href="service-consulting.html" class="svc-card__link">
-              詳しく見る
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </article>
 
-          <!-- Web制作 / LP制作 -->
-          <article class="svc-card js-fade delay-2">
-            <div class="svc-card__number">03</div>
-            <div class="svc-card__icon" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-              </svg>
+            <div class="svc-aside-card svc-aside-card--light">
+              <h3 class="svc-aside-card__title">開発の進め方</h3>
+              <ol class="svc-process-list">
+                <li class="svc-process-list__item">
+                  <span class="svc-process-list__num">01</span>
+                  <div>
+                    <strong>ヒアリング・要件定義</strong>
+                    <p>業務フロー・課題・理想の状態を整理し、実現可能な要件に落とし込みます</p>
+                  </div>
+                </li>
+                <li class="svc-process-list__item">
+                  <span class="svc-process-list__num">02</span>
+                  <div>
+                    <strong>設計・プロトタイプ</strong>
+                    <p>画面設計・DB設計・アーキテクチャ設計。プロトタイプで早期にフィードバック取得</p>
+                  </div>
+                </li>
+                <li class="svc-process-list__item">
+                  <span class="svc-process-list__num">03</span>
+                  <div>
+                    <strong>開発・テスト</strong>
+                    <p>アジャイル開発で進捗を見える化。定期的なデモで認識合わせを継続</p>
+                  </div>
+                </li>
+                <li class="svc-process-list__item">
+                  <span class="svc-process-list__num">04</span>
+                  <div>
+                    <strong>リリース・運用保守</strong>
+                    <p>本番環境へのデプロイ・移行サポート。リリース後の改善対応まで伴走</p>
+                  </div>
+                </li>
+              </ol>
             </div>
-            <h2 class="svc-card__title">Web制作 / LP制作</h2>
-            <p class="svc-card__desc">
-              BtoB向けの信頼感・わかりやすさ・問い合わせ導線を重視したコーポレートサイト・LPを制作。制作で終わらず、営業導線や成果まで踏み込んで設計します。
-            </p>
-            <a href="service-web.html" class="svc-card__link">
-              詳しく見る
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </article>
 
+            <a href="index.html#contact" class="svc-cta-btn">
+              システム開発について相談する
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Strengths -->
-    <section class="section section--alt">
+    <!-- ============================================================
+         02: ITコンサルティング
+         ============================================================ -->
+    <section class="section section--alt svc-detail" id="consulting">
       <div class="container">
-        <div class="section-header js-fade">
-          <span class="section-label">Why ITS</span>
-          <h2 class="section-title">ITSが選ばれる理由</h2>
-          <div class="gold-rule"></div>
+
+        <div class="svc-detail__header js-fade">
+          <div class="svc-detail__num">02</div>
+          <div class="svc-detail__icon-wrap svc-detail__icon-wrap--gold">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
+            </svg>
+          </div>
+          <h2 class="svc-detail__title">ITコンサルティング</h2>
+          <p class="svc-detail__subtitle">抽象的な「IT活用」を、実務レベルの施策まで具体化するパートナー</p>
         </div>
-        <div class="strengths-grid">
-          <div class="str-item js-fade">
-            <p class="str-item__num">01</p>
-            <h3 class="str-item__title">事業・営業・技術を統合した支援</h3>
-            <p class="str-item__desc">経営視点・営業視点・現場視点・技術視点を一人のパートナーが持つことで、分断なく課題を解決します。</p>
+
+        <div class="svc-detail__body">
+
+          <div class="svc-detail__main js-fade">
+            <p class="svc-detail__lead">
+              「どのシステムを入れるべきか判断できない」「DXと言われても何から手をつけていいかわからない」——そういった段階から伴走します。コンサルティングで終わりではなく、提案した施策の実装・定着まで一貫して支援することが、ITSのコンサルティングの特徴です。
+            </p>
+
+            <h3 class="svc-detail__sub-heading">支援できる領域</h3>
+            <ul class="svc-feature-list">
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--gold">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>DX推進・デジタル化支援</strong>
+                  <p>アナログ業務のデジタル化、業務フロー全体の可視化・改善計画策定。「DXロードマップ」作成から優先施策の実行まで支援。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--gold">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>IT戦略立案・システム企画</strong>
+                  <p>経営課題・事業課題からバックキャストしたIT投資計画の策定。予算規模・優先度・リスクを踏まえた実現可能な戦略を立案。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--gold">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>SaaS・ITツール選定支援</strong>
+                  <p>CRM・SFA・MA・ERP・勤怠管理・チャットツール等、自社に合ったツール選定を支援。無駄なライセンス費用を削減し、定着まで伴走。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--gold">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>業務プロセス改善（BPR）</strong>
+                  <p>業務フローの可視化（As-Is分析）から理想状態（To-Be）の設計・改善施策の立案・実行。現場に定着するレベルまで落とし込みます。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--gold">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>システム要件定義・RFP策定支援</strong>
+                  <p>ベンダー選定に向けた要件定義書・RFP（提案依頼書）の作成を支援。「何を作るべきか」を明確にし、最適なベンダーを見極めます。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--gold">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>データ活用・分析基盤構築</strong>
+                  <p>散在するデータの一元管理・BI ツール導入・KPI ダッシュボード構築。意思決定をデータドリブンに変える仕組みを整えます。</p>
+                </div>
+              </li>
+            </ul>
           </div>
-          <div class="str-item js-fade delay-1">
-            <p class="str-item__num">02</p>
-            <h3 class="str-item__title">コンサルから実装まで一気通貫</h3>
-            <p class="str-item__desc">「提案して終わり」ではなく、設計・開発・制作まで一貫して担います。成果が出るまで伴走します。</p>
-          </div>
-          <div class="str-item js-fade delay-2">
-            <p class="str-item__num">03</p>
-            <h3 class="str-item__title">AI活用によるスピードと品質</h3>
-            <p class="str-item__desc">最新AI技術を積極活用し、開発・制作・分析のスピードと品質を同時に高め、コストパフォーマンスを最大化します。</p>
+
+          <div class="svc-detail__aside js-fade delay-2">
+
+            <div class="svc-aside-card svc-aside-card--gold">
+              <h3 class="svc-aside-card__title">ITSコンサルの特徴</h3>
+              <ul class="svc-merit-list">
+                <li class="svc-merit-list__item">
+                  <span class="svc-merit-list__badge">01</span>
+                  <div>
+                    <strong>提案して終わりにしない</strong>
+                    <p>策定した戦略・施策を、必要であれば自社で実装・開発まで担います</p>
+                  </div>
+                </li>
+                <li class="svc-merit-list__item">
+                  <span class="svc-merit-list__badge">02</span>
+                  <div>
+                    <strong>経営・営業・技術を統合</strong>
+                    <p>ビジネス視点と技術視点を両立し、現場で機能する施策を提案</p>
+                  </div>
+                </li>
+                <li class="svc-merit-list__item">
+                  <span class="svc-merit-list__badge">03</span>
+                  <div>
+                    <strong>実務レベルまで具体化</strong>
+                    <p>抽象的なフレームワークではなく、明日から使えるレベルまで具体化</p>
+                  </div>
+                </li>
+                <li class="svc-merit-list__item">
+                  <span class="svc-merit-list__badge">04</span>
+                  <div>
+                    <strong>スモールスタートOK</strong>
+                    <p>スポットコンサル・単発相談から月次顧問契約まで柔軟に対応</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="svc-contact-mini">
+              <p class="svc-contact-mini__label">まずはお気軽に</p>
+              <p class="svc-contact-mini__text">課題感のヒアリングから対応いたします。初回相談は無料です。</p>
+              <a href="index.html#contact" class="svc-cta-btn svc-cta-btn--gold">
+                ITコンサルについて相談する
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
+    <!-- ============================================================
+         03: Web制作 / LP制作
+         ============================================================ -->
+    <section class="section svc-detail" id="web">
+      <div class="container">
+
+        <div class="svc-detail__header js-fade">
+          <div class="svc-detail__num">03</div>
+          <div class="svc-detail__icon-wrap svc-detail__icon-wrap--green">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h2 class="svc-detail__title">Web制作 / LP制作</h2>
+          <p class="svc-detail__subtitle">「かっこいいサイト」ではなく「成果が出るサイト」を設計する</p>
+        </div>
+
+        <div class="svc-detail__body">
+
+          <div class="svc-detail__main js-fade">
+            <p class="svc-detail__lead">
+              Webサイト・LPは「作ること」が目的ではありません。問い合わせ・資料請求・採用応募——それぞれのゴールに向けて導線を設計し、ビジネス成果に直結するサイトを制作します。BtoBの経営者・役員が見ても納得できる高品質な表現力と、SEO・CRO（コンバージョン最適化）の知識を組み合わせて対応します。
+            </p>
+
+            <h3 class="svc-detail__sub-heading">制作できるサイト・ページ種別</h3>
+            <ul class="svc-feature-list">
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--green">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>コーポレートサイト</strong>
+                  <p>企業の信頼性・ブランドを伝えるコーポレートサイト。採用・営業・IR向けの情報設計から、更新しやすいCMS構築まで対応。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--green">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>LP（ランディングページ）制作</strong>
+                  <p>リード獲得・資料請求・セミナー申込に特化したLP。CVR（コンバージョン率）を最大化するコピーライティング・導線設計まで一貫対応。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--green">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>採用サイト・採用LP</strong>
+                  <p>求職者に「この会社で働きたい」と思わせる採用専門サイト・LP。企業文化・働き方・メンバーの声を効果的に伝えるコンテンツ設計を支援。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--green">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>WordPressサイト構築</strong>
+                  <p>ブログ・ニュース・事例などを自社で更新できるWordPressサイト。オリジナルテーマ開発からプラグイン導入・教育まで対応。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--green">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>ECサイト・オンラインショップ</strong>
+                  <p>Shopify・WooCommerceを活用したECサイト構築。商品管理・決済連携・在庫管理まで含めた一気通貫での構築が可能。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--green">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>既存サイトのリニューアル</strong>
+                  <p>古くなったデザイン・使いにくい構造・モバイル非対応のサイトをリニューアル。SEO引き継ぎや既存コンテンツ移行にも対応。</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="svc-detail__aside js-fade delay-2">
+
+            <div class="svc-aside-card svc-aside-card--green">
+              <h3 class="svc-aside-card__title">制作実績の業種</h3>
+              <div class="svc-industry-list">
+                <span class="svc-industry-tag">運送・物流</span>
+                <span class="svc-industry-tag">IT・SaaS</span>
+                <span class="svc-industry-tag">建設・設備</span>
+                <span class="svc-industry-tag">医療・介護</span>
+                <span class="svc-industry-tag">コンサルティング</span>
+                <span class="svc-industry-tag">人材・採用</span>
+                <span class="svc-industry-tag">飲食・EC</span>
+                <span class="svc-industry-tag">士業・専門職</span>
+              </div>
+            </div>
+
+            <div class="svc-aside-card">
+              <h3 class="svc-aside-card__title">使用技術・ツール</h3>
+              <div class="tech-stack-group">
+                <p class="tech-stack-group__label">コーディング</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">HTML / CSS</span>
+                  <span class="tech-tag">JavaScript</span>
+                  <span class="tech-tag">TypeScript</span>
+                  <span class="tech-tag">React</span>
+                  <span class="tech-tag">Next.js</span>
+                </div>
+              </div>
+              <div class="tech-stack-group">
+                <p class="tech-stack-group__label">CMS</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">WordPress</span>
+                  <span class="tech-tag">Shopify</span>
+                  <span class="tech-tag">microCMS</span>
+                  <span class="tech-tag">Contentful</span>
+                </div>
+              </div>
+              <div class="tech-stack-group">
+                <p class="tech-stack-group__label">デザイン</p>
+                <div class="tech-tags">
+                  <span class="tech-tag">Figma</span>
+                  <span class="tech-tag">Adobe XD</span>
+                  <span class="tech-tag">Illustrator</span>
+                </div>
+              </div>
+            </div>
+
+            <a href="index.html#contact" class="svc-cta-btn svc-cta-btn--green">
+              Web制作について相談する
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         04: バナー・デザイン制作
+         ============================================================ -->
+    <section class="section section--alt svc-detail" id="design">
+      <div class="container">
+
+        <div class="svc-detail__header js-fade">
+          <div class="svc-detail__num">04</div>
+          <div class="svc-detail__icon-wrap svc-detail__icon-wrap--purple">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/>
+            </svg>
+          </div>
+          <h2 class="svc-detail__title">バナー・デザイン制作</h2>
+          <p class="svc-detail__subtitle">クリックされるバナー、選ばれるビジュアルを、ブランドに合わせて制作</p>
+        </div>
+
+        <div class="svc-detail__body">
+
+          <div class="svc-detail__main js-fade">
+            <p class="svc-detail__lead">
+              SNS広告・ディスプレイ広告・メルマガ・各種販促物まで、ブランドの世界観と訴求メッセージを融合させた高品質なビジュアルを制作します。「デザインはいいけれど成果が出ない」という問題を防ぐため、広告の目的・ターゲット・配信面を理解したうえでクリエイティブを設計します。
+            </p>
+
+            <h3 class="svc-detail__sub-heading">対応できる制作物</h3>
+            <ul class="svc-feature-list">
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--purple">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>SNS広告バナー（Instagram / X / Facebook / LINE）</strong>
+                  <p>各プラットフォームのフォーマット・仕様に最適化した広告バナー。スクロールを止める視認性とCTAの明確さを両立したクリエイティブを制作。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--purple">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>ディスプレイ広告バナー（Google / YDA）</strong>
+                  <p>リスティング広告との連携を意識した、レスポンシブ対応のディスプレイバナー。複数サイズの一括制作にも対応。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--purple">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>動画広告・アニメーションバナー</strong>
+                  <p>静止画よりも高いエンゲージメントが見込めるアニメーション・動画広告。短尺（6〜15秒）のモーションデザインを制作。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--purple">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>メールマガジン・HTMLメールデザイン</strong>
+                  <p>開封率・クリック率を高めるメルマガテンプレートのデザイン・コーディング。Mailchimp・Klaviyo等のツール対応も可能。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--purple">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>会社資料・営業資料デザイン</strong>
+                  <p>PowerPoint / Keynote / Google スライドを使った会社紹介・サービス説明資料のデザインリニューアル。経営層への提案に耐える品質を提供。</p>
+                </div>
+              </li>
+              <li class="svc-feature-list__item">
+                <div class="svc-feature-list__icon svc-feature-list__icon--purple">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <strong>ロゴ・VI（ビジュアルアイデンティティ）</strong>
+                  <p>スタートアップ・新規事業のブランディングからロゴデザイン・カラーパレット・タイポグラフィの策定。一貫したブランド表現をサポート。</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="svc-detail__aside js-fade delay-2">
+
+            <div class="svc-aside-card svc-aside-card--purple">
+              <h3 class="svc-aside-card__title">対応フォーマット</h3>
+              <div class="svc-format-grid">
+                <div class="svc-format-item">
+                  <p class="svc-format-item__platform">Instagram</p>
+                  <p class="svc-format-item__sizes">1:1 / 4:5 / 9:16</p>
+                </div>
+                <div class="svc-format-item">
+                  <p class="svc-format-item__platform">Facebook / X</p>
+                  <p class="svc-format-item__sizes">1200×628 / 1:1</p>
+                </div>
+                <div class="svc-format-item">
+                  <p class="svc-format-item__platform">LINE広告</p>
+                  <p class="svc-format-item__sizes">1200×628 / 1:1</p>
+                </div>
+                <div class="svc-format-item">
+                  <p class="svc-format-item__platform">Google Display</p>
+                  <p class="svc-format-item__sizes">300×250 / 728×90 他</p>
+                </div>
+                <div class="svc-format-item">
+                  <p class="svc-format-item__platform">動画・GIF</p>
+                  <p class="svc-format-item__sizes">MP4 / GIF / WebM</p>
+                </div>
+                <div class="svc-format-item">
+                  <p class="svc-format-item__platform">印刷物</p>
+                  <p class="svc-format-item__sizes">A4 / B5 / 名刺 他</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="svc-aside-card">
+              <h3 class="svc-aside-card__title">使用ツール</h3>
+              <div class="tech-tags">
+                <span class="tech-tag">Adobe Photoshop</span>
+                <span class="tech-tag">Adobe Illustrator</span>
+                <span class="tech-tag">Adobe After Effects</span>
+                <span class="tech-tag">Figma</span>
+                <span class="tech-tag">Canva Pro</span>
+              </div>
+            </div>
+
+            <a href="index.html#contact" class="svc-cta-btn svc-cta-btn--purple">
+              バナー・デザインについて相談する
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CTA Section
+         ============================================================ -->
     <section class="cta-section">
       <div class="cta-section__bg-word">CONTACT</div>
       <div class="cta-section__inner">
         <h2 class="cta-section__title js-fade">まずは、お気軽にご相談ください。</h2>
         <p class="cta-section__desc js-fade delay-1">
-          どのサービスが適切かわからない場合も、<br>現状と課題をお聞かせいただければご提案します。
+          どのサービスが最適かわからなくても大丈夫です。<br>課題をお聞きして、最適な進め方をご提案します。
         </p>
         <div class="cta-section__actions js-fade delay-2">
-          <a href="contact.html" class="btn btn--primary">お問い合わせ（無料）</a>
-          <a href="works.html" class="btn btn--outline">実績を見る</a>
+          <a href="index.html#contact" class="btn btn--primary">お問い合わせ（無料）</a>
+          <a href="index.html" class="btn btn--outline">トップページへ</a>
         </div>
         <p class="cta-section__note js-fade delay-3">通常3営業日以内にご返信いたします</p>
       </div>
@@ -174,54 +733,68 @@
 
   </main>
 
-  <!-- Footer -->
+  <!-- ============================================================
+       Footer
+       ============================================================ -->
   <footer class="footer">
     <div class="container">
       <div class="footer__grid">
+
         <div>
           <div class="footer__brand-logo">
-            <span class="footer__brand-mark">ITS</span>
-            <span class="footer__brand-sub">合同会社</span>
+            <img src="images/logo.svg" alt="ITS" class="footer__brand-img" width="30" height="30">
+            <span class="footer__brand-sub">ITS合同会社</span>
           </div>
           <p class="footer__tagline">STARS YOUR TECHNOLOGY</p>
           <p class="footer__desc">テクノロジーの力でビジネスの可能性を広げ、企業と人の成長を支援します。</p>
         </div>
+
         <div>
           <p class="footer__col-title">Service</p>
           <ul class="footer__links">
-            <li><a href="service-development.html">システム受託開発</a></li>
-            <li><a href="service-consulting.html">ITコンサルティング</a></li>
-            <li><a href="service-web.html">Web制作 / LP制作</a></li>
+            <li><a href="#systemdev">システム受託開発</a></li>
+            <li><a href="#consulting">ITコンサルティング</a></li>
+            <li><a href="#web">Web制作 / LP制作</a></li>
+            <li><a href="#design">バナー・デザイン制作</a></li>
           </ul>
         </div>
+
         <div>
-          <p class="footer__col-title">Company</p>
+          <p class="footer__col-title">Product</p>
           <ul class="footer__links">
-            <li><a href="company.html">会社概要</a></li>
-            <li><a href="works.html">実績紹介</a></li>
-            <li><a href="faq.html">よくある質問</a></li>
-            <li><a href="privacy.html">プライバシーポリシー</a></li>
+            <li><a href="familink.html">Familink</a></li>
+            <li><a href="familink.html#features">機能紹介</a></li>
+            <li><a href="familink.html#pricing">料金プラン</a></li>
           </ul>
         </div>
+
         <div>
           <p class="footer__col-title">Contact</p>
           <div class="footer__contact-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             <a href="mailto:info@its-tokyo.com">info@its-tokyo.com</a>
           </div>
-          <a href="contact.html" class="btn--gold-outline" style="margin-top:16px; font-size:0.74rem; padding:9px 18px;">お問い合わせ</a>
+          <div class="footer__contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            東京都新宿区西新宿3-3-13<br>西新宿水間ビル2階
+          </div>
+          <a href="index.html#contact" class="footer-contact-btn">お問い合わせ</a>
         </div>
+
       </div>
+
       <div class="footer__bottom">
         <p class="footer__copy">&copy; 2024 ITS合同会社. All Rights Reserved.</p>
         <div class="footer__bottom-links">
           <a href="privacy.html">プライバシーポリシー</a>
-          <a href="contact.html">お問い合わせ</a>
+          <a href="terms.html">利用規約</a>
+          <a href="index.html#contact">お問い合わせ</a>
         </div>
       </div>
     </div>
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>

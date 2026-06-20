@@ -10,6 +10,8 @@
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://ktakahashi7755-creator.github.io/its-corporate-site/">
   <meta name="twitter:card"       content="summary_large_image">
+  <meta name="keywords"           content="システム受託開発,ITコンサルティング,Web制作,LP制作,バナー制作,DX推進,東京,新宿,ITS合同会社">
+  <link rel="canonical"           href="https://ktakahashi7755-creator.github.io/its-corporate-site/">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,47 +81,45 @@
         <div class="hero__blob hero__blob--4"></div>
       </div>
 
-      <!-- 2カラムレイアウト -->
+      <!-- センタードレイアウト -->
       <div class="hero__inner">
 
-        <!-- 左: テキスト -->
-        <div class="hero__text">
-          <div class="hero__eyebrow">ITS合同会社</div>
+        <div class="hero__eyebrow">ITS合同会社</div>
 
-          <h1 class="hero__title">
-            テクノロジーで<br>
-            <span class="hero__title-accent">世界を輝かせる</span>
-          </h1>
+        <h1 class="hero__title">
+          テクノロジーで<br>
+          <span class="hero__title-accent">世界を輝かせる</span>
+        </h1>
 
-          <p class="hero__en">STARS YOUR TECHNOLOGY</p>
+        <p class="hero__en">STARS YOUR TECHNOLOGY</p>
 
-          <p class="hero__desc">
-            システム受託開発・ITコンサルティング・Web制作・自社プロダクト開発を通じて、企業の課題を解決し、事業成長を支援します。
-          </p>
+        <p class="hero__desc">
+          システム受託開発・ITコンサルティング・Web制作・自社プロダクト開発を通じて、企業の課題を解決し、事業成長を支援します。
+        </p>
 
-          <div class="hero__actions">
-            <a href="#contact"  class="btn btn--primary">お問い合わせ（無料）</a>
-            <a href="#services" class="btn btn--outline-dark">サービスを見る</a>
-          </div>
+        <div class="hero__actions">
+          <a href="#contact"  class="btn btn--primary">お問い合わせ（無料）</a>
+          <a href="#services" class="btn btn--outline-dark">サービスを見る</a>
         </div>
 
-        <!-- 右: ほくキャラクター -->
-        <div class="hero__character" aria-hidden="true">
-          <div class="hero__hoku-wrap">
-
-            <!-- ほく キャラクター画像 (mix-blend-mode のため最初に配置) -->
-            <img src="images/hoku.png" alt="ほく" class="hoku-img" width="300" height="300">
-
-            <!-- キラキラデコレーション (画像の前面に描画) -->
-            <div class="hero__sparkle hero__sparkle--1"></div>
-            <div class="hero__sparkle hero__sparkle--2"></div>
-            <div class="hero__sparkle hero__sparkle--3"></div>
-            <div class="hero__dot hero__dot--1"></div>
-            <div class="hero__dot hero__dot--2"></div>
-
-            <!-- 吹き出し -->
-            <div class="hoku-bubble">よろしく！</div>
-          </div>
+        <!-- サービスカテゴリチップ -->
+        <div class="hero__chips" aria-label="提供サービス一覧">
+          <a href="services.html#systemdev" class="hero__chip">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            システム受託開発
+          </a>
+          <a href="services.html#consulting" class="hero__chip">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+            ITコンサルティング
+          </a>
+          <a href="services.html#web" class="hero__chip">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Web制作 / LP制作
+          </a>
+          <a href="services.html#design" class="hero__chip">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+            バナー・デザイン制作
+          </a>
         </div>
 
       </div><!-- /.hero__inner -->
@@ -201,10 +201,10 @@
             <p class="svc-card__desc">
               企業ごとの課題・業務フローに合わせ、必要なシステムを設計・開発。要件整理から設計、開発、改善提案まで一貫して対応します。
             </p>
-            <span class="svc-card__link">
+            <a href="services.html#systemdev" class="svc-card__link">
               詳しく見る
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
+            </a>
           </article>
 
           <article class="svc-card js-fade delay-1">
@@ -218,10 +218,10 @@
             <p class="svc-card__desc">
               事業・業務課題に対し、ITをどう活用すべきかを整理。導入方針から改善施策まで、実務で使えるレベルまで具体化します。
             </p>
-            <span class="svc-card__link">
+            <a href="services.html#consulting" class="svc-card__link">
               詳しく見る
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
+            </a>
           </article>
 
           <article class="svc-card js-fade delay-2">
@@ -235,10 +235,27 @@
             <p class="svc-card__desc">
               BtoB向けの信頼感・わかりやすさ・問い合わせ導線を重視したコーポレートサイト・LPを制作。成果まで踏み込みます。
             </p>
-            <span class="svc-card__link">
+            <a href="services.html#web" class="svc-card__link">
               詳しく見る
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
+            </a>
+          </article>
+
+          <article class="svc-card js-fade">
+            <div class="svc-card__number">04</div>
+            <div class="svc-card__icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/>
+              </svg>
+            </div>
+            <h3 class="svc-card__title">バナー・デザイン制作</h3>
+            <p class="svc-card__desc">
+              SNS広告・ディスプレイ広告・各種グラフィック制作に対応。ブランドの世界観を活かした高品質なビジュアルを提供します。
+            </p>
+            <a href="services.html#design" class="svc-card__link">
+              詳しく見る
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
           </article>
 
         </div>
@@ -727,9 +744,10 @@
         <div>
           <p class="footer__col-title">Service</p>
           <ul class="footer__links">
-            <li><a href="#services">システム受託開発</a></li>
-            <li><a href="#services">ITコンサルティング</a></li>
-            <li><a href="#services">Web制作 / LP制作</a></li>
+            <li><a href="services.html#systemdev">システム受託開発</a></li>
+            <li><a href="services.html#consulting">ITコンサルティング</a></li>
+            <li><a href="services.html#web">Web制作 / LP制作</a></li>
+            <li><a href="services.html#design">バナー・デザイン制作</a></li>
           </ul>
         </div>
 
@@ -769,5 +787,45 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ITS合同会社",
+    "alternateName": "ITS LLC",
+    "url": "https://ktakahashi7755-creator.github.io/its-corporate-site/",
+    "logo": "https://ktakahashi7755-creator.github.io/its-corporate-site/images/logo.svg",
+    "description": "システム受託開発・ITコンサルティング・Web制作・自社プロダクト開発を通じて、企業の課題解決と事業成長を支援します。",
+    "foundingDate": "2024",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "西新宿3-3-13 西新宿水間ビル2階",
+      "addressLocality": "新宿区",
+      "addressRegion": "東京都",
+      "postalCode": "160-0023",
+      "addressCountry": "JP"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "info@its-tokyo.com",
+      "contactType": "customer service",
+      "availableLanguage": "Japanese"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "高橋 賢弥"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "ITSサービス一覧",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "システム受託開発" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ITコンサルティング" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web制作・LP制作" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "バナー・デザイン制作" } }
+      ]
+    }
+  }
+  </script>
 </body>
 </html>

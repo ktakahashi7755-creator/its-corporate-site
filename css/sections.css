@@ -219,7 +219,7 @@
    -------------------------------------------------------------------------- */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
@@ -299,8 +299,10 @@
   align-items: center;
   gap: 6px;
   font-size: 0.76rem;
+  font-weight: 600;
   letter-spacing: 0.1em;
   color: var(--color-primary);
+  text-decoration: none;
   transition: gap var(--duration-fast) ease;
   margin-top: auto;
 }
@@ -1138,7 +1140,7 @@
    Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
-  .services-grid    { grid-template-columns: 1fr 1fr; }
+  .services-grid    { grid-template-columns: 1fr 1fr; gap: 16px; }
   .works-grid       { grid-template-columns: 1fr 1fr; }
   .strengths-grid   { grid-template-columns: 1fr 1fr; }
   .about-strip__inner   { grid-template-columns: 1fr; gap: 40px; }

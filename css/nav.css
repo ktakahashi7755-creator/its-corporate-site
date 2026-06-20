@@ -192,6 +192,11 @@
 /* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .nav__inner { gap: 20px; }
+  .nav__menu  { gap: 18px; }
+}
+
 @media (max-width: 768px) {
   .nav__menu      { display: none; }
   .nav__cta       { display: none; }

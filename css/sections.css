@@ -1219,7 +1219,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--color-text-3);
-  width: 35%;
+  width: 32%;
   background: var(--color-bg-2);
   white-space: nowrap;
   vertical-align: top;
@@ -1429,7 +1429,12 @@
   text-transform: uppercase;
   color: var(--color-primary, #0A84FF);
   margin-bottom: 44px;
-  display: inline-block;
+  display: block;
+}
+
+/* Override js-line-reveal::after to center under eyebrow */
+.philosophy__eyebrow.js-line-reveal::after {
+  margin-inline: auto;
 }
 
 .philosophy__text {
@@ -1529,8 +1534,9 @@
 
 .fl-showcase__actions {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 /* iPhone mockup frames */
@@ -1745,15 +1751,25 @@
 
 .ceo-message__quote {
   font-family: 'Cormorant Garamond', var(--font-serif, serif);
-  font-size: clamp(2rem, 4.5vw, 4rem);
+  font-size: clamp(1.8rem, 4vw, 4rem);
   font-weight: 300;
   line-height: 1.45;
   color: #ffffff;
   margin: 0 0 40px;
   quotes: none;
-  border-left: 3px solid;
-  border-image: linear-gradient(to bottom, var(--color-primary, #0A84FF), var(--color-gold, #C9A84C)) 1;
+  position: relative;
   padding-left: 28px;
+}
+
+.ceo-message__quote::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  bottom: 0.1em;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--color-primary, #0A84FF), var(--color-gold, #C9A84C));
+  border-radius: 3px;
 }
 
 .ceo-message__body {
@@ -1848,12 +1864,129 @@
   pointer-events: none;
 }
 
-@media (max-width: 768px) {
+/* ── Responsive: Tablet ≤1024px ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .fl-showcase__inner {
+    gap: 48px;
+  }
+  .fl-showcase__mockups {
+    height: 420px;
+  }
+  .fl-iphone { width: 155px; }
+  .fl-iphone--back  { left: 0;   top: 30px; }
+  .fl-iphone--front { left: 100px; top: 0; }
+  .fl-iphone__screen { height: 280px; }
+
   .ceo-message__inner {
-    grid-template-columns: 1fr;
+    gap: 40px;
   }
   .ceo-message__photo {
-    width: 220px;
+    width: 240px;
+  }
+}
+
+/* ── Responsive: Tablet ≤900px ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .fl-showcase__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .fl-showcase__mockups { display: none; }
+
+  .ceo-message__inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .ceo-message__quote {
+    font-size: clamp(1.7rem, 5vw, 3rem);
+    padding-left: 20px;
+  }
+  .ceo-message__photo {
+    width: 200px;
     margin: 0 auto;
+  }
+}
+
+/* ── Responsive: Mobile ≤640px ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .fl-showcase__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .fl-showcase__actions .btn {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .philosophy__text {
+    font-size: clamp(1.55rem, 5.5vw, 2.8rem);
+  }
+  .philosophy__inner {
+    text-align: left;
+  }
+  .philosophy__eyebrow {
+    text-align: left;
+  }
+  .philosophy__sub {
+    text-align: left;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .ceo-message__quote {
+    font-size: clamp(1.5rem, 5.5vw, 2.5rem);
+  }
+  .ceo-message__body {
+    font-size: 14px;
+  }
+}
+
+/* ── Responsive: Mobile ≤480px ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .fl-showcase {
+    padding: clamp(56px, 8vw, 80px) 0;
+  }
+  .fl-showcase__name {
+    font-size: 2.8rem;
+  }
+  .fl-showcase__badge {
+    font-size: 13px;
+  }
+
+  .philosophy {
+    padding: clamp(56px, 10vw, 100px) 0;
+  }
+  .philosophy__text {
+    font-size: clamp(1.45rem, 6vw, 2.2rem);
+    letter-spacing: 0;
+  }
+  .philosophy__eyebrow.js-line-reveal::after {
+    margin-inline: 0;
+  }
+
+  .ceo-message {
+    padding: clamp(56px, 8vw, 80px) 0;
+  }
+  .ceo-message__quote {
+    font-size: clamp(1.35rem, 6vw, 2rem);
+    padding-left: 16px;
+  }
+  .ceo-message__photo {
+    width: 160px;
+  }
+  .ceo-message__name {
+    font-size: 1.1rem;
+  }
+
+  /* Company table on very small screens */
+  .co-table th {
+    width: 30%;
+    padding: 12px 12px;
+    font-size: 0.74rem;
+  }
+  .co-table td {
+    padding: 12px 12px;
+    font-size: 0.82rem;
+    word-break: break-all;
   }
 }

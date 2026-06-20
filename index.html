@@ -47,6 +47,7 @@
       </a>
 
       <nav class="nav__menu" aria-label="メインナビゲーション">
+        <a href="#philosophy" class="nav__link">理念</a>
         <a href="#about"    class="nav__link">会社について</a>
         <a href="#services" class="nav__link">サービス</a>
         <a href="#product"  class="nav__link">プロダクト</a>
@@ -65,6 +66,7 @@
   <!-- Mobile Drawer -->
   <div class="nav__drawer" id="nav-drawer" aria-hidden="true">
     <nav aria-label="モバイルナビゲーション">
+      <a href="#philosophy" class="nav__drawer-link">理念</a>
       <a href="#about"    class="nav__drawer-link">会社について</a>
       <a href="#services" class="nav__drawer-link">サービス</a>
       <a href="#product"  class="nav__drawer-link">プロダクト</a>
@@ -138,6 +140,58 @@
         <div class="hero__scroll-bar"></div>
       </div>
 
+    </section>
+
+    <!-- ============================================================
+         Marquee Band — Pokémon-inspired keyword ticker
+         ============================================================ -->
+    <div class="marquee-band" aria-hidden="true">
+      <div class="marquee-inner">
+        <div class="marquee-track">
+          <span class="marquee-item">DX推進</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">AI活用</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">Web開発</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">モバイルアプリ</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">業務自動化</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">クラウド設計</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">React</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">Node.js</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">Python</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">データ分析</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">IT教育</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">Familink</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">DX推進</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">AI活用</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">Web開発</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">モバイルアプリ</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">業務自動化</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">クラウド設計</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">React</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">Node.js</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">Python</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">データ分析</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">IT教育</span><span class="marquee-sep">★</span>
+          <span class="marquee-item">Familink</span><span class="marquee-sep">★</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         Philosophy — Pokémon-inspired white section w/ Cormorant quote
+         ============================================================ -->
+    <section id="philosophy" class="philosophy">
+      <div class="philosophy__inner container">
+        <p class="philosophy__eyebrow js-line-reveal">Our Philosophy</p>
+        <blockquote class="philosophy__text js-text-reveal">
+          <span class="js-text-reveal__line">テクノロジーは、目的ではない。</span>
+          <span class="js-text-reveal__line">人の暮らしを豊かにするための、手段だ。</span>
+        </blockquote>
+        <div class="js-stagger">
+          <p class="philosophy__sub js-stagger-item">
+            ITS合同会社は「技術で社会課題を解決する」という信念のもと、受託開発から自社プロダクトまで、一貫した品質と誠実さでお客様の事業に伴走しています。
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- ============================================================
@@ -301,263 +355,89 @@
     </section>
 
     <!-- ============================================================
-         Familink Product Section (自社プロダクト)
+         Familink Showcase — Enhanced v2.0 (dark gradient + iPhone mockups)
          ============================================================ -->
-    <section class="section product-section" id="product">
-      <div class="container">
+    <section class="fl-showcase" id="product">
+      <div class="fl-showcase__inner container">
 
-        <div class="section-header js-fade">
-          <span class="section-label">自社プロダクト開発</span>
-          <h2 class="section-title">テクノロジーで、<span>家族をつなぐ</span></h2>
-          <div class="blue-rule"></div>
-          <p class="section-desc section-desc--mt">
-            受託開発で培った技術力を活かし、社会に直接価値を届ける自社プロダクトの開発にも取り組んでいます。
-          </p>
-        </div>
-
-        <!-- Familink Hero Showcase -->
-        <div class="product-hero">
-
-          <!-- Left: Content -->
-          <div class="js-fade">
-            <div class="product-hero__badge">
-              <span class="product-hero__badge-dot"></span>
-              自社アプリ「Familink」
-            </div>
-
-            <h3 class="product-hero__app-name">Familink</h3>
-            <p class="product-hero__tagline">家族をチームに。<br>予定も、やることも、ひとつに。</p>
-            <p class="product-hero__desc">
-              子育て世代の「予定共有ミス」「タスク抜け漏れ」「家計の不透明さ」を解決する家族向けスマートアプリ。シンプルな UI で、忙しい毎日をスムーズに。
-            </p>
-
-            <ul class="product-features">
-              <li class="product-feature">
-                <span class="product-feature__icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                <div class="product-feature__body">
-                  <strong>ファミリーカレンダー</strong>
-                  <p>家族全員の予定を一つのカレンダーで共有。色分けで誰の予定かひと目でわかる</p>
-                </div>
-              </li>
-              <li class="product-feature">
-                <span class="product-feature__icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                <div class="product-feature__body">
-                  <strong>タスク・お買い物リスト</strong>
-                  <p>家族で共有できるタスク管理。買い物リストはリアルタイム更新</p>
-                </div>
-              </li>
-              <li class="product-feature">
-                <span class="product-feature__icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                <div class="product-feature__body">
-                  <strong>家計管理</strong>
-                  <p>支出を家族でリアルタイム共有。月次レポートで家計の透明性を確保</p>
-                </div>
-              </li>
-              <li class="product-feature">
-                <span class="product-feature__icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                <div class="product-feature__body">
-                  <strong>ファミリーボード</strong>
-                  <p>家族だけの掲示板。写真・メッセージ・思い出をひとつの場所に</p>
-                </div>
-              </li>
-            </ul>
-
-            <div class="product-hero__actions">
-              <a href="familink.html" class="btn--primary-solid">
-                Familinkを詳しく見る
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-              <a href="familink.html#pricing" class="btn--blue-outline">料金を見る</a>
-            </div>
-          </div>
-
-          <!-- Right: iPhone Mockups -->
-          <div class="product-hero__mockups js-fade delay-2">
-
-            <!-- Sub left: Calendar -->
-            <div class="iphone iphone--sub1">
-              <div class="iphone__frame">
-                <div class="iphone__screen">
-                  <div class="iphone__island"></div>
-                  <div class="app-calendar">
-                    <div class="app-cal__header">カレンダー</div>
-                    <div class="app-cal__month">2026年 6月</div>
-                    <div class="app-cal__grid">
-                      <div class="app-cal__day-label">日</div><div class="app-cal__day-label">月</div><div class="app-cal__day-label">火</div><div class="app-cal__day-label">水</div><div class="app-cal__day-label">木</div><div class="app-cal__day-label">金</div><div class="app-cal__day-label">土</div>
-                      <div class="app-cal__day app-cal__day--dim">1</div><div class="app-cal__day app-cal__day--dim">2</div><div class="app-cal__day app-cal__day--dim">3</div><div class="app-cal__day app-cal__day--dim">4</div><div class="app-cal__day app-cal__day--dim">5</div><div class="app-cal__day app-cal__day--dim">6</div><div class="app-cal__day app-cal__day--dim">7</div>
-                      <div class="app-cal__day">8</div><div class="app-cal__day">9</div><div class="app-cal__day">10</div><div class="app-cal__day">11</div><div class="app-cal__day">12</div><div class="app-cal__day">13</div><div class="app-cal__day">14</div>
-                      <div class="app-cal__day">15</div><div class="app-cal__day">16</div><div class="app-cal__day">17</div><div class="app-cal__day">18</div><div class="app-cal__day">19</div><div class="app-cal__day app-cal__day--today">20</div><div class="app-cal__day">21</div>
-                      <div class="app-cal__day app-cal__day--event">22</div><div class="app-cal__day">23</div><div class="app-cal__day">24</div><div class="app-cal__day">25</div><div class="app-cal__day">26</div><div class="app-cal__day">27</div><div class="app-cal__day">28</div>
-                      <div class="app-cal__day">29</div><div class="app-cal__day">30</div>
-                    </div>
-                    <div class="app-cal__events">
-                      <div class="app-cal__event app-cal__event--blue">
-                        <div><div class="app-cal__event-time">9:00</div><div class="app-cal__event-title">保育園 発表会</div></div>
-                      </div>
-                      <div class="app-cal__event app-cal__event--green">
-                        <div><div class="app-cal__event-time">18:00</div><div class="app-cal__event-title">家族ディナー</div></div>
-                      </div>
-                      <div class="app-cal__event app-cal__event--orange">
-                        <div><div class="app-cal__event-time">終日</div><div class="app-cal__event-title">パパ 出張</div></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="app-bottom-nav">
-                    <div class="app-nav-item"><div class="app-nav-dot"></div><div class="app-nav-label">ホーム</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot app-nav-dot--active"></div><div class="app-nav-label app-nav-label--active">カレンダー</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot"></div><div class="app-nav-label">タスク</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot"></div><div class="app-nav-label">家計</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot"></div><div class="app-nav-label">ボード</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Main: Home screen -->
-            <div class="iphone iphone--main">
-              <div class="iphone__frame">
-                <div class="iphone__screen">
-                  <div class="iphone__island"></div>
-                  <div class="app-home">
-                    <div class="app-home__header">こんにちは、高橋家</div>
-                    <div class="app-home__greeting">今日は 6月20日 (金)</div>
-
-                    <div class="app-home__banner">
-                      <div class="app-home__banner-label">今週の予定</div>
-                      <div class="app-home__banner-title">3件のイベント</div>
-                      <div class="app-home__banner-row">
-                        <span class="app-home__banner-chip">保育園</span>
-                        <span class="app-home__banner-chip">家族ディナー</span>
-                        <span class="app-home__banner-chip">+1</span>
-                      </div>
-                    </div>
-
-                    <div class="app-home__section-title">今日のタスク</div>
-                    <div class="app-home__tasks">
-                      <div class="app-home__task">
-                        <div class="app-home__task-dot app-home__task-dot--blue"></div>
-                        <div class="app-home__task-text">牛乳・パン・卵を買う</div>
-                        <div class="app-home__task-tag">買い物</div>
-                      </div>
-                      <div class="app-home__task">
-                        <div class="app-home__task-dot app-home__task-dot--green"></div>
-                        <div class="app-home__task-text">保育園のお迎え 17時</div>
-                        <div class="app-home__task-tag">ママ</div>
-                      </div>
-                      <div class="app-home__task">
-                        <div class="app-home__task-dot app-home__task-dot--orange"></div>
-                        <div class="app-home__task-text">電気代の確認</div>
-                        <div class="app-home__task-tag">家計</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="app-bottom-nav">
-                    <div class="app-nav-item"><div class="app-nav-dot app-nav-dot--active"></div><div class="app-nav-label app-nav-label--active">ホーム</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot"></div><div class="app-nav-label">カレンダー</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot"></div><div class="app-nav-label">タスク</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot"></div><div class="app-nav-label">家計</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot"></div><div class="app-nav-label">ボード</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Sub right: Budget -->
-            <div class="iphone iphone--sub2">
-              <div class="iphone__frame">
-                <div class="iphone__screen">
-                  <div class="iphone__island"></div>
-                  <div class="app-budget">
-                    <div class="app-budget__header">家計管理</div>
-                    <div class="app-budget__total">
-                      <div class="app-budget__total-label">6月の支出</div>
-                      <div class="app-budget__total-amount">¥128,400</div>
-                      <div class="app-budget__total-sub">予算 ¥180,000</div>
-                    </div>
-                    <div class="app-budget__bar-wrap">
-                      <div class="app-budget__bar-fill" style="width:71%"></div>
-                    </div>
-                    <div class="app-budget__bar-labels">
-                      <span>¥0</span><span>¥128,400 (71%)</span><span>¥180,000</span>
-                    </div>
-                    <div class="app-budget__cats">
-                      <div class="app-budget__cat">
-                        <div class="app-budget__cat-dot" style="background:#0A84FF"></div>
-                        <span class="app-budget__cat-name">食費</span>
-                        <span class="app-budget__cat-amt">¥42,000</span>
-                      </div>
-                      <div class="app-budget__cat">
-                        <div class="app-budget__cat-dot" style="background:#34C759"></div>
-                        <span class="app-budget__cat-name">日用品</span>
-                        <span class="app-budget__cat-amt">¥18,500</span>
-                      </div>
-                      <div class="app-budget__cat">
-                        <div class="app-budget__cat-dot" style="background:#FF9F0A"></div>
-                        <span class="app-budget__cat-name">教育費</span>
-                        <span class="app-budget__cat-amt">¥35,000</span>
-                      </div>
-                      <div class="app-budget__cat">
-                        <div class="app-budget__cat-dot" style="background:#FF6B8A"></div>
-                        <span class="app-budget__cat-name">娯楽</span>
-                        <span class="app-budget__cat-amt">¥12,900</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="app-bottom-nav app-bottom-nav--dark">
-                    <div class="app-nav-item"><div class="app-nav-dot app-nav-dot--dark"></div><div class="app-nav-label app-nav-label--dark">ホーム</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot app-nav-dot--dark"></div><div class="app-nav-label app-nav-label--dark">カレンダー</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot app-nav-dot--dark"></div><div class="app-nav-label app-nav-label--dark">タスク</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot app-nav-dot--dark-active"></div><div class="app-nav-label app-nav-label--dark-active">家計</div></div>
-                    <div class="app-nav-item"><div class="app-nav-dot app-nav-dot--dark"></div><div class="app-nav-label app-nav-label--dark">ボード</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- /.product-hero__mockups -->
-        </div><!-- /.product-hero -->
-
-        <!-- Feature Tour -->
-        <div class="product-tour js-fade">
-          <div class="tour-card">
-            <div class="tour-card__icon tour-card__icon--blue">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            </div>
-            <h4 class="tour-card__title">カレンダー共有</h4>
-            <p class="tour-card__desc">家族全員の予定を色分けで一元管理。ダブルブッキングを防ぐ</p>
-          </div>
-          <div class="tour-card">
-            <div class="tour-card__icon tour-card__icon--green">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-            </div>
-            <h4 class="tour-card__title">タスク管理</h4>
-            <p class="tour-card__desc">買い物リスト・やること管理をリアルタイム共有。抜け漏れをゼロに</p>
-          </div>
-          <div class="tour-card">
-            <div class="tour-card__icon tour-card__icon--orange">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF9F0A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </div>
-            <h4 class="tour-card__title">家計管理</h4>
-            <p class="tour-card__desc">支出をカテゴリ別に記録・可視化。月次レポートで家計を透明化</p>
-          </div>
-          <div class="tour-card">
-            <div class="tour-card__icon tour-card__icon--purple">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            </div>
-            <h4 class="tour-card__title">ファミリーボード</h4>
-            <p class="tour-card__desc">家族だけの掲示板。写真・コメントで日常をシェア</p>
+        <!-- Left: Content -->
+        <div class="fl-showcase__content">
+          <p class="fl-showcase__eyebrow js-line-reveal">Featured Product</p>
+          <h2 class="fl-showcase__name js-text-reveal">
+            <span class="js-text-reveal__line">Familink</span>
+          </h2>
+          <p class="fl-showcase__badge">家族をつなぐ、かんたん連絡アプリ</p>
+          <ul class="fl-showcase__features js-stagger">
+            <li class="js-stagger-item">ファミリーカレンダーで予定を一元共有</li>
+            <li class="js-stagger-item">タスク・お買い物リストをリアルタイム更新</li>
+            <li class="js-stagger-item">家計を見える化・月次レポート対応</li>
+            <li class="js-stagger-item">ファミリーボードで思い出を家族でシェア</li>
+          </ul>
+          <div class="fl-showcase__actions">
+            <a href="familink.html" class="btn btn--primary js-magnetic" data-magnetic-strength="0.22">
+              Familinkを詳しく見る
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="familink.html#pricing" class="btn btn--outline">料金を見る</a>
           </div>
         </div>
 
-      </div>
+        <!-- Right: iPhone Mockups -->
+        <div class="fl-showcase__mockups" aria-hidden="true">
+
+          <!-- Back iPhone: Hoku mascot -->
+          <div class="fl-iphone fl-iphone--back float-anim">
+            <div class="fl-iphone__frame">
+              <div class="fl-iphone__notch"></div>
+              <div class="fl-iphone__screen fl-iphone__screen--hoku">
+                <img src="images/hoku.png" alt="" class="fl-hoku" aria-hidden="true">
+              </div>
+            </div>
+          </div>
+
+          <!-- Front iPhone: App demo -->
+          <div class="fl-iphone fl-iphone--front float-anim" style="animation-delay:.6s">
+            <div class="fl-iphone__frame">
+              <div class="fl-iphone__notch"></div>
+              <div class="fl-iphone__screen">
+                <div class="fl-app">
+                  <div class="fl-app__header">こんにちは、高橋家</div>
+                  <div class="fl-app__date">6月20日（金）</div>
+                  <div class="fl-app__banner">
+                    <div class="fl-app__banner-label">今週の予定</div>
+                    <div class="fl-app__banner-count">3件のイベント</div>
+                    <div class="fl-app__chips">
+                      <span>保育園</span><span>ディナー</span><span>+1</span>
+                    </div>
+                  </div>
+                  <div class="fl-app__tasks">
+                    <div class="fl-app__task-title">今日のタスク</div>
+                    <div class="fl-app__task">
+                      <div class="fl-app__dot" style="background:#0A84FF"></div>
+                      <span>牛乳・パン・卵を買う</span>
+                    </div>
+                    <div class="fl-app__task">
+                      <div class="fl-app__dot" style="background:#34C759"></div>
+                      <span>保育園のお迎え 17時</span>
+                    </div>
+                    <div class="fl-app__task">
+                      <div class="fl-app__dot" style="background:#FF9F0A"></div>
+                      <span>電気代の確認</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="fl-app__nav">
+                  <div class="fl-app__nav-item fl-app__nav-item--active">ホーム</div>
+                  <div class="fl-app__nav-item">カレンダー</div>
+                  <div class="fl-app__nav-item">タスク</div>
+                  <div class="fl-app__nav-item">家計</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.fl-showcase__mockups -->
+      </div><!-- /.fl-showcase__inner -->
     </section>
 
     <!-- ============================================================
@@ -660,28 +540,33 @@
     </section>
 
     <!-- ============================================================
-         CEO Teaser
+         CEO Message — Pokémon-inspired Cormorant large quote (dark)
          ============================================================ -->
-    <section class="section section--alt">
-      <div class="container">
-        <div class="ceo-teaser__inner">
-          <div class="ceo-teaser__img js-fade">
-            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=560&auto=format&q=80" alt="代表 高橋賢弥" loading="lazy">
-          </div>
-          <div class="js-fade delay-2">
-            <span class="section-label">Message from CEO</span>
-            <blockquote class="ceo-teaser__quote">
-              テクノロジーは目的ではなく、<br>人と企業の可能性を広げる手段です。
-            </blockquote>
-            <p class="ceo-teaser__text">
+    <section class="ceo-message" id="message">
+      <div class="ceo-message__inner container">
+
+        <div class="ceo-message__content">
+          <p class="ceo-message__eyebrow js-line-reveal">Message from CEO</p>
+          <blockquote class="ceo-message__quote js-text-reveal">
+            <span class="js-text-reveal__line">すべての判断基準は、</span>
+            <span class="js-text-reveal__line">人の役に立てるかどうかだ。</span>
+          </blockquote>
+          <div class="js-stagger">
+            <p class="ceo-message__body js-stagger-item">
               IT人材の価値を最大化し、クライアント企業の事業課題を技術の力で解決する。ITSはその使命のもと、コンサルから開発・制作まで一貫して伴走するパートナーとして、確実な成果を追い求めます。
             </p>
-            <p class="ceo-teaser__name">
-              <strong>高橋 賢弥</strong>
-              ITS合同会社 代表
+            <p class="ceo-message__sig js-stagger-item">
+              <span class="ceo-message__name">高橋 賢弥</span>
+              <span class="ceo-message__role">ITS合同会社 代表</span>
             </p>
           </div>
         </div>
+
+        <div class="ceo-message__photo js-fade">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=560&auto=format&q=80" alt="代表 高橋賢弥" loading="lazy">
+          <div class="ceo-message__photo-accent" aria-hidden="true"></div>
+        </div>
+
       </div>
     </section>
 

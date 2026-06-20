@@ -198,8 +198,8 @@
         var btn = form.querySelector('[type="submit"]');
         if (btn) {
           btn.disabled = true;
-          btn.textContent = '送信しました ✓';
-          btn.style.background = '#34C759';
+          btn.textContent = '送信しました';
+          btn.classList.add('is-sent');
         }
       }
     });

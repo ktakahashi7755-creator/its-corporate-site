@@ -1336,3 +1336,12 @@
   background: var(--color-primary);
   color: white;
 }
+
+/* Form submit success state */
+.form-submit[type="submit"].is-sent,
+[type="submit"].is-sent {
+  background: #34C759;
+  border-color: #34C759;
+  cursor: default;
+  opacity: 0.85;
+}

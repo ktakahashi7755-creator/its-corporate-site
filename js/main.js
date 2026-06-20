@@ -1,42 +1,32 @@
-/* ==========================================================================
-   ITS — main.js  (段階的に追記していく)
-   ========================================================================== */
-
+/* ============================================================
+   Familink — main.js
+   ============================================================ */
 (function () {
   'use strict';
 
-  /* ------------------------------------------------------------------
-     1. Nav: スクロールで背景を付ける
-     ------------------------------------------------------------------ */
+  /* ── 1. Nav scroll glass effect ─────────────────────────── */
   function initNavScroll() {
-    const nav = document.getElementById('nav');
+    var nav = document.getElementById('nav');
     if (!nav) return;
-
-    function update() {
-      nav.classList.toggle('is-scrolled', window.scrollY > 40);
-    }
-
+    function update() { nav.classList.toggle('is-scrolled', window.scrollY > 48); }
     window.addEventListener('scroll', update, { passive: true });
-    update(); // 初期実行
+    update();
   }
 
-  /* ------------------------------------------------------------------
-     2. Nav: ハンバーガーメニュー開閉
-     ------------------------------------------------------------------ */
+  /* ── 2. Hamburger / Drawer ───────────────────────────────── */
   function initHamburger() {
-    const btn    = document.getElementById('hamburger');
-    const drawer = document.getElementById('nav-drawer');
+    var btn    = document.getElementById('hamburger');
+    var drawer = document.getElementById('drawer');
     if (!btn || !drawer) return;
 
     btn.addEventListener('click', function () {
-      const isOpen = drawer.classList.toggle('is-open');
-      btn.classList.toggle('is-open', isOpen);
-      btn.setAttribute('aria-expanded', isOpen);
-      drawer.setAttribute('aria-hidden', !isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+      var open = drawer.classList.toggle('is-open');
+      btn.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open);
+      drawer.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
     });
 
-    // ドロワー内リンクをタップしたら閉じる
     drawer.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
         drawer.classList.remove('is-open');
@@ -48,111 +38,72 @@
     });
   }
 
-  /* ------------------------------------------------------------------
-     3. スクロールフェードイン
-     ------------------------------------------------------------------ */
+  /* ── 3. Scroll fade-in (IntersectionObserver) ────────────── */
   function initScrollFade() {
-    const els = document.querySelectorAll('.js-fade');
+    var els = document.querySelectorAll('.js-fade');
     if (!els.length) return;
-
-    const io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
-
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     els.forEach(function (el) { io.observe(el); });
   }
 
-  /* ------------------------------------------------------------------
-     4. Hero: Canvas パーティクル
-     ------------------------------------------------------------------ */
-  function initParticles() {
-    var canvas = document.getElementById('hero-canvas');
-    if (!canvas) return;
+  /* ── 4. Contact form (client-side validation) ────────────── */
+  function initForm() {
+    var form = document.getElementById('contact-form');
+    if (!form) return;
 
-    var ctx = canvas.getContext('2d');
-    var particles = [];
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name  = form.querySelector('#cf-name');
+      var email = form.querySelector('#cf-email');
+      var msg   = form.querySelector('#cf-msg');
+      var check = form.querySelector('input[type="checkbox"]');
+      var valid = true;
 
-    function resize() {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    }
-
-    function makeParticle() {
-      return {
-        x:    Math.random() * canvas.width,
-        y:    Math.random() * canvas.height,
-        vx:   (Math.random() - 0.5) * 0.3,
-        vy:   (Math.random() - 0.5) * 0.3,
-        r:    Math.random() * 1.3 + 0.4,
-        a:    Math.random() * 0.5 + 0.15,
-        gold: Math.random() < 0.12
-      };
-    }
-
-    function init() {
-      resize();
-      var count = Math.min(Math.floor(canvas.width * canvas.height / 14000), 100);
-      particles = [];
-      for (var i = 0; i < count; i++) particles.push(makeParticle());
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // 接続線
-      for (var i = 0; i < particles.length; i++) {
-        for (var j = i + 1; j < particles.length; j++) {
-          var dx = particles[i].x - particles[j].x;
-          var dy = particles[i].y - particles[j].y;
-          var d  = Math.sqrt(dx * dx + dy * dy);
-          if (d < 100) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = 'rgba(201,168,76,' + ((1 - d / 100) * 0.1) + ')';
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-
-      // 点
-      particles.forEach(function (p) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height)  p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.gold
-          ? 'rgba(201,168,76,' + p.a + ')'
-          : 'rgba(139,160,184,' + p.a + ')';
-        ctx.fill();
+      [name, email, msg].forEach(function (el) {
+        el.style.borderColor = '';
+        if (!el.value.trim()) { el.style.borderColor = '#FF3B30'; valid = false; }
       });
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        email.style.borderColor = '#FF3B30'; valid = false;
+      }
+      if (!check.checked) { valid = false; }
 
-      requestAnimationFrame(draw);
-    }
+      if (!valid) { return; }
 
-    init();
-    draw();
-
-    window.addEventListener('resize', init, { passive: true });
+      /* 要設定: 実際の送信処理（Formspree等）をここに追加 */
+      var btn = form.querySelector('button[type="submit"]');
+      btn.textContent = '送信しました！ありがとうございます';
+      btn.disabled = true;
+      btn.style.background = '#34C759';
+      btn.style.boxShadow  = '0 8px 24px rgba(52,199,89,.3)';
+    });
   }
 
-  /* ------------------------------------------------------------------
-     Init
-     ------------------------------------------------------------------ */
+  /* ── 5. Smooth scroll for anchor links ───────────────────── */
+  function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href').slice(1);
+        if (!id) return;
+        var target = document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+        var offset = document.getElementById('nav') ? 72 : 0;
+        window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+      });
+    });
+  }
+
+  /* ── Init ────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
     initNavScroll();
     initHamburger();
     initScrollFade();
-    initParticles();
+    initForm();
+    initSmoothScroll();
   });
-
 }());

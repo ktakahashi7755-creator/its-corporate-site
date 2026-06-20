@@ -70,33 +70,127 @@
          Hero
          ============================================================ -->
     <section class="hero">
-      <canvas id="hero-canvas"></canvas>
-      <div class="hero__glow"></div>
 
-      <div class="hero__content">
-        <div class="hero__eyebrow">ITS合同会社</div>
-
-        <h1 class="hero__title">
-          テクノロジーで<br>世界を輝かせる
-        </h1>
-
-        <p class="hero__en">STARS YOUR TECHNOLOGY</p>
-
-        <p class="hero__desc">
-          システム受託開発・ITコンサルティング・Web制作・自社プロダクト開発を通じて、<br>
-          企業の課題を解決し、事業成長を支援します。
-        </p>
-
-        <div class="hero__actions">
-          <a href="#contact"  class="btn btn--primary">お問い合わせ（無料）</a>
-          <a href="#services" class="btn btn--outline">サービスを見る</a>
-        </div>
+      <!-- 背景ブロブ -->
+      <div class="hero__blobs" aria-hidden="true">
+        <div class="hero__blob hero__blob--1"></div>
+        <div class="hero__blob hero__blob--2"></div>
+        <div class="hero__blob hero__blob--3"></div>
+        <div class="hero__blob hero__blob--4"></div>
       </div>
 
+      <!-- 2カラムレイアウト -->
+      <div class="hero__inner">
+
+        <!-- 左: テキスト -->
+        <div class="hero__text">
+          <div class="hero__eyebrow">ITS合同会社</div>
+
+          <h1 class="hero__title">
+            テクノロジーで<br>
+            <span class="hero__title-accent">世界を輝かせる</span>
+          </h1>
+
+          <p class="hero__en">STARS YOUR TECHNOLOGY</p>
+
+          <p class="hero__desc">
+            システム受託開発・ITコンサルティング・Web制作・自社プロダクト開発を通じて、企業の課題を解決し、事業成長を支援します。
+          </p>
+
+          <div class="hero__actions">
+            <a href="#contact"  class="btn btn--primary">お問い合わせ（無料）</a>
+            <a href="#services" class="btn btn--outline-dark">サービスを見る</a>
+          </div>
+        </div>
+
+        <!-- 右: ほくキャラクター -->
+        <div class="hero__character" aria-hidden="true">
+          <div class="hero__hoku-wrap">
+
+            <!-- キラキラデコレーション -->
+            <div class="hero__sparkle hero__sparkle--1"></div>
+            <div class="hero__sparkle hero__sparkle--2"></div>
+            <div class="hero__sparkle hero__sparkle--3"></div>
+            <div class="hero__dot hero__dot--1"></div>
+            <div class="hero__dot hero__dot--2"></div>
+
+            <!-- ほく SVGキャラクター -->
+            <svg class="hoku-svg" viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="hokuBodyGrad" cx="38%" cy="28%" r="68%">
+                  <stop offset="0%"   stop-color="#FFE96A"/>
+                  <stop offset="55%"  stop-color="#FFD93D"/>
+                  <stop offset="100%" stop-color="#F5C00F"/>
+                </radialGradient>
+                <radialGradient id="ribbonGrad" cx="50%" cy="30%" r="70%">
+                  <stop offset="0%"   stop-color="#7ABEF0"/>
+                  <stop offset="100%" stop-color="#4A86D8"/>
+                </radialGradient>
+              </defs>
+
+              <!-- 星形ボディ（丸みのある5角星） -->
+              <path class="hoku-body" fill="url(#hokuBodyGrad)"
+                d="M85.3 42.25 Q100 20 114.7 42.25
+                   Q129.4 64.5 155.1 71.6
+                   Q180.8 78.7 164.2 99.6
+                   Q147.6 120.5 148.8 147.15
+                   Q150.0 173.8 125.0 164.4
+                   Q100 155 75.0 164.4
+                   Q50.0 173.8 51.2 147.15
+                   Q52.4 120.5 35.8 99.6
+                   Q19.2 78.7 44.9 71.6
+                   Q70.6 64.5 85.3 42.25 Z"/>
+
+              <!-- ほっぺ -->
+              <ellipse cx="68"  cy="114" rx="14" ry="8" fill="#FF8BA7" opacity="0.62"/>
+              <ellipse cx="132" cy="114" rx="14" ry="8" fill="#FF8BA7" opacity="0.62"/>
+
+              <!-- 左目 -->
+              <g class="hoku-eye-left" transform="translate(82,100)">
+                <ellipse class="hoku-eye-iris" rx="8" ry="9" fill="#1C1C1E"/>
+                <ellipse cx="3" cy="-3" rx="2.8" ry="2.8" fill="white"/>
+              </g>
+
+              <!-- 右目 -->
+              <g class="hoku-eye-right" transform="translate(118,100)">
+                <ellipse class="hoku-eye-iris" rx="8" ry="9" fill="#1C1C1E"/>
+                <ellipse cx="3" cy="-3" rx="2.8" ry="2.8" fill="white"/>
+              </g>
+
+              <!-- 通常の口（スマイル） -->
+              <path class="hoku-mouth-smile"
+                d="M86 122 Q100 136 114 122"
+                stroke="#1C1C1E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+              <!-- 驚き口（ホバー時表示） -->
+              <ellipse class="hoku-mouth-open"
+                cx="100" cy="127" rx="7" ry="9" fill="#1C1C1E"/>
+
+              <!-- リボン：左翼 -->
+              <path fill="url(#ribbonGrad)"
+                d="M93 163 C75 150 55 153 58 163 C55 173 75 176 93 163 Z"/>
+              <!-- リボン：右翼 -->
+              <path fill="url(#ribbonGrad)"
+                d="M107 163 C125 150 145 153 142 163 C145 173 125 176 107 163 Z"/>
+              <!-- リボン：中央ノット -->
+              <ellipse cx="100" cy="163" rx="14" ry="10" fill="#7ABEF0"/>
+              <ellipse cx="100" cy="163" rx="8"  ry="6"  fill="#4A86D8"/>
+              <ellipse cx="97"  cy="160" rx="3.5" ry="2.5" fill="rgba(255,255,255,0.45)"/>
+            </svg>
+
+            <!-- 吹き出し -->
+            <div class="hoku-bubble">よろしく！</div>
+          </div>
+        </div>
+
+      </div><!-- /.hero__inner -->
+
+      <!-- スクロールインジケーター -->
       <div class="hero__scroll">
         <span class="hero__scroll-label">Scroll</span>
         <div class="hero__scroll-bar"></div>
       </div>
+
     </section>
 
     <!-- ============================================================

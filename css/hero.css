@@ -1,116 +1,264 @@
 /* ==========================================================================
-   Hero Section
+   Hero Section — Bright / Animated (Hoku edition)
    ========================================================================== */
 
 .hero {
   position: relative;
-  height: 100svh;
-  min-height: 640px;
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
-  background: radial-gradient(ellipse at 30% 60%, #0c1d38 0%, #050a14 65%);
+  background: linear-gradient(145deg, #FFFBEC 0%, #EBF5FF 60%, #F0F8FF 100%);
 }
 
-#hero-canvas {
+/* --------------------------------------------------------------------------
+   Background blobs
+   -------------------------------------------------------------------------- */
+.hero__blobs {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.hero__glow {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 70% 25%, rgba(10, 132, 255, 0.08) 0%, transparent 55%),
-    radial-gradient(ellipse at 20% 75%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
   pointer-events: none;
 }
 
-/* Content */
-.hero__content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding-inline: var(--pad-x);
-  max-width: 820px;
+.hero__blob {
+  position: absolute;
+  border-radius: 50%;
 }
 
-/* Eyebrow */
+.hero__blob--1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 218, 62, 0.22) 0%, transparent 70%);
+  top: -200px;
+  right: -80px;
+  animation: blobDrift 9s ease-in-out infinite;
+}
+
+.hero__blob--2 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(10, 132, 255, 0.09) 0%, transparent 70%);
+  bottom: -120px;
+  left: -100px;
+  animation: blobDrift 11s ease-in-out infinite 3s;
+}
+
+.hero__blob--3 {
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(52, 199, 89, 0.09) 0%, transparent 70%);
+  top: 45%;
+  right: 20%;
+  animation: blobDrift 7s ease-in-out infinite 1.5s;
+}
+
+.hero__blob--4 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(255, 159, 10, 0.11) 0%, transparent 70%);
+  top: 18%;
+  left: 35%;
+  animation: blobDrift 8s ease-in-out infinite 4.5s;
+}
+
+@keyframes blobDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(18px, -22px) scale(1.06); }
+  66%       { transform: translate(-12px, 12px) scale(0.96); }
+}
+
+/* --------------------------------------------------------------------------
+   Inner layout (two-column)
+   -------------------------------------------------------------------------- */
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+  padding-block: clamp(100px, 14vw, 140px) 80px;
+}
+
+.hero__text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Eyebrow label */
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  font-family: var(--font-serif);
-  font-size: 0.68rem;
-  letter-spacing: 0.32em;
+  gap: 12px;
+  font-family: var(--font-product);
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--color-gold);
-  margin-bottom: 24px;
+  color: var(--color-primary);
+  font-weight: 700;
+  margin-bottom: 22px;
   opacity: 0;
-  animation: fadeUp 0.8s var(--ease-out) 0.3s forwards;
+  animation: fadeUp 0.7s var(--ease-out) 0.2s forwards;
 }
 
-.hero__eyebrow::before,
-.hero__eyebrow::after {
+.hero__eyebrow::before {
   content: '';
   display: block;
-  width: 32px;
-  height: 1px;
-  background: var(--color-gold);
-  opacity: 0.5;
+  width: 28px;
+  height: 2.5px;
+  background: var(--color-primary);
+  border-radius: 2px;
 }
 
 /* Title */
 .hero__title {
   font-family: var(--font-serif);
-  font-size: clamp(2.4rem, 6.5vw, 5rem);
+  font-size: clamp(2.4rem, 5.5vw, 4.4rem);
   font-weight: 600;
-  color: var(--color-white);
-  line-height: 1.18;
+  color: var(--color-text);
+  line-height: 1.2;
   letter-spacing: -0.02em;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   opacity: 0;
-  animation: fadeUp 0.9s var(--ease-out) 0.5s forwards;
+  animation: fadeUp 0.8s var(--ease-out) 0.4s forwards;
+}
+
+.hero__title-accent {
+  background: linear-gradient(135deg, #0A84FF 20%, #5AC8FA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* English tagline */
 .hero__en {
-  font-family: var(--font-serif);
-  font-size: clamp(0.75rem, 1.6vw, 1rem);
-  letter-spacing: 0.28em;
+  font-family: var(--font-product);
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--color-gold);
-  margin-bottom: 28px;
+  margin-bottom: 26px;
   opacity: 0;
-  animation: fadeUp 0.8s var(--ease-out) 0.7s forwards;
+  animation: fadeUp 0.7s var(--ease-out) 0.6s forwards;
 }
 
 /* Description */
 .hero__desc {
-  font-size: clamp(0.85rem, 1.6vw, 0.95rem);
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.88;
-  max-width: 480px;
-  margin-inline: auto;
+  font-size: clamp(0.875rem, 1.5vw, 0.95rem);
+  color: var(--color-text-3);
+  line-height: 1.9;
+  max-width: 440px;
   margin-bottom: 40px;
   opacity: 0;
-  animation: fadeUp 0.8s var(--ease-out) 0.9s forwards;
+  animation: fadeUp 0.7s var(--ease-out) 0.8s forwards;
 }
 
-/* CTA Buttons */
+/* CTA buttons */
 .hero__actions {
   display: flex;
-  gap: 12px;
-  justify-content: center;
+  gap: 14px;
   flex-wrap: wrap;
   opacity: 0;
-  animation: fadeUp 0.8s var(--ease-out) 1.1s forwards;
+  animation: fadeUp 0.7s var(--ease-out) 1.0s forwards;
 }
 
-/* Scroll Indicator */
+/* --------------------------------------------------------------------------
+   Character column
+   -------------------------------------------------------------------------- */
+.hero__character {
+  flex: 0 0 360px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+  opacity: 0;
+  animation: fadeIn 1s ease 0.7s forwards;
+}
+
+.hero__hoku-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Hoku SVG */
+.hoku-svg {
+  width: 270px;
+  height: 308px;
+  display: block;
+  filter:
+    drop-shadow(0 24px 44px rgba(255, 213, 0, 0.30))
+    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.07));
+  animation: hokuFloat 3.4s ease-in-out infinite;
+  cursor: pointer;
+  transition: filter 0.35s ease;
+}
+
+.hoku-svg:hover {
+  filter:
+    drop-shadow(0 32px 52px rgba(255, 213, 0, 0.48))
+    drop-shadow(0 12px 24px rgba(0, 0, 0, 0.10));
+}
+
+/* Speech bubble */
+.hoku-bubble {
+  position: absolute;
+  top: -6px;
+  right: -12px;
+  background: white;
+  border-radius: 18px 18px 18px 4px;
+  padding: 10px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09);
+  white-space: nowrap;
+  animation: bubblePop 0.5s var(--ease-out) 2.2s both;
+  transform-origin: bottom left;
+}
+
+.hoku-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 14px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-top: 8px solid white;
+}
+
+/* Sparkle decorations around Hoku */
+.hero__sparkle,
+.hero__dot {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero__sparkle {
+  background: var(--color-gold);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  animation: sparkle 3s ease-in-out infinite;
+}
+
+.hero__sparkle--1 { width: 18px; height: 18px; top:  4%; left:  2%; animation-delay: 0s;    opacity: 0.8; }
+.hero__sparkle--2 { width: 12px; height: 12px; top: 72%; right: 0%; animation-delay: 1.5s;  opacity: 0.65; }
+.hero__sparkle--3 { width: 10px; height: 10px; top: 24%; right: 5%; animation-delay: 0.8s;  opacity: 0.55; }
+
+.hero__dot {
+  border-radius: 50%;
+  animation: miniFloat 5.5s ease-in-out infinite;
+}
+
+.hero__dot--1 { width: 11px; height: 11px; background: var(--color-primary); opacity: 0.22; bottom: 22%; left:  5%; animation-delay: 2s; }
+.hero__dot--2 { width:  7px; height:  7px; background: #34C759;              opacity: 0.30; top:   52%; right: 2%; animation-delay: 3.5s; }
+
+/* --------------------------------------------------------------------------
+   Scroll indicator
+   -------------------------------------------------------------------------- */
 .hero__scroll {
   position: absolute;
   bottom: 28px;
@@ -120,16 +268,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   opacity: 0;
-  animation: fadeIn 1s ease 1.8s forwards;
+  animation: fadeIn 1s ease 2.2s forwards;
 }
 
 .hero__scroll-label {
   font-size: 0.58rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--color-text-4);
 }
 
 .hero__scroll-bar {
@@ -140,49 +288,109 @@
 }
 
 /* --------------------------------------------------------------------------
-   Buttons
+   Buttons (global)
    -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.82rem;
-  letter-spacing: 0.09em;
-  padding: 14px 32px;
-  border-radius: var(--radius-sm);
-  transition: all var(--duration-base) ease;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 14px 30px;
+  border-radius: 100px;
+  transition: all 0.25s var(--ease-out);
   white-space: nowrap;
   cursor: pointer;
-}
-
-.btn--primary {
-  background: var(--grad-primary);
-  color: white;
-  font-weight: 700;
+  text-decoration: none;
   border: none;
 }
 
+.btn--primary {
+  background: linear-gradient(135deg, #0A84FF 0%, #5AC8FA 100%);
+  color: white;
+  box-shadow: 0 6px 20px rgba(10, 132, 255, 0.30);
+}
+
 .btn--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-primary);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(10, 132, 255, 0.42);
 }
 
 .btn--outline {
-  border: 1px solid rgba(255, 255, 255, 0.30);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   color: rgba(255, 255, 255, 0.9);
+  background: transparent;
 }
 
 .btn--outline:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  border-color: white;
+  background: rgba(255, 255, 255, 0.12);
   transform: translateY(-2px);
 }
+
+.btn--outline-dark {
+  border: 1.5px solid rgba(28, 28, 30, 0.22);
+  color: var(--color-text-2);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+}
+
+.btn--outline-dark:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-lt);
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Hoku: eye animations
+   -------------------------------------------------------------------------- */
+
+/* Both eyes blink simultaneously, right eye also winks alone */
+.hoku-eye-iris {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.hoku-eye-left .hoku-eye-iris {
+  animation: hokublink 8s ease-in-out infinite 0s;
+}
+
+.hoku-eye-right .hoku-eye-iris {
+  animation: hokublinkwink 8s ease-in-out infinite 0.07s;
+}
+
+@keyframes hokublink {
+  0%, 43%, 57%, 100% { transform: scaleY(1); }
+  50%                 { transform: scaleY(0.06); }
+}
+
+/* Shared blink at 50%, solo wink at 78% */
+@keyframes hokublinkwink {
+  0%, 43%, 57%, 74%, 84%, 100% { transform: scaleY(1); }
+  50%                           { transform: scaleY(0.06); }
+  79%                           { transform: scaleY(0.06); }
+}
+
+/* Hover: surprised expression */
+.hoku-mouth-open  { opacity: 0; transition: opacity 0.15s ease; }
+.hoku-mouth-smile { transition: opacity 0.15s ease; }
+
+.hoku-svg:hover .hoku-eye-iris {
+  animation: none;
+  transform: scale(1.2);
+  transition: transform 0.18s ease;
+}
+
+.hoku-svg:hover .hoku-mouth-smile { opacity: 0; }
+.hoku-svg:hover .hoku-mouth-open  { opacity: 1; }
 
 /* --------------------------------------------------------------------------
    Keyframes
    -------------------------------------------------------------------------- */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -192,8 +400,29 @@
 }
 
 @keyframes scrollPulse {
-  0%, 100% { opacity: 0.4; transform: scaleY(0.6); }
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
   50%       { opacity: 1;   transform: scaleY(1); }
+}
+
+@keyframes hokuFloat {
+  0%, 100% { transform: translateY(0)     rotate(0deg); }
+  30%       { transform: translateY(-15px) rotate(-1.8deg); }
+  70%       { transform: translateY(-8px)  rotate(1.2deg); }
+}
+
+@keyframes miniFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1)   rotate(0deg);   opacity: 0.7; }
+  50%       { transform: scale(1.4) rotate(180deg); opacity: 1;   }
+}
+
+@keyframes bubblePop {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @keyframes float {
@@ -204,6 +433,27 @@
 /* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
-@media (max-width: 640px) {
-  .hero__actions { flex-direction: column; align-items: center; }
+@media (max-width: 900px) {
+  .hero__character { flex: 0 0 300px; min-height: 320px; }
+  .hoku-svg        { width: 220px; height: 251px; }
+}
+
+@media (max-width: 700px) {
+  .hero__inner {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding-block: clamp(90px, 14vw, 120px) 60px;
+    gap: 16px;
+  }
+
+  .hero__character { flex: none; width: 100%; min-height: 240px; }
+  .hoku-svg        { width: 180px; height: 205px; }
+  .hoku-bubble     { font-size: 0.75rem; padding: 8px 12px; }
+  .hero__desc      { max-width: 100%; margin-inline: auto; }
+  .hero__actions   { justify-content: center; }
+  .hero__eyebrow   { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .hero__title { font-size: 2.1rem; }
 }

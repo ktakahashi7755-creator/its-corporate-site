@@ -1590,16 +1590,16 @@
 }
 
 .fl-iphone__screen--hoku {
-  background: linear-gradient(160deg, #0A1428 0%, #0A0E18 100%);
+  background: #F8F8FA;
   align-items: center;
   justify-content: center;
 }
 
 .fl-hoku {
-  width: 120px;
+  width: 110px;
   height: auto;
-  mix-blend-mode: screen;
-  filter: brightness(1.1);
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 8px 20px rgba(200, 160, 0, 0.30));
 }
 
 /* App demo UI */
@@ -1849,8 +1849,8 @@
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
+  object-position: top center;
   border-radius: 4px;
-  filter: grayscale(20%);
 }
 
 .ceo-message__photo-accent {
